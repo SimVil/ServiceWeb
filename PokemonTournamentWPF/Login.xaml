@@ -5,24 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PokemonTournamentWPF"
         mc:Ignorable="d"
-        Title="Login" Height="363" Width="570">
+        Title="Login" Style="{StaticResource LoginWindow}">
     <Grid>
-       
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        
-        <Label x:Name="label_login" Content="Login :" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15"/>
-        <TextBox x:Name="textbox_login" Grid.Row="0" Grid.Column="1" Height="25"/>
-        <Label x:Name="label_password" Content="Password :" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15"/>
-        <PasswordBox x:Name="passwordbox_password" Grid.Row="1" Grid.Column="1" Height="25"/>
-        <Button x:Name="btn_connexion" Content="Connexion" Grid.Row="2" Grid.Column="1" Height="35" Cursor="Hand" Click="btn_connexion_Click"/>
+        <StackPanel Margin="8" Orientation="Vertical">
+                <TextBlock Style="{StaticResource TitleLogin}">
+                Connexion
+                </TextBlock>
+
+                <StackPanel Style="{StaticResource FieldLogin}">
+                    <TextBlock Style="{StaticResource LineLogin}"> Login :</TextBlock>
+                <TextBox Name="textbox_login" Width="200" Height="20"/>
+                </StackPanel>
+
+                <StackPanel Style="{StaticResource FieldLogin}">
+                    <TextBlock Style="{StaticResource LineLogin}"> Password :</TextBlock>
+                    <PasswordBox Name="Pass" Width="200" Height="20"/>
+                </StackPanel>
+
+
+            </StackPanel>
+
+        <Button x:Name="btn_connexion" Content="Connexion" Style="{StaticResource ButtonLogin}" Cursor="Hand" Click="btn_connexion_Click"/>
     </Grid>
+ 
 </Window>
