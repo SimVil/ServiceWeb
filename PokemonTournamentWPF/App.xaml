@@ -26,8 +26,8 @@
         <Style x:Key="MainWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowTopLayout}">
             <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
             <Setter Property="Width" Value="800"/>
-            <Setter Property="Height" Value="300"/>
-            <Setter Property="MaxHeight" Value="350"/>
+            <Setter Property="Height" Value="700"/>
+            <Setter Property="MaxHeight" Value="800"/>
             <Setter Property="MaxWidth" Value="800"/>
             <Setter Property="MinHeight" Value="250"/>
             <Setter Property="MinWidth" Value="750"/>

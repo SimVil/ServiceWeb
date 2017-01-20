@@ -22,12 +22,19 @@ namespace PokemonTournamentWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<String> pks { get; set; }
+        public List<String> mts { get; set; }
+        public List<String> sts { get; set; }
+
         private PokemonTournamentManager controller;
 
         public MainWindow()
         {
             InitializeComponent();
             controller = new PokemonTournamentManager();
+            pks = controller.GetAllPokemonsString();
+            sts = controller.GetAllStadesString();
+            mts = controller.GetAllMatchsString();
             btn_pokemons.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
 
