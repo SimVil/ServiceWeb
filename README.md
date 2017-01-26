@@ -1,3 +1,0 @@
-
-PokemonTournament
-ServiceWeb
