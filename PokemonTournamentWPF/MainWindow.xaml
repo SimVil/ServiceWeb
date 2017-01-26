@@ -31,8 +31,24 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <ListBox x:Name="list_informations" DockPanel.Dock="Left" Grid.Column="0" SelectionChanged="list_informations_SelectionChanged">
-
+            <ListBox x:Name="list_pokemons" DockPanel.Dock="Left" Grid.Column="0"
+                ItemsSource="{Binding Pokemons}" 
+                SelectedItem="{Binding SelectedItem}">
+            </ListBox>
+            <ListBox x:Name="list_stades" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
+                ItemsSource="{Binding Stades}" 
+                SelectedItem="{Binding SelectedItem}">
+            </ListBox>
+            <ListBox x:Name="list_matchs" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
+                ItemsSource="{Binding Matchs}" 
+                SelectedItem="{Binding SelectedItem}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" FontSize="20" FontWeight="Bold" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
             <Grid x:Name="grid_view_pokemons" Background="Red" Grid.Column="1">
                 <Grid>
@@ -59,16 +75,16 @@
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="button_ajouter_stade" Content="Ajouter Stade" Grid.Column="0" Margin="5" Click="button_ajouter_Click"/>
-                <Button x:Name="button_supprimer_stade" Content="Supprimer Stade" Grid.Column="1" Margin="5" Click="button_supprimer_Click"/>
+                <Button x:Name="button_ajouter_stade" Grid.Column="0" Margin="5"  Command="{Binding ElementName=list_stades,  Path=DataContext.AddCommand}">Ajouter Stade</Button>
+                <Button x:Name="button_supprimer_stade" Grid.Column="1" Margin="5" Command="{Binding ElementName=list_stades, Path=DataContext.RemoveCommand}">Supprimer Stade</Button>
                 
-                <WrapPanel x:Name="wrap_panel_stade_ajout" Grid.Column="0" Grid.Row="1" Visibility="Collapsed">
+                <WrapPanel x:Name="wrap_panel_stade_ajout" Grid.Column="0" Grid.Row="1">
                     <Label x:Name="label_nom_stade" Content="Nom du stade" Margin="5"/>
-                    <TextBox  x:Name="text_box_nom_stade" Width="200"/>
+                    <TextBox  x:Name="text_box_nom_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
-                <WrapPanel x:Name="wrap_panel_stade_ajout2" Grid.Column="1" Grid.Row="1" Visibility="Collapsed">
+                <WrapPanel x:Name="wrap_panel_stade_ajout2" Grid.Column="1" Grid.Row="1">
                     <Label x:Name="label_nbplaces_stade" Content="Nombre places" Margin="5"/>
-                    <TextBox  x:Name="text_box_nbplaces_stade" Width="200"/>
+                    <TextBox  x:Name="text_box_nbplaces_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.NbPlaces, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
 
                 <Button x:Name="button_ok_stade" Content="Ok" Grid.Column="1" Grid.Row="3" Margin="5" Click="button_ok_ajouter_Click" Visibility="Collapsed"/>

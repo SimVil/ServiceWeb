@@ -23,3 +23,6 @@ C:\Users\Admin\Desktop\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\PokemonT
 C:\Users\Admin\Desktop\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.csproj.GenerateResource.Cache
 C:\Users\Admin\Desktop\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.exe
 C:\Users\Admin\Desktop\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.pdb
+C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\bin\Debug\PokemonTournamentWPF.exe.config
+C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.exe
+C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.pdb

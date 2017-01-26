@@ -33,11 +33,20 @@ namespace PokemonTournamentWPF
 
         private void btn_pokemons_Click(object sender, RoutedEventArgs e)
         {
-            list_informations.ItemsSource = controller.GetAllPokemons();
+
+            IList<PokemonTournamentEntities.Pokemon> pokemons = controller.GetAllPokemons();
+
+            ViewModelBase.PokemonsViewModel pvm = new ViewModelBase.PokemonsViewModel(pokemons);
+            list_pokemons.DataContext = pvm;
+
             List<String> list_types = new List<String>();
             list_types.Add("");            
             list_types.AddRange(Enum.GetNames(typeof(TypeElement)));
             combo_filtrage.ItemsSource = list_types;
+
+            list_pokemons.Visibility = Visibility.Visible;
+            list_stades.Visibility = Visibility.Collapsed;
+            list_matchs.Visibility = Visibility.Collapsed;
 
             grid_view_pokemons.Visibility = Visibility.Visible;
             grid_view_stades.Visibility = Visibility.Collapsed;
@@ -46,8 +55,15 @@ namespace PokemonTournamentWPF
 
         private void btn_stades_Click(object sender, RoutedEventArgs e)
         {
+            IList<PokemonTournamentEntities.Stade> stades = controller.GetAllStades();
 
-            list_informations.ItemsSource = controller.GetAllStades();
+            ViewModelBase.StadesViewModel svm = new ViewModelBase.StadesViewModel(stades);
+            list_stades.DataContext = svm;
+         
+            list_pokemons.Visibility = Visibility.Collapsed;
+            list_stades.Visibility = Visibility.Visible;
+            list_matchs.Visibility = Visibility.Collapsed;
+
             grid_view_pokemons.Visibility = Visibility.Collapsed;
             grid_view_stades.Visibility = Visibility.Visible;
             grid_view_matchs.Visibility = Visibility.Collapsed;
@@ -56,7 +72,15 @@ namespace PokemonTournamentWPF
 
         private void btn_matchs_Click(object sender, RoutedEventArgs e)
         {
-            list_informations.ItemsSource = controller.GetAllMatchs();
+            IList<PokemonTournamentEntities.Match> matchs = controller.GetAllMatchs();
+
+            ViewModelBase.MatchsViewModel mvm = new ViewModelBase.MatchsViewModel(matchs);
+            list_matchs.DataContext = mvm;
+
+            list_pokemons.Visibility = Visibility.Collapsed;
+            list_stades.Visibility = Visibility.Collapsed;
+            list_matchs.Visibility = Visibility.Visible;
+
             grid_view_pokemons.Visibility = Visibility.Collapsed;
             grid_view_stades.Visibility = Visibility.Collapsed;
             grid_view_matchs.Visibility = Visibility.Visible;
@@ -65,93 +89,22 @@ namespace PokemonTournamentWPF
          private void btn_print_Click(object sender, RoutedEventArgs e)
         {
             PrintDialog pdlg = new PrintDialog();
-            pdlg.PrintVisual(this.list_informations,"");
+            pdlg.PrintVisual(this.list_pokemons,""); //attention, a modifier : ajouter fenetre de choix d'objet a printer
             pdlg.ShowDialog();
         }
-
-
-        private void  button_ajouter_Click(object sender, RoutedEventArgs e)
-        {
-            wrap_panel_stade_ajout.Visibility = Visibility.Visible;
-            wrap_panel_stade_ajout2.Visibility = Visibility.Visible;
-            button_ok_stade.Visibility = Visibility.Visible;
-
-            list_informations.SelectedItem = null;
-        }
-
-        private void button_supprimer_Click(object sender, RoutedEventArgs e)
-        {
-            if (list_informations.SelectedItem != null)
-            {
-                Stade stade = (Stade)list_informations.SelectedItem;
-
-                controller.GetAllStades().Remove(stade);
-                list_informations.Items.Refresh();
-            }
-            else
-            {
-                MessageBoxResult result =  MessageBox.Show("Veuillez sélectionner un élément à supprimer.");
-            }
-           
-
-        }
-
-
-
-
-        private void list_informations_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           if(list_informations.SelectedItem != null)
-           {
-               if (list_informations.SelectedItem.GetType().ToString() == "PokemonTournamentEntities.Stade")
-               {
-                   wrap_panel_stade_ajout.Visibility = Visibility.Visible;
-                   wrap_panel_stade_ajout2.Visibility = Visibility.Visible;
-                   button_ok_stade.Visibility = Visibility.Visible;
-
-                   Stade stade = (Stade)list_informations.SelectedItem;
-
-                   if (stade != null)
-                   {
-                       text_box_nom_stade.Text = stade.Nom;
-                       text_box_nbplaces_stade.Text = stade.NbPlaces.ToString();
-                   }
-               }            
-           }          
-        }
-
-
+      
         private void button_ok_ajouter_Click(object sender, RoutedEventArgs e)
-        {
-            if(text_box_nbplaces_stade.Text != "" && text_box_nom_stade.Text != "")
-            {
-                int nbPlaces;
-                bool is_int = Int32.TryParse(text_box_nbplaces_stade.Text, out nbPlaces);
-            
-                Stade stade = new Stade(text_box_nom_stade.Text, nbPlaces, null);
-                if (list_informations.SelectedItem == null)
-                {
-                    controller.GetAllStades().Add(stade);
-                }
-                else
-                {
-                    Stade existant = (Stade) list_informations.SelectedItem;
-                    controller.GetAllStades().Remove(existant);
-                    controller.GetAllStades().Add(stade);
-                }
-               
-                list_informations.Items.Refresh();
+        { //ce code peut servir pour contrôler l'entrée d'un stade dans la liste
+            int nbPlaces;
 
-                text_box_nom_stade.Text = "";
-                text_box_nbplaces_stade.Text = "";               
+            if (text_box_nbplaces_stade.Text != "" && text_box_nom_stade.Text != "" 
+                && Int32.TryParse(text_box_nbplaces_stade.Text, out nbPlaces))
+            {                                                                                  
             } 
             else
             {
                 MessageBoxResult result = MessageBox.Show("Veuillez remplir tous les champs.");
             }
-            wrap_panel_stade_ajout.Visibility = Visibility.Collapsed;
-            wrap_panel_stade_ajout2.Visibility = Visibility.Collapsed;
-            button_ok_stade.Visibility = Visibility.Collapsed;
         }
 
         private void button_filtrage_Click(object sender, RoutedEventArgs e)
@@ -159,12 +112,12 @@ namespace PokemonTournamentWPF
             String filtre = combo_filtrage.Text;
             if(filtre == "")
             {
-                list_informations.ItemsSource = controller.GetAllPokemons();
+                list_stades.ItemsSource = controller.GetAllPokemons();
             }
             else
             {
                 TypeElement type = (TypeElement)Enum.Parse(typeof(TypeElement),filtre);
-                list_informations.ItemsSource = controller.GetAllPokemonsFromType(type);
+                list_pokemons.ItemsSource = controller.GetAllPokemonsFromType(type);
             }
         }
 
@@ -173,25 +126,5 @@ namespace PokemonTournamentWPF
             XMLSave fenetre = new XMLSave();
             fenetre.Show();
         }
-
-        /*private void clearGridView()
-        {
-            grid_view.Children.Clear();
-            grid_view.RowDefinitions.Clear();
-            grid_view.ColumnDefinitions.Clear();
-        }
-
-        private void createGridView(int rows, int columns)
-        {
-            int i;
-            for(i = 0; i < rows; ++i)
-            {
-                grid_view.RowDefinitions.Add(new RowDefinition());
-            }
-            for (i = 0; i < columns; ++i)
-            {
-                grid_view.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-        }*/
     }
 }

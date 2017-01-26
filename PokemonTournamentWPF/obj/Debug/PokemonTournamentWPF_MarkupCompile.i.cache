@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Admin\Desktop\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\
+C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\
 PokemonTournamentWPF
 none
 false
 DEBUG;TRACE
-C:\Users\Admin\Desktop\ServiceWeb-master\PokemonTournamentWPF\App.xaml
+C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\App.xaml
 31230679241
 
 19-470953802
-16-184415281
+16-1967146597
 Login.xaml;MainWindow.xaml;XMLSave.xaml;
 
-False
+True
 

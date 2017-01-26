@@ -8,11 +8,11 @@ namespace PokemonTournamentEntities
 {
     public class Match : EntityObject
     {
-        public int IdPokemonVainqueur { get; private set; }
-        public PhaseTournoi PhaseTournoi { get; private set; }
-        public Pokemon Pokemon1 { get; private set; }
-        public Pokemon Pokemon2 { get; private set; }
-        public Stade StadePokemon { get; private set; }
+        public int IdPokemonVainqueur { get; set; }
+        public PhaseTournoi PhaseTournoi { get; set; }
+        public Pokemon Pokemon1 { get; set; }
+        public Pokemon Pokemon2 { get; set; }
+        public Stade StadePokemon { get; set; }
 
         public Match(Pokemon pokemon1, Pokemon pokemon2, int idPokemonVainqueur, PhaseTournoi phaseTournoi, Stade stade) : base()
         {

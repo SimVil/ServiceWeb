@@ -57,6 +57,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModelBase\MatchViewModel.cs" />
+    <Compile Include="ViewModelBase\MatchsViewModel.cs" />
+    <Compile Include="ViewModelBase\PokemonViewModel.cs" />
+    <Compile Include="ViewModelBase\PokemonsViewModel.cs" />
+    <Compile Include="ViewModelBase\RelayCommand.cs" />
+    <Compile Include="ViewModelBase\StadesViewModel.cs" />
+    <Compile Include="ViewModelBase\StadeViewModel.cs" />
+    <Compile Include="ViewModelBase\ViewModelBase.cs" />
     <Compile Include="XMLSave.xaml.cs">
       <DependentUpon>XMLSave.xaml</DependentUpon>
     </Compile>
