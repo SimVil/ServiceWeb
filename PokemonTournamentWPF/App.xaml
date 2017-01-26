@@ -1,0 +1,196 @@
+﻿<Application x:Class="PokemonTournamentWPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PokemonTournamentWPF"
+             StartupUri="LoginWindow.xaml">
+    <Application.Resources>
+
+        <!-- =========================================================================== -->
+        <!-- Windows Style                                                               -->
+        <!-- =========================================================================== -->
+
+        <Style x:Key="WindowTopLayout" TargetType="{x:Type Window}">
+            <Setter Property="AllowsTransparency" Value="False"/>
+            <Setter Property="Background" Value="#2c3e50"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="WindowTooledStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowTopLayout}">
+            <Setter Property="WindowStyle" Value="ToolWindow" />
+            <Setter Property="Width"  Value="400" />
+            <Setter Property="Height" Value="400" />
+            <Setter Property="ResizeMode" Value="NoResize"/>
+
+        </Style>
+        
+        <Style x:Key="MainWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowTopLayout}">
+            <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+            <Setter Property="Width" Value="800"/>
+            <Setter Property="Height" Value="300"/>
+            <Setter Property="MaxHeight" Value="350"/>
+            <Setter Property="MaxWidth" Value="800"/>
+            <Setter Property="MinHeight" Value="250"/>
+            <Setter Property="MinWidth" Value="750"/>
+
+        </Style>
+
+        <Style x:Key="LoginWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowTooledStyle}">
+            <Setter Property="Width" Value="525"/>
+            <Setter Property="Height" Value="350"/>
+            <Setter Property="MaxHeight" Value="350"/>
+            <Setter Property="MaxWidth" Value="600"/>
+            <Setter Property="MinHeight" Value="250"/>
+            <Setter Property="MinWidth" Value="350"/>
+
+        </Style>
+
+
+        <Style x:Key="AlternWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowTooledStyle}"></Style>
+        
+        <Style x:Key="ExportWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowTooledStyle}">
+            <Setter Property="Height" Value="300"/>
+            <Setter Property="Width" Value="400" />
+
+        </Style>
+
+        
+        
+        <!-- =========================================================================== -->
+        <!-- TextBlock Style                                                             -->
+        <!-- =========================================================================== -->
+        
+        <Style x:Key="TitleLogin" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontFamily" Value="OpenSans"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Foreground" Value="#bdc3c7"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+
+        </Style>
+
+        <Style x:Key="LineLogin" TargetType="{x:Type TextBlock}">
+            <Setter Property="Width" Value="90" />
+            <Setter Property="FontFamily" Value="OpenSans" />
+            <Setter Property="Foreground" Value="#bdc3c7" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            
+        </Style>
+
+        <Style x:Key="MainTitle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="800"/>
+            <Setter Property="Background" Value="#c0392b"/>
+            <Setter Property="Foreground" Value="#bdc3c7" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="OpenSans"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="10 10 10 10"/>
+
+        </Style>
+
+        <Style x:Key="AlternListItem" TargetType="{x:Type TextBlock}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width"  Value="300" />
+            <Setter Property="Background" Value="#9a0038"/>
+            <Setter Property="Foreground" Value="#ecf0f1"/>
+            <Setter Property="FontFamily" Value="OpenSans"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="10 10 10 10"/>
+            <Setter Property="TextAlignment" Value="Justify" />
+
+        </Style>
+
+        <Style x:Key="ExportLine" TargetType="{x:Type TextBlock}">
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Margin" Value="20 20 20 20" />
+            <Setter Property="FontFamily" Value="OpenSans" />
+            <Setter Property="Foreground" Value="#bdc3c7" />
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+
+        </Style>
+
+
+
+        <!-- =========================================================================== -->
+        <!-- Button Style                                                                -->
+        <!-- =========================================================================== -->
+
+        <Style x:Key="ButtonLogin" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="0 40 40 0"/>
+            <Setter Property="Background" Value="#179e50"/>
+            <Setter Property="Foreground" Value="#ecf0f1"/>
+            <Setter Property="BorderBrush" Value="#179e50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style x:Key="MainButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="158"/>
+            <Setter Property="Background" Value="#2980b9"/>
+            <Setter Property="Foreground" Value="#ecf0f1"/>
+            <Setter Property="BorderBrush" Value="#111111"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+        </Style>
+
+
+        <Style x:Key="ButtonExport" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Margin" Value="0 40 40 0"/>
+            <Setter Property="Background" Value="#179e50"/>
+            <Setter Property="Foreground" Value="#ecf0f1"/>
+            <Setter Property="BorderBrush" Value="#179e50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+
+        <!-- =========================================================================== -->
+        <!-- Panel Style                                                                 -->
+        <!-- =========================================================================== -->
+
+        <Style x:Key="ButtonPanel" TargetType="{x:Type WrapPanel}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            
+        </Style>
+
+        <Style x:Key="FieldLogin" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10 0 0 10" />
+
+        </Style>
+
+        <Style x:Key="ExportForm" TargetType="{x:Type WrapPanel}">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10 10 10 10" />
+
+        </Style>
+        
+        
+
+
+
+        <!-- =========================================================================== -->
+        <!-- Border Style                                                                -->
+        <!-- =========================================================================== -->
+
+        <Style x:Key="BorderListItem" TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="#2c3e50"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+        </Style>
+
+    </Application.Resources>
+</Application>
