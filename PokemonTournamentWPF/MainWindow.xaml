@@ -1,0 +1,100 @@
+﻿<Window x:Class="PokemonTournamentWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PokemonTournamentWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="800">
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Save" Click="MenuItem_save_Click" />
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btn_pokemons" Content="Pokemons" Grid.Column="0" Height="30" Margin="10" Click="btn_pokemons_Click"/>
+            <Button x:Name="btn_stades" Content="Stades" Grid.Column="1" Height="30" Margin="10" Click="btn_stades_Click"/>
+            <Button x:Name="btn_matchs" Content="Matchs" Grid.Column="2" Height="30" Margin="10" Click="btn_matchs_Click"/>
+            <Button x:Name="btn_print" Content="Print" Grid.Column="3" Height="30" Margin="10" Click="btn_print_Click"/>
+        </Grid>
+
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="list_pokemons" DockPanel.Dock="Left" Grid.Column="0"
+                ItemsSource="{Binding Pokemons}" 
+                SelectedItem="{Binding SelectedItem}">
+            </ListBox>
+            <ListBox x:Name="list_stades" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
+                ItemsSource="{Binding Stades}" 
+                SelectedItem="{Binding SelectedItem}">
+            </ListBox>
+            <ListBox x:Name="list_matchs" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
+                ItemsSource="{Binding Matchs}" 
+                SelectedItem="{Binding SelectedItem}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" FontSize="20" FontWeight="Bold" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Grid x:Name="grid_view_pokemons" Background="Red" Grid.Column="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="162*"/>
+                        <ColumnDefinition Width="261*"/>
+                        <ColumnDefinition Width="211*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="9*"/>
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="combo_filtrage" Grid.Column="0" Margin="5" Grid.ColumnSpan="2"></ComboBox>
+                    <Button x:Name="button_filtrage" Content="Filtrage" Grid.Column="2" Margin="5" Click="button_filtrage_Click"/>
+                </Grid>
+            </Grid>
+            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Collapsed" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="button_ajouter_stade" Grid.Column="0" Margin="5"  Command="{Binding ElementName=list_stades,  Path=DataContext.AddCommand}">Ajouter Stade</Button>
+                <Button x:Name="button_supprimer_stade" Grid.Column="1" Margin="5" Command="{Binding ElementName=list_stades, Path=DataContext.RemoveCommand}">Supprimer Stade</Button>
+                
+                <WrapPanel x:Name="wrap_panel_stade_ajout" Grid.Column="0" Grid.Row="1">
+                    <Label x:Name="label_nom_stade" Content="Nom du stade" Margin="5"/>
+                    <TextBox  x:Name="text_box_nom_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
+                </WrapPanel>
+                <WrapPanel x:Name="wrap_panel_stade_ajout2" Grid.Column="1" Grid.Row="1">
+                    <Label x:Name="label_nbplaces_stade" Content="Nombre places" Margin="5"/>
+                    <TextBox  x:Name="text_box_nbplaces_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.NbPlaces, UpdateSourceTrigger=PropertyChanged}"/>
+                </WrapPanel>
+
+                <Button x:Name="button_ok_stade" Content="Ok" Grid.Column="1" Grid.Row="3" Margin="5" Click="button_ok_ajouter_Click" Visibility="Collapsed"/>
+
+
+
+            </Grid>
+            <Grid x:Name="grid_view_matchs" Background="Yellow" Visibility="Collapsed" Grid.Column="1">
+
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>
