@@ -75,10 +75,12 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Add()
         {
-            PokemonTournamentEntities.Match a = new PokemonTournamentEntities.Match(null, null, 0, PokemonTournamentEntities.PhaseTournoi.HuitiemeFinale, null);
+              PokemonTournamentEntities.Match a = new PokemonTournamentEntities.Match(null, null, 0, PokemonTournamentEntities.PhaseTournoi.HuitiemeFinale, null);
 
-            this.SelectedItem = new MatchViewModel(a);
-            Matchs.Add(this.SelectedItem);
+              this.SelectedItem = new MatchViewModel(a);
+              Matchs.Add(this.SelectedItem);
+
+            
         }
 
         // Commande Remove

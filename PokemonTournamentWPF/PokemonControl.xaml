@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="PokemonTournamentWPF.PokemonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PokemonTournamentWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Margin="0,10,-87,-66">
+        <WrapPanel>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="293" Margin="17,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="138"/>
+            <StackPanel>
+                <TextBlock x:Name="PokemonCard" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" TextAlignment="Center" Background="Orange" Width="129"><Run Text="Pokemon Card"/></TextBlock>
+                <Separator HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="129"/>
+                <WrapPanel>
+                    <Label Content="Nom :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="27" />
+                    <TextBox x:Name="pokemon_name" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Height="22"  Text="{Binding SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Type  :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="27" />
+                    <ListBox x:Name="pokemon_type" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" Height="22" ItemsSource="{Binding SelectedItem.Types, UpdateSourceTrigger=PropertyChanged}"/>
+                    
+                </WrapPanel>
+                <!--<WrapPanel>
+                    <ComboBox x:Name="list_types" Width="64" ItemsSource="{Binding Types}"/>
+                    <Button x:Name="ajouter_type" Content="Ajouter" Width="46"/>
+                    <Button x:Name="supprimer_type" Content="Supprimer" Width="71"/>                    
+                </WrapPanel>-->
+                <Label Content="Caractérstiques :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Height="27" />
+                  <WrapPanel>
+                    <StackPanel>
+                        <WrapPanel>
+                            <Label Content="Vie :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
+                            <TextBox x:Name="pokemon_vie" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Height="22" Text="{Binding SelectedItem.Vie, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Defense :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
+                            <TextBox x:Name="pokemon_def" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Height="22" Text="{Binding SelectedItem.Defense, UpdateSourceTrigger=PropertyChanged}" />
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Force :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
+                            <TextBox x:Name="pokemon_force" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Height="27" Text="{Binding SelectedItem.Force, UpdateSourceTrigger=PropertyChanged}" />
+                        </WrapPanel>
+                    </StackPanel>
+                </WrapPanel>
+            </StackPanel>
+        </WrapPanel>
+
+
+
+
+
+    </Grid>
+</UserControl>

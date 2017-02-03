@@ -134,7 +134,7 @@ namespace PokemonTournamentWPF.ViewModelBase
         {
             OnCloseNotified(new EventArgs());
         }
-
+                 
         #endregion
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PokemonTournamentWPF"
+        xmlns:mycontrol="clr-namespace:PokemonTournamentWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
 
@@ -35,6 +36,18 @@
                 ItemsSource="{Binding Pokemons}" 
                 SelectedItem="{Binding SelectedItem}">
             </ListBox>
+            <!--"<ListView  x:Name="list_pokemons"
+            ItemsSource="{Binding Pokemons}" 
+            SelectedItem="{Binding SelectedItem}"
+            Grid.Row="1" Grid.ColumnSpan="3" 
+            Margin="5,5,5,5" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Nom Pokemon" DisplayMemberBinding="{Binding Nom}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>-->
+
             <ListBox x:Name="list_stades" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
                 ItemsSource="{Binding Stades}" 
                 SelectedItem="{Binding SelectedItem}">
@@ -42,15 +55,8 @@
             <ListBox x:Name="list_matchs" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
                 ItemsSource="{Binding Matchs}" 
                 SelectedItem="{Binding SelectedItem}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding}" FontSize="20" FontWeight="Bold" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
             </ListBox>
-            <Grid x:Name="grid_view_pokemons" Background="Red" Grid.Column="1">
+            <Grid x:Name="grid_view_pokemons" Background="Red" Margin="158,10,-0.4,-9.8" Grid.ColumnSpan="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="162*"/>
@@ -63,6 +69,10 @@
                     </Grid.RowDefinitions>
                     <ComboBox x:Name="combo_filtrage" Grid.Column="0" Margin="5" Grid.ColumnSpan="2"></ComboBox>
                     <Button x:Name="button_filtrage" Content="Filtrage" Grid.Column="2" Margin="5" Click="button_filtrage_Click"/>
+                    <mycontrol:PokemonControl Margin="144,35,207,147.2" DataContext="{Binding ElementName=list_pokemons}"  Grid.ColumnSpan="3" Grid.RowSpan="2" />
+                    <Button x:Name="button_ajouter_pokemon"  Grid.Column="3" Height="20" Margin="40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.AddCommand}" Grid.Row="1" RenderTransformOrigin="0.568,4.753" Grid.ColumnSpan="2">Ajouter Pokemon</Button>
+                    
+                    
                 </Grid>
             </Grid>
             <Grid x:Name="grid_view_stades" Background="Green" Visibility="Collapsed" Grid.Column="1">
@@ -77,7 +87,7 @@
                 </Grid.RowDefinitions>
                 <Button x:Name="button_ajouter_stade" Grid.Column="0" Margin="5"  Command="{Binding ElementName=list_stades,  Path=DataContext.AddCommand}">Ajouter Stade</Button>
                 <Button x:Name="button_supprimer_stade" Grid.Column="1" Margin="5" Command="{Binding ElementName=list_stades, Path=DataContext.RemoveCommand}">Supprimer Stade</Button>
-                
+
                 <WrapPanel x:Name="wrap_panel_stade_ajout" Grid.Column="0" Grid.Row="1">
                     <Label x:Name="label_nom_stade" Content="Nom du stade" Margin="5"/>
                     <TextBox  x:Name="text_box_nom_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
@@ -86,6 +96,8 @@
                     <Label x:Name="label_nbplaces_stade" Content="Nombre places" Margin="5"/>
                     <TextBox  x:Name="text_box_nbplaces_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.NbPlaces, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
+
+                <mycontrol:StadeControl Margin="139,71,0,71.2" DataContext="{Binding ElementName=list_stades}"  Grid.ColumnSpan="3" Grid.RowSpan="2"></mycontrol:StadeControl>
 
                 <Button x:Name="button_ok_stade" Content="Ok" Grid.Column="1" Grid.Row="3" Margin="5" Click="button_ok_ajouter_Click" Visibility="Collapsed"/>
 

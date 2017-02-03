@@ -75,10 +75,11 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Add()
         {
-            PokemonTournamentEntities.Stade a = new PokemonTournamentEntities.Stade("<Nom>", 0, null);
-
-            this.SelectedItem = new StadeViewModel(a);
+            
+            //PokemonTournamentEntities.Stade a = new PokemonTournamentEntities.Stade("WTF", 0, null);
+            //this.SelectedItem = new StadeViewModel(a);
             Stades.Add(this.SelectedItem);
+            
         }
 
         // Commande Remove
