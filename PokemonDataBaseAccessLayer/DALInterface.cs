@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,27 +8,45 @@ using PokemonTournamentEntities;
 
 namespace PokemonDataBaseAccessLayer
 {
-    public abstract class DALInterface
+    interface DALInterface
     {
-        public abstract List<Pokemon> GetPokemonList();
+        List<string> GetPokemon();
 
-        public abstract void AddPokemon(Pokemon n);
+        List<string> GetStade();
 
-        public abstract void DeletePokemon(Pokemon d);
+        List<string> GetMatch();
 
-        public abstract void UpdatePokemon(Pokemon u);
+        List<string> getElement();
 
-        public abstract List<Stade> GetStade();
-
-        public abstract void a();
-
-        public abstract List<Match> GetMatch();
-
-        public abstract void List<Element>();
-
-        
-
-        public abstract void ShowAllRecords();
 
     }
 }
+
+/*
+ *         void AddElement();
+
+        void DeleteElement();
+
+        void UpdateElement();
+ * 
+ *         void AddMatch();
+
+        void DeleteMatch();
+
+        void UpdateMatch();
+ * 
+ * 
+ *         void AddStade();
+
+        void DeleteStade();
+
+        void UpdateStade();
+ * 
+ * 
+ *         void AddPokemon(Pokemon n);
+
+        void DeletePokemon(Pokemon d);
+
+        void UpdatePokemon(Pokemon u);
+ * 
+ * */

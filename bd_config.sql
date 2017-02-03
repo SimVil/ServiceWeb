@@ -1,4 +1,4 @@
-
+﻿
 /* -----------------------------------------------------------------------------
 * Fichier : bd_config.sql
 * Date    : 02/2017
@@ -16,7 +16,7 @@
 /* Creation des tables ------------------------------------------------------ */
 
 create table Element (
-    ide  int not null,  /* id element */
+    ide  int not null,                /* id element */
     type char(20),                    /* type element */
     constraint pk_elt primary key (ide),
     constraint uniq_t_e unique(type),
@@ -31,7 +31,7 @@ create table Element (
 
 
 create table Phase (
-    idp int not null,                /* id phase */
+    idp int not null,                         /* id phase */
     typp char(20) not null,                   /* type de phase */
     constraint pk_phs primary key (idp),
     constraint uniq_t_p unique(typp),
@@ -69,7 +69,7 @@ create table Stade (
     ids  int not null,                    /* id stade */
     nbp  int,                             /* nombre places stade */
     nom  varchar(32),                     /* nom du stade */
-    type int,							  /* id type */
+    type int,							                /* id type */
     constraint pk_stade primary key (ids),
     constraint sk_type_stade foreign key (type) references Element(ide)
 );
@@ -119,27 +119,28 @@ create table Utilisateur (
 
 /* ==== creation elements ==== */
 insert into Element (ide, type)
-values (seq_elt.nextval, 'Eau');						/* 1 */
-
-insert into Element (ide, type)			
-values (seq_elt.nextval, 'Feu');						/* 2 */
+values (1, 'Eau');						/* 1 */
 
 insert into Element (ide, type)
-values (seq_elt.nextval, 'Sol');						/* 3 */
+values (2, 'Feu');						/* 2 */
 
 insert into Element (ide, type)
-values (seq_elt.nextval, 'Plante');					/* 4 */
+values (3, 'Sol');						/* 3 */
 
 insert into Element (ide, type)
-values (seq_elt.nextval, 'Electrique');				/* 5 */
+values (4, 'Plante');					/* 4 */
 
 insert into Element (ide, type)
-values (seq_elt.nextval, 'Glace');					/* 6 */
+values (5, 'Electrique');				/* 5 */
 
 insert into Element (ide, type)
-values (seq_elt.nextval, 'Vol');						/* 7 */
+values (6, 'Glace');					/* 6 */
+
+insert into Element (ide, type)
+values (7, 'Vol');						/* 7 */
 
 /* Résultat : */
+/*
        IDE TYPE
 ---------- --------------------
 	 1 Eau
@@ -151,7 +152,7 @@ values (seq_elt.nextval, 'Vol');						/* 7 */
 	 7 Vol
 
 7 rows selected.
-
+*/
 
 /* ==== creation phase ==== */
 insert into Phase (idp, typp)
@@ -166,14 +167,14 @@ values (3, 'DemiFinale');
 insert into Phase (idp, typp)
 values (4, 'Finale');
 
-
+/*
        IDP TYPP
 ---------- --------------------
 	 1 HuitiemeFinale
 	 2 QuartFinale
 	 3 DemiFinale
 	 4 Finale
-
+*/
 
 /* ==== ajout de pokemons ==== */
 insert into Pokemon (idp, nom, vie, force, defense)
@@ -241,7 +242,7 @@ values (8, 7);
 
 /* ==== ajout de stades ==== */
 insert into Stade (ids, nom, nbp, type)
-values (1, 'Stade neutre', 75000, NULL); 
+values (1, 'Stade neutre', 75000, NULL);
 
 insert into Stade (ids, nom, nbp, type)
 values (2, 'Stade eclair', 50000, 5);
