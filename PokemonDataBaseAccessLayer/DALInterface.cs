@@ -18,6 +18,10 @@ namespace PokemonDataBaseAccessLayer
 
         List<string> getElement();
 
+        string GetPokemonById(int id);
+
+        string GetStadeById(int id);
+
 
     }
 }
