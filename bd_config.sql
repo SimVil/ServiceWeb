@@ -16,7 +16,7 @@
 /* Creation des tables ------------------------------------------------------ */
 
 create table Element (
-    ide  int not null,                /* id element */
+    ide  int not null,  /* id element */
     type char(20),                    /* type element */
     constraint pk_elt primary key (ide),
     constraint uniq_t_e unique(type),
@@ -50,19 +50,28 @@ create table Pokemon (
     vie     int,                          /* vie du pokemon */
     force   int,                          /* force du pokemon */
     defense int,                          /* defense poke */
-    type    int,                          /* type pokemon (par son id) */
-    constraint pk_poke primary key (idp),
-    constraint sk_type_poke foreign key (type) references Element(ide)
+    constraint pk_poke primary key (idp)
 );
 
+
+/*	Les Pokémon peuvent avoir plusieurs types.
+*	On est donc obligés de créer une nouvelle table pour ça.
+*/
+create table PokemonType (
+	pkm		int,					/* id du pokemon */
+	type	int,					/* id du type */
+	constraint pk_pkmtype primary key (pkm, type),
+	constraint sk_pkm_pkmt foreign key (pkm) references Pokemon(idp),
+	constraint sk_type_pkmt foreign key (type) references Element(ide)
+);
 
 create table Stade (
     ids  int not null,                    /* id stade */
     nbp  int,                             /* nombre places stade */
     nom  varchar(32),                     /* nom du stade */
-    type int,                             /* type terrain (par son id) */
+    type int,							  /* id type */
     constraint pk_stade primary key (ids),
-    constraint sk_type_std foreign key (type) references Element(ide)
+    constraint sk_type_stade foreign key (type) references Element(ide)
 );
 
 
@@ -110,25 +119,38 @@ create table Utilisateur (
 
 /* ==== creation elements ==== */
 insert into Element (ide, type)
-values (1, 'Eau');
+values (seq_elt.nextval, 'Eau');						/* 1 */
+
+insert into Element (ide, type)			
+values (seq_elt.nextval, 'Feu');						/* 2 */
 
 insert into Element (ide, type)
-values (2, 'Feu');
+values (seq_elt.nextval, 'Sol');						/* 3 */
 
 insert into Element (ide, type)
-values (3, 'Sol');
+values (seq_elt.nextval, 'Plante');					/* 4 */
 
 insert into Element (ide, type)
-values (4, 'Plante');
+values (seq_elt.nextval, 'Electrique');				/* 5 */
 
 insert into Element (ide, type)
-values (5, 'Electrique');
+values (seq_elt.nextval, 'Glace');					/* 6 */
 
 insert into Element (ide, type)
-values (6, 'Glace');
+values (seq_elt.nextval, 'Vol');						/* 7 */
 
-insert into Element (ide, type)
-values (7, 'Vol');
+/* Résultat : */
+       IDE TYPE
+---------- --------------------
+	 1 Eau
+	 2 Feu
+	 3 Sol
+	 4 Plante
+	 5 Electrique
+	 6 Glace
+	 7 Vol
+
+7 rows selected.
 
 
 /* ==== creation phase ==== */
@@ -145,38 +167,84 @@ insert into Phase (idp, typp)
 values (4, 'Finale');
 
 
+       IDP TYPP
+---------- --------------------
+	 1 HuitiemeFinale
+	 2 QuartFinale
+	 3 DemiFinale
+	 4 Finale
+
+
 /* ==== ajout de pokemons ==== */
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (1, 'Electhor', 200, 75, 30, 7);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (1, 'Electhor', 200, 75, 30);
 
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (2, 'Brasegali', 160, 90, 25, 2);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (2, 'Brasegali', 160, 90, 25);
 
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (3, 'Onigali', 180, 55, 45, 6);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (3, 'Onigali', 180, 55, 45);
 
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (4, 'Lucario', 165, 70, 35, 3);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (4, 'Lucario', 165, 70, 35);
 
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (5, 'Tortank', 220, 60, 30, 1);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (5, 'Tortank', 220, 60, 30);
 
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (6, 'Germinion', 140, 65, 25, 4);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (6, 'Germinion', 140, 65, 25);
 
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (7, 'Groudon', 200, 85, 35, 2);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (7, 'Groudon', 200, 85, 35);
 
-insert into Pokemon (idp, nom, vie, force, defense, type)
-values (8, 'Kyogre', 210, 75, 35, 1);
+insert into Pokemon (idp, nom, vie, force, defense)
+values (8, 'Kyogre', 210, 75, 35);
+
+
+/* ==== ajout des types de Pokemon ==== */
+insert into PokemonType (pkm, type)			/* Electhor : elec */
+values (1, 5);
+
+insert into PokemonType (pkm, type)			/* Electhor : vol */
+values (1, 7);
+
+insert into PokemonType (pkm, type)			/* Brasegali : feu */
+values (2, 2);
+
+insert into PokemonType (pkm, type)			/* Onigali : glace */
+values (3, 6);
+
+insert into PokemonType (pkm, type)			/* Lucario : sol */
+values (4, 3);
+
+insert into PokemonType (pkm, type)			/* Tortank : eau */
+values (5, 1);
+
+insert into PokemonType (pkm, type)			/* Tortank : sol */
+values (5, 3);
+
+insert into PokemonType (pkm, type)			/* Germinion : plante */
+values (6, 4);
+
+insert into PokemonType (pkm, type)			/* Groudon : feu */
+values (7, 2);
+
+insert into PokemonType (pkm, type)			/* Groudon : sol */
+values (7, 3);
+
+insert into PokemonType (pkm, type)			/* Kyogre : eau */
+values (8, 1);
+
+insert into PokemonType (pkm, type)			/* Kyogre : vol */
+values (8, 7);
 
 
 /* ==== ajout de stades ==== */
 insert into Stade (ids, nom, nbp, type)
-values (1, 'Stade neutre', 75000, 1); /* /!\ pas logique (1 = eau != neutre ) */
+values (1, 'Stade neutre', 75000, NULL); 
 
 insert into Stade (ids, nom, nbp, type)
-values (2, 'Stade éclair', 50000, 5);
+values (2, 'Stade eclair', 50000, 5);
 
 insert into Stade (ids, nom, nbp, type)
 values (3, 'Stade aquatique', 90000, 1);
