@@ -241,16 +241,16 @@ values (8, 7);
 
 /* ==== ajout de stades ==== */
 insert into Stade (ids, nom, nbp, type)
-values (1, 'Stade neutre', 75000, NULL);
+values (1, 'Stade-neutre', 75000, NULL);
 
 insert into Stade (ids, nom, nbp, type)
-values (2, 'Stade eclair', 50000, 5);
+values (2, 'Stade-eclair', 50000, 5);
 
 insert into Stade (ids, nom, nbp, type)
-values (3, 'Stade aquatique', 90000, 1);
+values (3, 'Stade-aquatique', 90000, 1);
 
 insert into Stade (ids, nom, nbp, type)
-values (4, 'Stade volcan', 60000, 2);
+values (4, 'Stade-volcan', 60000, 2);
 
 
 /* ==== ajout de matchs ==== */

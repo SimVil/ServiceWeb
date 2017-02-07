@@ -28,6 +28,8 @@ namespace PokemonConsole
             AfficherPokemons();
             Console.WriteLine("\n\nLes matchs disponibles :");
             AfficherMatchs();
+            Console.WriteLine("\n\nLes users :");
+            AfficherUtilisateur();
         }
 
         public void AfficherStades()
@@ -43,6 +45,11 @@ namespace PokemonConsole
         public void AfficherMatchs()
         {
             manager.GetAllMatchs().ForEach(m => Console.WriteLine(m));
+        }
+
+        public void AfficherUtilisateur()
+        {
+            manager.GetAllUtilisateurs().ForEach(m => Console.WriteLine(m));
         }
     }
 }

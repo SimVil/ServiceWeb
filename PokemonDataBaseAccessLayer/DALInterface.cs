@@ -10,15 +10,15 @@ namespace PokemonDataBaseAccessLayer
 {
     interface DALInterface
     {
-        List<string> GetPokemon();
+        List<string> GetAllPokemons();
 
-        List<string> GetStade();
+        List<string> GetAllStades();
 
-        List<string> GetMatch();
+        List<string> GetAllMatchs();
 
-        List<string> GetElement();
+        List<string> GetAllElements();
 
-        List<string> GetUtilisateur();
+        List<string> GetAllUtilisateurs();
 
         string GetPokemonById(int id);
 

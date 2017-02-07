@@ -34,8 +34,8 @@ namespace PokemonTournamentEntities
 
         public override String ToString()
         {
-            return Nom;
-            //return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense;
+            //return Nom;
+            return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense;
         }
     }
 }

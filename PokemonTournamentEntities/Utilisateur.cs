@@ -20,5 +20,11 @@ namespace PokemonTournamentEntities
             Login = login;
             Password = password;
         }
+
+        public override String ToString()
+        {
+            return Prenom;
+           
+        }
     }
 }

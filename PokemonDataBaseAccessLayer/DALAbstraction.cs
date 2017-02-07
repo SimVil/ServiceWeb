@@ -10,14 +10,16 @@ namespace PokemonDataBaseAccessLayer
     public class DALAbstraction
     {
         private DALInterface idal = new DALImplementation();
-        
+
+        // on peut essayer de passer par une methode generique
+        // et des delegate pour eviter la duplication de code degueulasse comme la
 
         public List<Pokemon> GetAllPokemons()
         {
             List<Pokemon> resu = new List<Pokemon>();
             List<string> pokestring = new List<string>();
 
-            pokestring = idal.GetPokemon();
+            pokestring = idal.GetAllPokemons();
 
             foreach(string s in pokestring)
             {
@@ -35,12 +37,12 @@ namespace PokemonDataBaseAccessLayer
         }
           
 
-        public List<Stade> GetStades()
+        public List<Stade> GetAllStades()
         {
             List<Stade> resu = new List<Stade>();
             List<string> stades = new List<string>();
             string[] subs;
-            stades = idal.GetStade();
+            stades = idal.GetAllStades();
 
             foreach (string s in stades)
             {
@@ -59,7 +61,7 @@ namespace PokemonDataBaseAccessLayer
             List<Match> resu = new List<Match>();
             List<string> matchs = new List<string>();
             string[] subs;
-            matchs = idal.GetMatch();
+            matchs = idal.GetAllMatchs();
 
             foreach (string s in matchs)
             {
@@ -67,12 +69,33 @@ namespace PokemonDataBaseAccessLayer
                 resu.Add(new Match(
                     definePokemon(idal.GetPokemonById(Int32.Parse(subs[0]))),
                     definePokemon(idal.GetPokemonById(Int32.Parse(subs[1]))),
-                    Int32.Parse(subs[2])),
+                    Int32.Parse(subs[2]),
                     constTournoi(Int32.Parse(subs[3])),
-                    defineStade(idal.GetStadeById(Int32.Parse(subs[3]))));
+                    defineStade(idal.GetStadeById(Int32.Parse(subs[3])))));
             }
 
             return resu;
+        }
+
+        public List<Utilisateur> GetAllUtilisateurs()
+        {
+            List<Utilisateur> res = new List<Utilisateur>();
+            List<string> user = new List<string>();
+            string[] subs;
+
+            user = idal.GetAllUtilisateurs();
+
+            foreach (string s in user)
+            {
+                subs = s.Split(' ');
+                res.Add(new Utilisateur(
+                    subs[0],
+                    subs[1],
+                    subs[2],
+                    subs[3]));
+            }
+
+            return res;
         }
 
         public List<Pokemon> GetAllPokemonsFromType(TypeElement type)
@@ -87,10 +110,8 @@ namespace PokemonDataBaseAccessLayer
 
         public Utilisateur getUtilisateurByLogin(String login)
         {
-            return Utilisateurs.Where(u => u.Login == login).FirstOrDefault();
+            return GetAllUtilisateurs().Where(u => u.Login == login).FirstOrDefault();
         }
-
-
 
 
         public Pokemon definePokemon(string s)

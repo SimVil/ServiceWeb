@@ -16,7 +16,7 @@ namespace PokemonDataBaseAccessLayer
         private List<string> DataRequire(string request)
         {
             List<string> res = new List<string>();
-            string[] tmp = null;
+            List<string> tmp = new List<string>();
             int i = 0;
 
             using (SqlConnection SqlCo = new SqlConnection(_connectionString))
@@ -28,11 +28,13 @@ namespace PokemonDataBaseAccessLayer
 
                 while (sqlDaRe.Read())
                 {
-                    for(i = 1; i <= sqlDaRe.FieldCount; i++)
+                    for(i = 0; i < sqlDaRe.FieldCount; i++)
                     {
-                        tmp.SetValue(sqlDaRe.GetString(i), i - 1);
+                        tmp.Add(sqlDaRe.GetValue(i).ToString());
+                   
                     }
-                    res.Add(string.Join(" ", tmp));
+                    res.Add(string.Join(" ", tmp.ToArray()));
+                    tmp.Clear();
                     // faudra ptet rajouter un clear, mais vu qu'on remplace les id ca
                     // devrait passer
                      
@@ -47,33 +49,33 @@ namespace PokemonDataBaseAccessLayer
 
         public DALImplementation() { }
 
-        public List<string> GetPokemon()
+        public List<string> GetAllPokemons()
         {
             string r = "select nom, vie, force, defense from Pokemon;";
             return DataRequire(r);
         }
 
-        public List<string> GetStade()
+        public List<string> GetAllStades()
         {
             string r = "select nom, nbp from Stade;";
             return DataRequire(r);
         }
 
-        public List<string> GetElement()
+        public List<string> GetAllElements()
         {
             string r = "select type from Element;";
             return DataRequire(r);
         }
 
-        public List<string> GetMatch()
+        public List<string> GetAllMatchs()
         {
             string r = "select pk1, pk2, pkv, std, phs from Match;";
             return DataRequire(r);
         }
 
-        public List<string> GetUtilisateur()
+        public List<string> GetAllUtilisateurs()
         {
-            string r = "select nom, prenom, login, from Utilisateur;";
+            string r = "select nom, prenom, login, password from Utilisateur;";
             return DataRequire(r);
 
         }
