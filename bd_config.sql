@@ -31,7 +31,7 @@ create table Element (
 
 
 create table Phase (
-    idp int not null,                /* id phase */
+    idp int not null,                         /* id phase */
     typp char(20) not null,                   /* type de phase */
     constraint pk_phs primary key (idp),
     constraint uniq_t_p unique(typp),
