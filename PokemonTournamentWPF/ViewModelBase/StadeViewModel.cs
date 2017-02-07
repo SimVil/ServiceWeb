@@ -57,6 +57,17 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
+        public string StadeImage
+        {
+            get { return _stade.StadeImage; }
+            set
+            {
+                if (value == _stade.StadeImage) return;
+                _stade.StadeImage = value;
+                base.OnPropertyChanged("StadeImage");
+            }
+        }
+
         public override string ToString()
         {
             return Nom;

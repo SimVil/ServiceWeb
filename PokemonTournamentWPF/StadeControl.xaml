@@ -10,7 +10,7 @@
         <WrapPanel>
             <Rectangle Stroke="GreenYellow" Opacity="2" StrokeThickness="1" Canvas.Left="24" Canvas.Top="22" Height="258" Width="151">
                 <Rectangle.Fill>
-                    <ImageBrush ImageSource="{Binding SelectedItem.StadImage}"></ImageBrush>
+                    <ImageBrush ImageSource="{Binding SelectedItem.StadeImage}"></ImageBrush>
                 </Rectangle.Fill>
             </Rectangle>
             <StackPanel>
