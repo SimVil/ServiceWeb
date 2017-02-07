@@ -4,3 +4,4 @@ drop table pokemon;
 drop table utilisateur;
 drop table phase;
 drop table element;
+drop table PokemonType;

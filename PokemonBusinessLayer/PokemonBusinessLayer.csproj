@@ -49,6 +49,10 @@
       <Project>{ec9cc790-42fb-434a-806c-30f4e09b3923}</Project>
       <Name>PokemonDataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonDataBaseAccessLayer\PokemonDataBaseAccessLayer.csproj">
+      <Project>{0e2a2120-f2b3-46c2-a9ed-2b4e850a7f09}</Project>
+      <Name>PokemonDataBaseAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokemonTournamentEntities\PokemonTournamentEntities.csproj">
       <Project>{4574a837-f071-4067-988b-9af2a5e3d413}</Project>
       <Name>PokemonTournamentEntities</Name>
