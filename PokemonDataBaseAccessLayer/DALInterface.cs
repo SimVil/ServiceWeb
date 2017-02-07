@@ -16,7 +16,9 @@ namespace PokemonDataBaseAccessLayer
 
         List<string> GetMatch();
 
-        List<string> getElement();
+        List<string> GetElement();
+
+        List<string> GetUtilisateur();
 
         string GetPokemonById(int id);
 
