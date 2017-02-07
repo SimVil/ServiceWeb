@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PokemonTournamentEntities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PokemonTournamentWPF.ViewModelBase
 {
-    public class StadesViewModel : ViewModelBase
+    public class TypesViewModel : ViewModelBase
     {
         // Event destiné à réclamer la fermeture du conteneur;
         public event EventHandler<EventArgs> CloseNotified;
@@ -17,20 +18,20 @@ namespace PokemonTournamentWPF.ViewModelBase
         }
 
         // Model encapsulé dans le ViewModel
-        private ObservableCollection<StadeViewModel> _stades;
+        private ObservableCollection<TypeViewModel> _types;
 
-        public ObservableCollection<StadeViewModel> Stades
+        public ObservableCollection<TypeViewModel> Types
         {
-            get { return _stades; }
+            get { return _types; }
             private set
             {
-                _stades = value;
-                OnPropertyChanged("Stades");
+                _types = value;
+                OnPropertyChanged("Types");
             }
         }
 
-        private StadeViewModel _selectedItem;
-        public StadeViewModel SelectedItem
+        private TypeViewModel _selectedItem;
+        public TypeViewModel SelectedItem
         {
             get { return _selectedItem; }
             set
@@ -40,12 +41,12 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
-        public StadesViewModel(IList<PokemonTournamentEntities.Stade> stadesModel)
+        public TypesViewModel(IList<PokemonTournamentEntities.TypeElement> typesModel)
         {
-            _stades = new ObservableCollection<StadeViewModel>();
-            foreach (PokemonTournamentEntities.Stade a in stadesModel)
+            _types = new ObservableCollection<TypeViewModel>();
+            foreach (PokemonTournamentEntities.TypeElement a in typesModel)
             {
-                _stades.Add(new StadeViewModel(a));
+                _types.Add(new TypeViewModel(a));
             }
         }
 
@@ -75,11 +76,10 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Add()
         {
-            
-            PokemonTournamentEntities.Stade a = new PokemonTournamentEntities.Stade("WTF", 0, null);
-            this.SelectedItem = new StadeViewModel(a);
-            Stades.Add(this.SelectedItem);
-            
+            TypeElement te = TypeElement.Eau; 
+            this.SelectedItem = new TypeViewModel(te);
+            Types.Add(this.SelectedItem);
+
         }
 
         // Commande Remove
@@ -106,7 +106,7 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Remove()
         {
-            if (this.SelectedItem != null) Stades.Remove(this.SelectedItem);
+            if (this.SelectedItem != null) Types.Remove(this.SelectedItem);
         }
 
         // Commande Close

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PokemonTournamentWPF.ViewModelBase
 {
-    class StadeViewModel : ViewModelBase
+    public class StadeViewModel : ViewModelBase
     {
         // Model encapsulé dans le ViewModel
         private PokemonTournamentEntities.Stade _stade;

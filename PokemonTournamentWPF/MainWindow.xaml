@@ -19,12 +19,14 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btn_pokemons" Content="Pokemons" Grid.Column="0" Height="30" Margin="10" Click="btn_pokemons_Click"/>
             <Button x:Name="btn_stades" Content="Stades" Grid.Column="1" Height="30" Margin="10" Click="btn_stades_Click"/>
             <Button x:Name="btn_matchs" Content="Matchs" Grid.Column="2" Height="30" Margin="10" Click="btn_matchs_Click"/>
-            <Button x:Name="btn_print" Content="Print" Grid.Column="3" Height="30" Margin="10" Click="btn_print_Click"/>
+            <Button x:Name="btn_print" Content="Print" Grid.Column="4" Height="30" Margin="10" Click="btn_print_Click"/>
+            <Button x:Name="btn_duel" Content="duel" Grid.Column="3" Height="30" Margin="10" Click="btn_duel_Click" />
         </Grid>
 
         <Grid DockPanel.Dock="Bottom">
@@ -32,34 +34,45 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <ListBox x:Name="list_pokemons" DockPanel.Dock="Left" Grid.Column="0"
+            <!--<ListBox x:Name="list_pokemons" DockPanel.Dock="Left" Grid.Column="0"
                 ItemsSource="{Binding Pokemons}" 
                 SelectedItem="{Binding SelectedItem}">
-            </ListBox>
-            <!--"<ListView  x:Name="list_pokemons"
+            </ListBox>-->
+            <ListView  x:Name="list_pokemons"
             ItemsSource="{Binding Pokemons}" 
             SelectedItem="{Binding SelectedItem}"
-            Grid.Row="1" Grid.ColumnSpan="3" 
+            Grid.Row="1" Grid.Column="0" 
             Margin="5,5,5,5" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Nom Pokemon" DisplayMemberBinding="{Binding Nom}"/>
                     </GridView>
                 </ListView.View>
-            </ListView>-->
+            </ListView>
 
-            <ListBox x:Name="list_stades" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
+            <!--<ListBox x:Name="list_stades" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
                 ItemsSource="{Binding Stades}" 
                 SelectedItem="{Binding SelectedItem}">
-            </ListBox>
+            </ListBox>-->
+            <ListView  x:Name="list_stades"
+            ItemsSource="{Binding Stades}" 
+            SelectedItem="{Binding SelectedItem}"
+            Grid.Row="1" Grid.Column="0" 
+            Margin="5,5,5,5" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Nom Stade" DisplayMemberBinding="{Binding Nom}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
             <ListBox x:Name="list_matchs" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
                 ItemsSource="{Binding Matchs}" 
                 SelectedItem="{Binding SelectedItem}">
             </ListBox>
-            <Grid x:Name="grid_view_pokemons" Background="Red" Margin="158,10,-0.4,-9.8" Grid.ColumnSpan="2">
+            <Grid x:Name="grid_view_pokemons" Background="Violet" Margin="158,10,-0.4,-9.8" Grid.ColumnSpan="2" Visibility="Visible">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="162*"/>
+                        <ColumnDefinition Width="400*"/>
                         <ColumnDefinition Width="261*"/>
                         <ColumnDefinition Width="211*"/>
                     </Grid.ColumnDefinitions>
@@ -69,44 +82,59 @@
                     </Grid.RowDefinitions>
                     <ComboBox x:Name="combo_filtrage" Grid.Column="0" Margin="5" Grid.ColumnSpan="2"></ComboBox>
                     <Button x:Name="button_filtrage" Content="Filtrage" Grid.Column="2" Margin="5" Click="button_filtrage_Click"/>
-                    <mycontrol:PokemonControl Margin="144,35,207,147.2" DataContext="{Binding ElementName=list_pokemons}"  Grid.ColumnSpan="3" Grid.RowSpan="2" />
-                    <Button x:Name="button_ajouter_pokemon"  Grid.Column="3" Height="20" Margin="40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.AddCommand}" Grid.Row="1" RenderTransformOrigin="0.568,4.753" Grid.ColumnSpan="2">Ajouter Pokemon</Button>
-                    
-                    
+                    <mycontrol:PokemonControl DataContext="{Binding ElementName=list_pokemons}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="10,0,144,0.2" />
+                    <StackPanel Grid.Column="3" Grid.Row="2">
+                        <Button x:Name="button_ajouter_pokemon"  Grid.Column="1" Grid.Row="1" Height="20" Margin="0,40,39.6,40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.AddCommand}" >Ajouter Pokemon</Button>
+                        <Button x:Name="button_supprimer_pokemon"  Grid.Column="1" Height="20" Margin="0,40,39.6,40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.RemoveCommand}" Grid.Row="1" >Supprimer Pokemon</Button>
+                    </StackPanel>
+
                 </Grid>
             </Grid>
-            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Collapsed" Grid.Column="1">
+            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Visible" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="5*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="button_ajouter_stade" Grid.Column="0" Margin="5"  Command="{Binding ElementName=list_stades,  Path=DataContext.AddCommand}">Ajouter Stade</Button>
-                <Button x:Name="button_supprimer_stade" Grid.Column="1" Margin="5" Command="{Binding ElementName=list_stades, Path=DataContext.RemoveCommand}">Supprimer Stade</Button>
 
-                <WrapPanel x:Name="wrap_panel_stade_ajout" Grid.Column="0" Grid.Row="1">
-                    <Label x:Name="label_nom_stade" Content="Nom du stade" Margin="5"/>
-                    <TextBox  x:Name="text_box_nom_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
-                </WrapPanel>
-                <WrapPanel x:Name="wrap_panel_stade_ajout2" Grid.Column="1" Grid.Row="1">
-                    <Label x:Name="label_nbplaces_stade" Content="Nombre places" Margin="5"/>
-                    <TextBox  x:Name="text_box_nbplaces_stade" Width="200" Text="{Binding ElementName=list_stades, Path=SelectedItem.NbPlaces, UpdateSourceTrigger=PropertyChanged}"/>
-                </WrapPanel>
-
-                <mycontrol:StadeControl Margin="139,71,0,71.2" DataContext="{Binding ElementName=list_stades}"  Grid.ColumnSpan="3" Grid.RowSpan="2"></mycontrol:StadeControl>
-
-                <Button x:Name="button_ok_stade" Content="Ok" Grid.Column="1" Grid.Row="3" Margin="5" Click="button_ok_ajouter_Click" Visibility="Collapsed"/>
-
-
+                <mycontrol:StadeControl DataContext="{Binding ElementName=list_stades}"  Grid.Column="0" Grid.Row="0" Margin="10,0,307.2,0.4" Grid.ColumnSpan="2"></mycontrol:StadeControl>
+                <StackPanel Grid.Column="1" Margin="0,80,0,0">
+                    <Button x:Name="button_ajouter_stade" Height="20"  Command="{Binding DataContext.AddCommand, ElementName=list_stades}"  Content="Ajouter Stade" Margin="82,0,80.6,0" />
+                    <Button x:Name="button_supprimer_stade" Height="20" Margin="82,80,80.6,0" Command="{Binding DataContext.RemoveCommand, ElementName=list_stades}" Content="Supprimer Stade" />
+                </StackPanel>
 
             </Grid>
-            <Grid x:Name="grid_view_matchs" Background="Yellow" Visibility="Collapsed" Grid.Column="1">
+            <Grid x:Name="grid_view_matchs" Background="Gray" Visibility="Collapsed" Grid.Column="1">
+                <mycontrol:MatchControl Margin="150,50,50,50" DataContext="{Binding ElementName=list_matchs}" >
+                    
+                </mycontrol:MatchControl>
+            </Grid>
+
+            <Grid x:Name="grid_view_tournoi" Background="BlanchedAlmond" Visibility="Collapsed" Grid.Column="1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="4*"/>
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <ListView x:Name="list_pokemons1_tournament" Grid.Column="0" ItemsSource="{Binding Pokemons}" SelectedItem="{Binding SelectedItem}" Margin="58,67,58,0" Grid.RowSpan="2"></ListView>
+                <ListView x:Name="list_pokemons2_tournament" Grid.Column="2" ItemsSource="{Binding Pokemons}" SelectedItem="{Binding SelectedItem}" Margin="58.2,67,58.2,0" Grid.RowSpan="2"/>
+                <Button x:Name="lancer_duel" Content="Battle !" Grid.Row="2" Grid.ColumnSpan="3" Margin="282,10,282.2,10.2" Click="lancer_duel_Click"/>
+                <TextBlock x:Name="versus" Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontFamily="Century Gothic" FontSize="20" Margin="0,110,0,0"  Text="Versus"></TextBlock>
+                <Image x:Name="pokearena_png" Grid.Column="1" Grid.Row="0" Margin="0,5,0,0"  Source="pokearena.png" Stretch="Fill"/>
 
             </Grid>
+
         </Grid>
+
+
     </DockPanel>
 </Window>

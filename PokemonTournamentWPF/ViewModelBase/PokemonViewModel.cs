@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PokemonTournamentEntities;
 
 namespace PokemonTournamentWPF.ViewModelBase
 {
@@ -68,6 +69,7 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
+        
         public List<PokemonTournamentEntities.TypeElement> Types 
         {
             get { return _pokemon.Types; }
@@ -78,6 +80,50 @@ namespace PokemonTournamentWPF.ViewModelBase
                 base.OnPropertyChanged("Types");
             }
         }
+
+        public string PokeImage
+        {
+            get { return _pokemon.PokeImage; }
+            set
+            {
+                if (value == _pokemon.PokeImage) return;
+                _pokemon.PokeImage = value;
+                base.OnPropertyChanged("PokeImage");
+            }
+        }
+
+
+        /*public List<TypeViewModel> Types
+        {
+            get {
+                List<TypeViewModel> _types = new List<TypeViewModel>();
+                foreach (PokemonTournamentEntities.TypeElement t in _pokemon.Types)
+                {
+                    TypeViewModel tvm = new TypeViewModel(t);
+                    _types.Add(tvm);
+                }
+                return _types;
+            }
+            set
+            {
+                List<PokemonTournamentEntities.TypeElement> _typesE = new List<PokemonTournamentEntities.TypeElement>();
+                bool fin = false;
+                int i = 0;
+                int length = _pokemon.Types.Count;
+                while (i < length && !fin)
+                {
+                    if(value.ToString() == _pokemon.Types.ElementAt(i).ToString())
+                    {
+                        _typesE.Add(_pokemon.Types.ElementAt(i));
+                        fin = true;
+                    }
+                }
+                if (_typesE == _pokemon.Types) return;
+
+                _pokemon.Types = _typesE;
+                base.OnPropertyChanged("Types");
+            }
+        }*/
 
         public override String ToString()
         {

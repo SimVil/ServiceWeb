@@ -13,6 +13,7 @@ namespace PokemonDataAccessLayer
         private List<Stade> Stades;
         private List<Match> Matchs;
         private List<Utilisateur> Utilisateurs;
+        private List<TypeElement> Types;
 
         public static DALManager Instance { get; private set; } //= null;
 
@@ -22,14 +23,15 @@ namespace PokemonDataAccessLayer
             Stades = new List<Stade>();
             Matchs = new List<Match>();
             Utilisateurs = new List<Utilisateur>();
+            Types = new List<TypeElement>();
             CreerMonde();
             Instance = this;            
         }
 
         private void CreerMonde()
         {
-            Pokemon p1 = new Pokemon("Electhor", 200, 75, 30, new List<TypeElement>() { TypeElement.Electrique, TypeElement.Vol });
-            Pokemon p2 = new Pokemon("Brasegali", 160, 90, 25, new List<TypeElement>() { TypeElement.Feu });
+            Pokemon p1 = new Pokemon("Electhor", 200, 75, 30, new List<TypeElement>() { TypeElement.Electrique, TypeElement.Vol }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\electhor.png");
+            Pokemon p2 = new Pokemon("Brasegali", 160, 90, 25, new List<TypeElement>() { TypeElement.Feu }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Brasegali.png");
             Pokemon p3 = new Pokemon("Onigali", 180, 55, 45, new List<TypeElement>() { TypeElement.Glace });
             Pokemon p4 = new Pokemon("Lucario", 165, 70, 35, new List<TypeElement>() { TypeElement.Sol });
             Pokemon p5 = new Pokemon("Tortank", 220, 60, 30, new List<TypeElement>() { TypeElement.Eau, TypeElement.Sol });
@@ -44,6 +46,15 @@ namespace PokemonDataAccessLayer
             Pokemons.Add(p6);
             Pokemons.Add(p7);
             Pokemons.Add(p8);
+
+            Types.Add(TypeElement.Eau);
+            Types.Add(TypeElement.Electrique);
+            Types.Add(TypeElement.Feu);
+            Types.Add(TypeElement.Glace);
+            Types.Add(TypeElement.Plante);
+            Types.Add(TypeElement.Sol);
+            Types.Add(TypeElement.Vol);
+
 
             Stade s1 = new Stade("Stade neutre", 75000, new List<TypeElement>());
             Stade s2 = new Stade("Stade éclair", 50000, new List<TypeElement>() { TypeElement.Electrique });
@@ -88,6 +99,11 @@ namespace PokemonDataAccessLayer
             return Pokemons;
         }
 
+        public List<TypeElement> GetAllTypes()
+        {
+            return Types;
+        }
+
         public List<Stade> GetAllStades()
         {
             return Stades;
@@ -113,5 +129,7 @@ namespace PokemonDataAccessLayer
             return Utilisateurs.Where(u => u.Login == login).FirstOrDefault();
         }
         
+
+
     }
 }

@@ -38,6 +38,11 @@ namespace PokemonBusinessLayer
             return DALManager.GetInstance().GetAllMatchs();
         }
 
+        public List<TypeElement> GetAllTypes()
+        {
+            return DALManager.GetInstance().GetAllTypes();
+        }
+
         /**
          * Retourne les valeurs sous forme de String
          */

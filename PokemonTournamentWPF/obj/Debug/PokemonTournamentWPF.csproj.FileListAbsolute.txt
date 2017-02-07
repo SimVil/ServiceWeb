@@ -53,3 +53,5 @@ C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Deb
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\PokemonControl.baml
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\StadeControl.g.cs
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\StadeControl.baml
+C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\MatchControl.g.cs
+C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentWPF\obj\Debug\MatchControl.baml
