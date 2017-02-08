@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PokemonTournamentWPF"
         xmlns:mycontrol="clr-namespace:PokemonTournamentWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800">
+        Title="MainWindow" Height="600" Width="800">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">

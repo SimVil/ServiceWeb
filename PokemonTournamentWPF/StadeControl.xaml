@@ -8,12 +8,15 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Margin="0,10,-87,-66">
         <WrapPanel>
+            <StackPanel>
             <Rectangle Stroke="GreenYellow" Opacity="2" StrokeThickness="1" Canvas.Left="24" Canvas.Top="22" Height="258" Width="151">
                 <Rectangle.Fill>
                     <ImageBrush ImageSource="{Binding SelectedItem.StadeImage}"></ImageBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <StackPanel>
+            <Button x:Name="button_modification" Click="Button_Click_Modifier">Modifier</Button>
+            </StackPanel>
+                <StackPanel>
                 <TextBlock x:Name="StadiumCard" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" TextAlignment="Center" Background="GreenYellow" Margin="9,0,0,0"  Width="129"><Run Text="Stadium Card"/></TextBlock>
                 <Separator HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Margin="9,0,0,0" Width="129"/>
                 <WrapPanel>
@@ -21,18 +24,19 @@
                     <TextBox x:Name="stade_name" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" Height="21"  Text="{Binding SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
                 <WrapPanel>
-                    <Label Content="Type  :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="27" />
-                    <ListBox x:Name="stade_type" HorizontalAlignment="Left" VerticalAlignment="Top" Width="87" Height="40" ItemsSource="{Binding SelectedItem.Types, UpdateSourceTrigger=PropertyChanged}"/>
-                </WrapPanel>
-                <WrapPanel>
                     <Label Content="Nb Places :"/>
                     <TextBox x:Name="stade_places" Margin="0,6,0,0" Width="69" Height="19" Text="{Binding SelectedItem.NbPlaces}"/>
                 </WrapPanel>
-                <!--<WrapPanel>
-                    <ComboBox x:Name="list_types" Width="64" ItemsSource="{Binding Types}"/>
-                    <Button x:Name="ajouter_type" Content="Ajouter" Width="46"/>
-                    <Button x:Name="supprimer_type" Content="Supprimer" Width="71"/>                    
-                </WrapPanel>-->
+                <StackPanel>
+                    <Label x:Name="label_types_disponibles" Content="Types disponibles" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <ListView x:Name="list_types_disponibles" ItemsSource="{Binding SelectedItem.TypesDisponibles}" SelectedItem="{Binding SelectedItem.SelectedItemDisponibles}"/>
+
+                    <Button x:Name="button_ajout_type" Content="&gt;&gt;" Command="{Binding SelectedItem.AddCommand}"/>
+                    <Button x:Name="button_remove_type" Content="&lt;&lt;" Command="{Binding SelectedItem.RemoveCommand}"/>
+
+                    <Label Content="Types" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <ListView  x:Name="list_types_pokemon" ItemsSource="{Binding SelectedItem.Types}" SelectedItem="{Binding SelectedItem.SelectedItemStade}"/>
+                </StackPanel>
             </StackPanel>
         </WrapPanel>
 

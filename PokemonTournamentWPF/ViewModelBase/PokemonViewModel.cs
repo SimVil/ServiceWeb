@@ -40,7 +40,10 @@ namespace PokemonTournamentWPF.ViewModelBase
             _typesDisponibles = new ObservableCollection<TypeElement>();
             foreach (TypeElement t in Enum.GetValues(typeof(TypeElement)).Cast<TypeElement>())
             {
-                _typesDisponibles.Add(t);
+                if(!types.Contains(t))
+                {
+                    _typesDisponibles.Add(t);
+                }
             }
         }
 

@@ -31,8 +31,6 @@ namespace PokemonTournamentWPF
             controller = new PokemonTournamentManager();
             InitializeComponent();
 
-            //list_types_pokemon.DataContext = pvm;
-
             is_modif = true;
             Button_Click_Modifier(null, null);
         }
@@ -41,11 +39,13 @@ namespace PokemonTournamentWPF
         {
             if(is_modif)
             {
+                button_modification.Content = "Modifier";
                 pokemon_force.IsEnabled = false;
                 pokemon_def.IsEnabled = false;
                 pokemon_vie.IsEnabled = false;
                 pokemon_name.IsEnabled = false;
 
+                label_types_disponibles.Visibility = Visibility.Collapsed;
                 list_types_disponibles.Visibility = Visibility.Collapsed;
                 list_types_pokemon.Visibility = Visibility.Visible;
 
@@ -56,19 +56,16 @@ namespace PokemonTournamentWPF
             }
             else
             {
+                button_modification.Content = "Terminé";
                 pokemon_force.IsEnabled = true;
                 pokemon_def.IsEnabled = true;
                 pokemon_vie.IsEnabled = true;
                 pokemon_name.IsEnabled = true;
-                
-                //ViewModelBase.TypesViewModel pvm = new ViewModelBase.TypesViewModel();
-                //list_types_disponibles.DataContext = pvm;
-                //list_types_pokemon_modif.DataContext = pvm;
 
+
+                label_types_disponibles.Visibility = Visibility.Visible;
                 list_types_disponibles.Visibility = Visibility.Visible;
-                //list_types_pokemon_modif.Visibility = Visibility.Visible;
-                //list_types_pokemon.Visibility = Visibility.Collapsed;
-
+                
                 button_ajout_type.Visibility = Visibility.Visible;
                 button_remove_type.Visibility = Visibility.Visible;
 

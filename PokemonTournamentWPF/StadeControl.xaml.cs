@@ -20,9 +20,50 @@ namespace PokemonTournamentWPF
     /// </summary>
     public partial class StadeControl : UserControl
     {
+        private bool is_modif;
+
         public StadeControl()
         {
             InitializeComponent();
+
+            is_modif = true;
+            Button_Click_Modifier(null, null);
+        }
+
+        private void Button_Click_Modifier(object sender, RoutedEventArgs e)
+        {
+            if (is_modif)
+            {
+                button_modification.Content = "Modifier";
+                stade_name.IsEnabled = false;
+                stade_places.IsEnabled = false;              
+
+                label_types_disponibles.Visibility = Visibility.Collapsed;
+                list_types_disponibles.Visibility = Visibility.Collapsed;
+                list_types_pokemon.Visibility = Visibility.Visible;
+
+                button_ajout_type.Visibility = Visibility.Collapsed;
+                button_remove_type.Visibility = Visibility.Collapsed;
+
+                is_modif = false;
+            }
+            else
+            {
+                button_modification.Content = "Terminé";
+                stade_name.IsEnabled = true;
+                stade_places.IsEnabled = true;
+          
+
+
+                label_types_disponibles.Visibility = Visibility.Visible;
+                list_types_disponibles.Visibility = Visibility.Visible;
+
+                button_ajout_type.Visibility = Visibility.Visible;
+                button_remove_type.Visibility = Visibility.Visible;
+
+                is_modif = true;
+            }
+
         }
     }
 }

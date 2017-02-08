@@ -27,15 +27,14 @@
                     <TextBox x:Name="pokemon_name" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="22"  Text="{Binding SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
                 <StackPanel>
-                    <Label Content="Types disponibles" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    <ListView x:Name="list_types_disponibles" ItemsSource="{Binding SelectedItem.TypesDisponibles}" SelectedItem="{Binding SelectedItemDisponibles}"/>
+                    <Label x:Name="label_types_disponibles" Content="Types disponibles" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <ListView x:Name="list_types_disponibles" ItemsSource="{Binding SelectedItem.TypesDisponibles}" SelectedItem="{Binding SelectedItem.SelectedItemDisponibles}"/>
 
                     <Button x:Name="button_ajout_type" Content="&gt;&gt;" Command="{Binding SelectedItem.AddCommand}"/>
                     <Button x:Name="button_remove_type" Content="&lt;&lt;" Command="{Binding SelectedItem.RemoveCommand}"/>
 
                     <Label Content="Types" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    <ListView  x:Name="list_types_pokemon" ItemsSource="{Binding SelectedItem.Types}" SelectedItem="{Binding SelectedItemPokemon}"/>
-                    <!--<ListView x:Name="list_types_pokemon_modif" ItemsSource="{Binding TypesPokemon}" SelectedItem="{Binding SelectedItemPokemon}" Visibility="Collapsed"/>-->
+                    <ListView  x:Name="list_types_pokemon" ItemsSource="{Binding SelectedItem.Types}" SelectedItem="{Binding SelectedItem.SelectedItemPokemon}"/>
                 </StackPanel>
                 
                 <Label Content="Caractérstiques :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Height="27" />
