@@ -16,3 +16,12 @@ C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonBusinessLayer\bin\Deb
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonBusinessLayer\obj\Debug\PokemonBusinessLayer.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonBusinessLayer\obj\Debug\PokemonBusinessLayer.dll
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonBusinessLayer\obj\Debug\PokemonBusinessLayer.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\bin\Debug\PokemonBusinessLayer.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\bin\Debug\PokemonBusinessLayer.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\bin\Debug\PokemonDataAccessLayer.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\bin\Debug\PokemonTournamentEntities.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\bin\Debug\PokemonDataAccessLayer.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\bin\Debug\PokemonTournamentEntities.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\obj\Debug\PokemonBusinessLayer.csprojResolveAssemblyReference.cache
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\obj\Debug\PokemonBusinessLayer.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonBusinessLayer\obj\Debug\PokemonBusinessLayer.pdb

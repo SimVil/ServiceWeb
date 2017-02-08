@@ -8,3 +8,8 @@ C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentEntities\bi
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentEntities\obj\Debug\PokemonTournamentEntities.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentEntities\obj\Debug\PokemonTournamentEntities.dll
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonTournamentEntities\obj\Debug\PokemonTournamentEntities.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentEntities\bin\Debug\PokemonTournamentEntities.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentEntities\bin\Debug\PokemonTournamentEntities.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentEntities\obj\Debug\PokemonTournamentEntities.csprojResolveAssemblyReference.cache
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentEntities\obj\Debug\PokemonTournamentEntities.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentEntities\obj\Debug\PokemonTournamentEntities.pdb

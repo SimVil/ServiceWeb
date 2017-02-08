@@ -4,11 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PokemonTournamentEntities;
+using System.Collections.ObjectModel;
 
 namespace PokemonTournamentWPF.ViewModelBase
 {
     public class PokemonViewModel : ViewModelBase
     {
+
+        public event EventHandler<EventArgs> CloseNotified;
+        protected void OnCloseNotified(EventArgs e)
+        {
+            this.CloseNotified(this, e);
+        }
         // Model encapsulé dans le ViewModel
         private PokemonTournamentEntities.Pokemon _pokemon;
 
@@ -21,6 +28,20 @@ namespace PokemonTournamentWPF.ViewModelBase
         public PokemonViewModel(PokemonTournamentEntities.Pokemon pokemonModel)
         {
             _pokemon = pokemonModel;
+
+            types = new ObservableCollection<TypeElement>();
+            if(_pokemon != null && _pokemon.Types != null)
+            {
+                foreach (TypeElement t in _pokemon.Types)
+                {
+                    types.Add(t);
+                }
+            }
+            _typesDisponibles = new ObservableCollection<TypeElement>();
+            foreach (TypeElement t in Enum.GetValues(typeof(TypeElement)).Cast<TypeElement>())
+            {
+                _typesDisponibles.Add(t);
+            }
         }
 
         #region "Propriétés accessibles, mappables par la View"
@@ -69,19 +90,55 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
-        
-        public List<PokemonTournamentEntities.TypeElement> Types 
+
+        public ObservableCollection<PokemonTournamentEntities.TypeElement> Types
         {
-            get { return _pokemon.Types; }
+            get { return types; }
             set
             {
-                if (value == _pokemon.Types) return;
-                _pokemon.Types = value;
+                if (value == types) return;
+                types = value;
                 base.OnPropertyChanged("Types");
             }
         }
+        private ObservableCollection<TypeElement> types;
 
-        public string PokeImage
+       
+        private ObservableCollection<TypeElement> _typesDisponibles;
+        public ObservableCollection<TypeElement> TypesDisponibles
+        {
+            get { return _typesDisponibles; }
+            private set
+            {
+                _typesDisponibles = value;
+                OnPropertyChanged("TypesDisponibles");
+            }
+        }
+
+
+        private TypeElement _selectedItemPokemon;
+        public TypeElement SelectedItemPokemon
+        {
+            get { return _selectedItemPokemon; }
+            set
+            {
+                _selectedItemPokemon = value;
+                OnPropertyChanged("SelectedItemPokemon");
+            }
+        }
+
+        private TypeElement _selectedItemDisponibles;
+        public TypeElement SelectedItemDisponibles
+        {
+            get { return _selectedItemDisponibles; }
+            set
+            {
+                _selectedItemDisponibles = value;
+                OnPropertyChanged("SelectedItemDisponibles");
+            }
+        }
+
+        public Uri PokeImage
         {
             get { return _pokemon.PokeImage; }
             set
@@ -92,43 +149,103 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
-
-        /*public List<TypeViewModel> Types
-        {
-            get {
-                List<TypeViewModel> _types = new List<TypeViewModel>();
-                foreach (PokemonTournamentEntities.TypeElement t in _pokemon.Types)
-                {
-                    TypeViewModel tvm = new TypeViewModel(t);
-                    _types.Add(tvm);
-                }
-                return _types;
-            }
-            set
-            {
-                List<PokemonTournamentEntities.TypeElement> _typesE = new List<PokemonTournamentEntities.TypeElement>();
-                bool fin = false;
-                int i = 0;
-                int length = _pokemon.Types.Count;
-                while (i < length && !fin)
-                {
-                    if(value.ToString() == _pokemon.Types.ElementAt(i).ToString())
-                    {
-                        _typesE.Add(_pokemon.Types.ElementAt(i));
-                        fin = true;
-                    }
-                }
-                if (_typesE == _pokemon.Types) return;
-
-                _pokemon.Types = _typesE;
-                base.OnPropertyChanged("Types");
-            }
-        }*/
-
         public override String ToString()
         {
             return Nom;
             //return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense;
+        }
+
+        #endregion
+
+        #region "Commandes du formulaire"
+
+        // Commande Add
+        private RelayCommand _addCommand;
+        public System.Windows.Input.ICommand AddCommand
+        {
+            get
+            {
+                if (_addCommand == null)
+                {
+                    _addCommand = new RelayCommand(
+                        () => this.Add(),
+                        () => this.CanAdd()
+                        );
+                }
+                return _addCommand;
+            }
+        }
+
+        private bool CanAdd()
+        {
+            return true;
+        }
+
+        private void Add()
+        {
+            if (!Types.Contains(SelectedItemDisponibles))
+            {
+                Types.Add(SelectedItemDisponibles);
+                TypesDisponibles.Remove(SelectedItemDisponibles);
+            }
+        }
+
+        // Commande Remove
+        private RelayCommand _removeCommand;
+        public System.Windows.Input.ICommand RemoveCommand
+        {
+            get
+            {
+                if (_removeCommand == null)
+                {
+                    _removeCommand = new RelayCommand(
+                        () => this.Remove(),
+                        () => this.CanRemove()
+                        );
+                }
+                return _removeCommand;
+            }
+        }
+
+        private bool CanRemove()
+        {
+            return true;
+        }
+
+        private void Remove()
+        {
+            if (Types.Contains(SelectedItemPokemon))
+            {
+                TypesDisponibles.Add(SelectedItemPokemon);
+                Types.Remove(SelectedItemPokemon);
+            }
+        }
+
+        // Commande Close
+        private RelayCommand _closeCommand;
+        public System.Windows.Input.ICommand CloseCommand
+        {
+            get
+            {
+                if (_closeCommand == null)
+                {
+                    _closeCommand = new RelayCommand(
+                        () => this.Close(),
+                        () => this.CanClose()
+                        );
+                }
+                return _closeCommand;
+            }
+        }
+
+        private bool CanClose()
+        {
+            return true;
+        }
+
+        private void Close()
+        {
+            OnCloseNotified(new EventArgs());
         }
 
         #endregion

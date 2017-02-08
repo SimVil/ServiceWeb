@@ -30,14 +30,14 @@ namespace PokemonDataAccessLayer
 
         private void CreerMonde()
         {
-            Pokemon p1 = new Pokemon("Electhor", 200, 75, 30, new List<TypeElement>() { TypeElement.Electrique, TypeElement.Vol }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\electhor.png");
-            Pokemon p2 = new Pokemon("Brasegali", 160, 90, 25, new List<TypeElement>() { TypeElement.Feu }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Brasegali.png");
-            Pokemon p3 = new Pokemon("Onigali", 180, 55, 45, new List<TypeElement>() { TypeElement.Glace }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Onigali.png");
-            Pokemon p4 = new Pokemon("Lucario", 165, 70, 35, new List<TypeElement>() { TypeElement.Sol }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Lucario.png");
-            Pokemon p5 = new Pokemon("Tortank", 220, 60, 30, new List<TypeElement>() { TypeElement.Eau, TypeElement.Sol }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Tortank.png");
-            Pokemon p6 = new Pokemon("Germinion", 140, 65, 25, new List<TypeElement>() { TypeElement.Plante }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Germinion.png");
-            Pokemon p7 = new Pokemon("Groudon", 200, 85, 35, new List<TypeElement>() { TypeElement.Feu, TypeElement.Sol}, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Groudon.png");
-            Pokemon p8 = new Pokemon("Kyogre", 210, 75, 35, new List<TypeElement>() { TypeElement.Eau, TypeElement.Vol }, @"C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\Images\Kyogre.png");
+            Pokemon p1 = new Pokemon("Electhor", 200, 75, 30, new List<TypeElement>() { TypeElement.Electrique, TypeElement.Vol }, new Uri("..\\..\\..\\Images\\electhor.png", UriKind.Relative));
+            Pokemon p2 = new Pokemon("Brasegali", 160, 90, 25, new List<TypeElement>() { TypeElement.Feu }, new Uri("..\\..\\Images\\Brasegali.png", UriKind.Relative));
+            Pokemon p3 = new Pokemon("Onigali", 180, 55, 45, new List<TypeElement>() { TypeElement.Glace }, new Uri("Images\\Onigali.png", UriKind.Relative));
+            Pokemon p4 = new Pokemon("Lucario", 165, 70, 35, new List<TypeElement>() { TypeElement.Sol }, new Uri("Images\\Lucario.png", UriKind.Relative));
+            Pokemon p5 = new Pokemon("Tortank", 220, 60, 30, new List<TypeElement>() { TypeElement.Eau, TypeElement.Sol },new Uri("Images\\Tortank.png", UriKind.Relative));
+            Pokemon p6 = new Pokemon("Germinion", 140, 65, 25, new List<TypeElement>() { TypeElement.Plante }, new Uri("Images\\Germinion.png", UriKind.Relative));
+            Pokemon p7 = new Pokemon("Groudon", 200, 85, 35, new List<TypeElement>() { TypeElement.Feu, TypeElement.Sol}, new Uri("Images\\Groudon.png", UriKind.Relative));
+            Pokemon p8 = new Pokemon("Kyogre", 210, 75, 35, new List<TypeElement>() { TypeElement.Eau, TypeElement.Vol }, new Uri("Images\\Kyogre.png", UriKind.Relative));
             Pokemons.Add(p1);
             Pokemons.Add(p2);
             Pokemons.Add(p3);

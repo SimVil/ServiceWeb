@@ -18,7 +18,6 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         // Model encapsulé dans le ViewModel
         private ObservableCollection<PokemonViewModel> _pokemons;
-
         public ObservableCollection<PokemonViewModel> Pokemons
         {
             get { return _pokemons; }

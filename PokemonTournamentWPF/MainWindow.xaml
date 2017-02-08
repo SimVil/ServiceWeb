@@ -26,7 +26,7 @@
             <Button x:Name="btn_stades" Content="Stades" Grid.Column="1" Height="30" Margin="10" Click="btn_stades_Click"/>
             <Button x:Name="btn_matchs" Content="Matchs" Grid.Column="2" Height="30" Margin="10" Click="btn_matchs_Click"/>
             <Button x:Name="btn_print" Content="Print" Grid.Column="4" Height="30" Margin="10" Click="btn_print_Click"/>
-            <Button x:Name="btn_duel" Content="duel" Grid.Column="3" Height="30" Margin="10" Click="btn_duel_Click" />
+            <Button x:Name="btn_duel" Content="Duel" Grid.Column="3" Height="30" Margin="10" Click="btn_duel_Click" />
         </Grid>
 
         <Grid DockPanel.Dock="Bottom">

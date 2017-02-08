@@ -23,40 +23,58 @@ namespace PokemonTournamentWPF
     public partial class PokemonControl : UserControl
     {
         private PokemonTournamentManager controller;
-        private IList<PokemonTournamentEntities.TypeElement> types;
+
+        private bool is_modif;
 
         public PokemonControl()
         {
             controller = new PokemonTournamentManager();
             InitializeComponent();
-            types = controller.GetAllTypes();
-            ViewModelBase.TypesViewModel pvm = new ViewModelBase.TypesViewModel(types);
-            //comboBox_types.DataContext = pvm;
+
+            //list_types_pokemon.DataContext = pvm;
+
+            is_modif = true;
+            Button_Click_Modifier(null, null);
         }
 
-        private void button_ajouter_type_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_Modifier(object sender, RoutedEventArgs e)
         {
-            /* bool fin = false;
+            if(is_modif)
+            {
+                pokemon_force.IsEnabled = false;
+                pokemon_def.IsEnabled = false;
+                pokemon_vie.IsEnabled = false;
+                pokemon_name.IsEnabled = false;
 
-             ViewModelBase.TypeViewModel t = (ViewModelBase.TypeViewModel)comboBox_types.SelectedItem;
-             if(t != null)
-             {
-                 int length = types.Count;
-                 int i = 0;
-                 while (i < length && !fin)
-                 {
-                     if (types.ElementAt(i).ToString() == t.ToString())
-                     {
-                         fin = true;
-                         //pokemon_type.Items.Add(types.ElementAt(i));
-                         List<TypeElement> p = (List<TypeElement>)pokemon_type.ItemsSource;
-                         p.Add(types.ElementAt(i));
-                         pokemon_type.DataContext = p;                     
-                     }
-                     ++i;
-                 }
-             }  */          
-       
+                list_types_disponibles.Visibility = Visibility.Collapsed;
+                list_types_pokemon.Visibility = Visibility.Visible;
+
+                button_ajout_type.Visibility = Visibility.Collapsed;
+                button_remove_type.Visibility = Visibility.Collapsed;
+
+                is_modif = false;
+            }
+            else
+            {
+                pokemon_force.IsEnabled = true;
+                pokemon_def.IsEnabled = true;
+                pokemon_vie.IsEnabled = true;
+                pokemon_name.IsEnabled = true;
+                
+                //ViewModelBase.TypesViewModel pvm = new ViewModelBase.TypesViewModel();
+                //list_types_disponibles.DataContext = pvm;
+                //list_types_pokemon_modif.DataContext = pvm;
+
+                list_types_disponibles.Visibility = Visibility.Visible;
+                //list_types_pokemon_modif.Visibility = Visibility.Visible;
+                //list_types_pokemon.Visibility = Visibility.Collapsed;
+
+                button_ajout_type.Visibility = Visibility.Visible;
+                button_remove_type.Visibility = Visibility.Visible;
+
+                is_modif = true;
+            }
+            
         }
     }
 }

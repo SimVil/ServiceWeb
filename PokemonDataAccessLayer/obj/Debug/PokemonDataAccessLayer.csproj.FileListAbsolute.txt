@@ -12,3 +12,10 @@ C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonDataAccessLayer\bin\D
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonDataAccessLayer\obj\Debug\PokemonDataAccessLayer.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonDataAccessLayer\obj\Debug\PokemonDataAccessLayer.dll
 C:\Users\Admin\Desktop\serviceweb\ServiceWeb-master\PokemonDataAccessLayer\obj\Debug\PokemonDataAccessLayer.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonDataAccessLayer\bin\Debug\PokemonDataAccessLayer.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonDataAccessLayer\bin\Debug\PokemonDataAccessLayer.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonDataAccessLayer\bin\Debug\PokemonTournamentEntities.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonDataAccessLayer\bin\Debug\PokemonTournamentEntities.pdb
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonDataAccessLayer\obj\Debug\PokemonDataAccessLayer.csprojResolveAssemblyReference.cache
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonDataAccessLayer\obj\Debug\PokemonDataAccessLayer.dll
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonDataAccessLayer\obj\Debug\PokemonDataAccessLayer.pdb
