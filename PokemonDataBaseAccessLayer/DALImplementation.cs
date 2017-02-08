@@ -14,10 +14,12 @@ namespace PokemonDataBaseAccessLayer
 {
     class DALImplementation : DALInterface
     {
-        //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Simon\\Desktop\\Cours\\ISIMA\\ZZ-2\\Service Web\\PokemonTournament\\pif.mdf;Integrated Security = True; Connect Timeout = 30";
+        private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Simon\\Desktop\\Cours\\ISIMA\\ZZ-2\\Service Web\\PokemonTournament\\pif.mdf;Integrated Security = True; Connect Timeout = 30";
         //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\pif.mdf;Integrated Security=True;Connect Timeout=30";
-        private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\Downgraded.mdf;Integrated Security = True; Connect Timeout = 30";
+        //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\Downgraded.mdf;Integrated Security = True; Connect Timeout = 30";
 
+
+        /* fonction recuperant de maniere generale une liste de string de donnee */
         private List<string> DataRequire(string request)
         {
             List<string> res = new List<string>();
@@ -52,7 +54,7 @@ namespace PokemonDataBaseAccessLayer
 
         }
 
-
+        /* recupere les datatable */
         private DataTable TableRequire(string r)
         {
             DataTable res = new DataTable();
@@ -69,38 +71,24 @@ namespace PokemonDataBaseAccessLayer
 
         }
 
-        private int UpdateByCommand(string r, DataTable t)
-        {
-            int res = 0;
-
-            using (SqlConnection connect = new SqlConnection(_connectionString))
-            {
-                SqlCommand com = new SqlCommand(r, connect);
-                SqlDataAdapter adapter = new SqlDataAdapter(com);
-                
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-
-                com.CommandText = r;
-
-                adapter.UpdateCommand = builder.GetUpdateCommand();
-                adapter.DeleteCommand = builder.GetDeleteCommand();
-                adapter.InsertCommand = builder.GetInsertCommand();
-
-                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                res = adapter.Update(t);
-
-            }
-        
-            return res;
-
-        }
-
-
         public DALImplementation() { }
 
         public List<string> GetAllPokemons()
         {
-            string r = "select nom, vie, force, defense from Pokemon;";
+            string r = "select idp, nom, vie, force, defense from Pokemon;";
+            return DataRequire(r);
+        }
+
+        public List<string> GetAllPokemonType()
+        {
+            string r = "select pkm, type from PokemonType;";
+            return DataRequire(r);
+
+        }
+
+        public List<string> GetPokemonTypeById(int id)
+        {
+            string r = "select pkm, type from PokemonType where pkm = " + id + ";";
             return DataRequire(r);
         }
 
@@ -130,7 +118,7 @@ namespace PokemonDataBaseAccessLayer
 
         public string GetPokemonById(int id)
         {
-            string r = "select nom, vie, force, defense from Pokemon where idp = " + id + ";";
+            string r = "select idp, nom, vie, force, defense from Pokemon where idp = " + id + ";";
             return string.Format(DataRequire(r).First());
         }
 
@@ -149,6 +137,12 @@ namespace PokemonDataBaseAccessLayer
         private DataTable GetPokemonTable()
         {
             string r = "select * from Pokemon;";
+            return TableRequire(r);
+        }
+
+        private DataTable GetPokemonTypeTable()
+        {
+            string r = "select * from PokemonType;";
             return TableRequire(r);
         }
 
@@ -181,11 +175,97 @@ namespace PokemonDataBaseAccessLayer
         public int AddPokemon(Pokemon p)
         {
             int res = 0;
-            int id = GetAllPokemons().Count() + 1;
-            string r = "insert into Pokemon (idp, nom, vie, force, defense) " +
-                        "values(" + id + ", " + p.PokemonFormat() + ");";
+            string r = "INSERT INTO Pokemon(idp, nom, vie, force, defense)" +
+                       "VALUES (@idp, @nom, @vie, @force, @defense)";
 
-            res = UpdateByCommand(r, GetPokemonTable());
+            DataTable t = (GetPokemonTable());
+
+            try
+            {
+                using (SqlConnection connect = new SqlConnection(_connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand(r, connect);
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                    adapter.InsertCommand = cmd;
+                    adapter.SelectCommand = new SqlCommand("select * from Pokemon", connect);
+                    adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
+
+                    adapter.InsertCommand.Parameters.AddWithValue("@idp", p.id);
+                    adapter.InsertCommand.Parameters.AddWithValue("@nom", p.Nom);
+                    adapter.InsertCommand.Parameters.AddWithValue("@vie", p.Vie);
+                    adapter.InsertCommand.Parameters.AddWithValue("@force", p.Force);
+                    adapter.InsertCommand.Parameters.AddWithValue("@defense", p.Defense);
+
+                    adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                    DataRow nr = t.Rows.Add();
+                    nr.SetField("idp", p.id);
+                    nr.SetField("nom", p.Nom);
+                    nr.SetField("vie", p.Vie);
+                    nr.SetField("force", p.Force);
+                    nr.SetField("defense", p.Defense);
+
+                    res = adapter.Update(t);
+                    
+
+                }
+            } catch(Exception e)
+            {
+                Console.WriteLine("Erreur dans AddPokemon");
+                Console.WriteLine(e.ToString());
+                
+            }
+
+            return res;
+        }
+
+        public int DeletePokemon(Pokemon p)
+        {
+            int res = 0;
+            string r = "delete from Pokemon Where idp = @idp";
+            DataTable t = (GetPokemonTable());
+
+            try
+            {
+                using (SqlConnection connect = new SqlConnection(_connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand(r, connect);
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                    adapter.DeleteCommand = cmd;
+                    adapter.SelectCommand = new SqlCommand("select * from Pokemon", connect);
+                    adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                    adapter.InsertCommand = builder.GetInsertCommand(true);
+
+                    adapter.DeleteCommand.Parameters.AddWithValue("@idp", p.id);
+
+                    for(int i = 0; i < t.Rows.Count; i++)
+                    {
+                        DataRow dr = t.Rows[i];
+                        if(dr["idp"].Equals(p.id))
+                        {
+                            dr.Delete();
+                        }
+                    }
+
+                    adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                    res = adapter.Update(t);
+
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur dans DeletePokemon");
+                Console.WriteLine(e.ToString());
+
+            }
+
+
             return res;
         }
 

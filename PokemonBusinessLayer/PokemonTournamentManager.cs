@@ -88,10 +88,15 @@ namespace PokemonBusinessLayer
             return dab.GetAllUtilisateurs().Select(m => m.ToString()).ToList();
         }
 
-        public int AddPokemon(string n, int v, int f, int d, List<TypeElement> t)
+        public int AddPokemon(Pokemon p)
         {
-            return dab.AddPokemon(new Pokemon(n, v, f, d, t));
+            return dab.AddPokemon(p);
 
+        }
+
+        public int DeletePokemon(Pokemon p)
+        {
+            return dab.DeletePokemon(p);
         }
     }
 }

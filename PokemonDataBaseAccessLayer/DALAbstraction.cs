@@ -23,14 +23,7 @@ namespace PokemonDataBaseAccessLayer
 
             foreach(string s in pokestring)
             {
-                Pokemon poke = new Pokemon();
-                string[] subStrings = s.Split(' ');
-
-                resu.Add(new Pokemon(subStrings[0],
-                    Int32.Parse(subStrings[1]),
-                    Int32.Parse(subStrings[2]), 
-                    Int32.Parse(subStrings[3]), 
-                    new List<TypeElement>(1)));
+                resu.Add(definePokemon(s));
             }
 
             return resu;
@@ -118,12 +111,19 @@ namespace PokemonDataBaseAccessLayer
         {
 
             string[] sub = s.Split(' ');
+            List<string> strt = idal.GetPokemonTypeById(Int32.Parse(sub[0]));
+            List<TypeElement> types = new List<TypeElement>();
+            foreach(string x in strt)
+            {
+                types.Add((TypeElement)Int32.Parse(x.Split(' ')[1]) - 1);
+            }
             Pokemon p = new Pokemon(
-                    sub[0],
-                    Int32.Parse(sub[1]),
+                    Int32.Parse(sub[0]),
+                    sub[1],
                     Int32.Parse(sub[2]),
                     Int32.Parse(sub[3]),
-                    new List<TypeElement>(1));
+                    Int32.Parse(sub[4]),
+                    types);
 
             return p;
         }
@@ -165,6 +165,11 @@ namespace PokemonDataBaseAccessLayer
         public int AddPokemon(Pokemon p)
         {
             return idal.AddPokemon(p);
+        }
+
+        public int DeletePokemon(Pokemon p)
+        {
+            return idal.DeletePokemon(p);
         }
 
     }
