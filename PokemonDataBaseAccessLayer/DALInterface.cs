@@ -24,6 +24,10 @@ namespace PokemonDataBaseAccessLayer
 
         string GetStadeById(int id);
 
+        string GetPokemonByNom(string n);
+
+        int AddPokemon(Pokemon p);
+
 
     }
 }

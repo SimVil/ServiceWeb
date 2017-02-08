@@ -162,5 +162,10 @@ namespace PokemonDataBaseAccessLayer
             return pt;
         }
 
+        public int AddPokemon(Pokemon p)
+        {
+            return idal.AddPokemon(p);
+        }
+
     }
 }

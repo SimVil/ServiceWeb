@@ -30,6 +30,10 @@ namespace PokemonConsole
             AfficherMatchs();
             Console.WriteLine("\n\nLes users :");
             AfficherUtilisateur();
+
+            manager.AddPokemon("Michou", 100, 100, 100, new List<TypeElement>() { TypeElement.Eau });
+            Console.WriteLine("\n\nLes pokémons disponibles :");
+            AfficherPokemons();
         }
 
         public void AfficherStades()

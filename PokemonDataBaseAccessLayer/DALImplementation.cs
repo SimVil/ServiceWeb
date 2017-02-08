@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
+using PokemonTournamentEntities;
+
+// penser a la jointure pour recuperer la liste de type des pokemon !
 
 
 namespace PokemonDataBaseAccessLayer
 {
     class DALImplementation : DALInterface
     {
-        private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Simon\\Desktop\\Cours\\ISIMA\\ZZ-2\\Service Web\\PokemonTournament\\pif.mdf;Integrated Security = True; Connect Timeout = 30";
+        //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Simon\\Desktop\\Cours\\ISIMA\\ZZ-2\\Service Web\\PokemonTournament\\pif.mdf;Integrated Security = True; Connect Timeout = 30";
         //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\pif.mdf;Integrated Security=True;Connect Timeout=30";
+        private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\Downgraded.mdf;Integrated Security = True; Connect Timeout = 30";
 
         private List<string> DataRequire(string request)
         {
@@ -47,6 +52,50 @@ namespace PokemonDataBaseAccessLayer
 
         }
 
+
+        private DataTable TableRequire(string r)
+        {
+            DataTable res = new DataTable();
+
+            using (SqlConnection connect = new SqlConnection(_connectionString))
+            {
+                SqlCommand com = new SqlCommand(r, connect);
+                SqlDataAdapter adapter = new SqlDataAdapter(com);
+                adapter.Fill(res);
+
+            }
+
+            return res;
+
+        }
+
+        private int UpdateByCommand(string r, DataTable t)
+        {
+            int res = 0;
+
+            using (SqlConnection connect = new SqlConnection(_connectionString))
+            {
+                SqlCommand com = new SqlCommand(r, connect);
+                SqlDataAdapter adapter = new SqlDataAdapter(com);
+                
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                com.CommandText = r;
+
+                adapter.UpdateCommand = builder.GetUpdateCommand();
+                adapter.DeleteCommand = builder.GetDeleteCommand();
+                adapter.InsertCommand = builder.GetInsertCommand();
+
+                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                res = adapter.Update(t);
+
+            }
+        
+            return res;
+
+        }
+
+
         public DALImplementation() { }
 
         public List<string> GetAllPokemons()
@@ -77,12 +126,17 @@ namespace PokemonDataBaseAccessLayer
         {
             string r = "select nom, prenom, login, password from Utilisateur;";
             return DataRequire(r);
-
         }
 
         public string GetPokemonById(int id)
         {
             string r = "select nom, vie, force, defense from Pokemon where idp = " + id + ";";
+            return string.Format(DataRequire(r).First());
+        }
+
+        public string GetPokemonByNom(string n)
+        {
+            string r = "select nom, vie, force, defense from Pokemon where Nom = " + n + ";";
             return string.Format(DataRequire(r).First());
         }
         
@@ -91,7 +145,50 @@ namespace PokemonDataBaseAccessLayer
             string r = "select nom, nbp from Stade where ids = " + id + ";";
             return string.Format(DataRequire(r).First());
         }
-       
+
+        private DataTable GetPokemonTable()
+        {
+            string r = "select * from Pokemon;";
+            return TableRequire(r);
+        }
+
+        private DataTable GetUtilisateurTable()
+        {
+            string r = "select * from Utilisateur;";
+            return TableRequire(r);
+        }
+
+        private DataTable GetStadeTable()
+        {
+            string r = "select * from Stade;";
+            return TableRequire(r);
+        }
+
+        private DataTable GetMatchTable()
+        {
+            string r = "select * from Match;";
+            return TableRequire(r);
+        }
+
+        private DataTable GetElementTable()
+        {
+            string r = "select * from Element;";
+            return TableRequire(r);
+        }
+
+
+        // considere que l'on peut avoir plusieurs fois un pokemon dans la db
+        public int AddPokemon(Pokemon p)
+        {
+            int res = 0;
+            int id = GetAllPokemons().Count() + 1;
+            string r = "insert into Pokemon (idp, nom, vie, force, defense) " +
+                        "values(" + id + ", " + p.PokemonFormat() + ");";
+
+            res = UpdateByCommand(r, GetPokemonTable());
+            return res;
+        }
+
 
     }
 }

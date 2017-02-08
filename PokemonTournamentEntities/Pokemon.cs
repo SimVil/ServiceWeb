@@ -37,5 +37,10 @@ namespace PokemonTournamentEntities
             //return Nom;
             return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense;
         }
+
+        public string PokemonFormat()
+        {
+            return "'" + Nom + "', " + Vie + ", " + Force + ", " + Defense;
+        }
     }
 }
