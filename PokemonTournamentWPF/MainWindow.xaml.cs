@@ -215,21 +215,29 @@ namespace PokemonTournamentWPF
                 if (content == "Tournoi Automatique")
                 {
                     MessageBox.Show("Tournoi Automatique");
-                    //Jouer les matchs du huitième
                     
+                    //First Duel phase
                     Pokemon winner1 = Pokemon.Duel((Pokemon)combattant1.SelectedItem,(Pokemon)combattant2.SelectedItem, null);
-                    /*winner2 = Pokemon.Duel((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, null);
-                    winner3 = Pokemon.Duel((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, null);
-                    winner4 = Pokemon.Duel((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, null);
+                    Pokemon winner2 = Pokemon.Duel((Pokemon)combattant3.SelectedItem, (Pokemon)combattant4.SelectedItem, null);
+                    Pokemon winner3 = Pokemon.Duel((Pokemon)combattant5.SelectedItem, (Pokemon)combattant6.SelectedItem, null);
+                    Pokemon winner4 = Pokemon.Duel((Pokemon)combattant7.SelectedItem, (Pokemon)combattant8.SelectedItem, null);
+
+                    //Healing phase
                     winner1.Heal();
                     winner2.Heal();
                     winner3.Heal();
                     winner4.Heal();
+
+                    //Second Duel phase
                     winner1 = Pokemon.Duel(winner1, winner2,null);
                     winner3 = Pokemon.Duel(winner3, winner4, null);
+
+                    //healing phase
                     winner1.Heal();
                     winner3.Heal();
-                    winner1 = Pokemon.Duel(winner1, winner3, null);*/
+
+                    //Final
+                    winner1 = Pokemon.Duel(winner1, winner3, null);
                     
                     MessageBox.Show("The Winner of the ZZ Tournament is : "+winner1.Nom + " !!");
 
