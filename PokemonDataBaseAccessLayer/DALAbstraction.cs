@@ -155,6 +155,11 @@ namespace PokemonDataBaseAccessLayer
             return idal.DeletePokemon(p);
         }
 
+        public int UpdatePokemon(Pokemon p)
+        {
+            return idal.UpdatePokemon(p);
+        }
+
         
 
     }

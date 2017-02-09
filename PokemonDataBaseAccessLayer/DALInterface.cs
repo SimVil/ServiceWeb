@@ -36,6 +36,8 @@ namespace PokemonDataBaseAccessLayer
 
         int DeletePokemonType(int id);
 
+        int UpdatePokemon(Pokemon p);
+
 
     }
 }

@@ -26,17 +26,20 @@ namespace PokemonConsole
             AfficherStades();
             Console.WriteLine("\n\nLes pokémons disponibles :");
             AfficherPokemons();
-            Console.WriteLine("\n\nLes matchs disponibles :");
+            Console.WriteLine("\n\nLes matchs disponibles : ");
             AfficherMatchs();
-            Console.WriteLine("\n\nLes users :");
-            AfficherUtilisateur();
 
-            List<Pokemon> l = manager.GetAllPokemons();
-            manager.DeletePokemon(l.Find(p => p.id == 9));
+            manager.AddPokemon(new Pokemon(15, "Michou", 100, 100, 100, new List<TypeElement>() { TypeElement.Eau, TypeElement.Electrique }));
             Console.WriteLine("\n\nLes pokémons disponibles :");
             AfficherPokemons();
 
-            manager.AddPokemon(new Pokemon("Michou", 100, 100, 100, new List<TypeElement>() { TypeElement.Eau, TypeElement.Electrique }));
+            Pokemon michou = manager.GetAllPokemons().Find(x => x.id == 15);
+            michou.Nom = "Alizarine";
+            michou.Vie = 200;
+            michou.Types.Clear();
+            michou.Types = new List<TypeElement>() { TypeElement.Vol, TypeElement.Eau, TypeElement.Feu };
+            manager.UpdatePokemon(michou);
+            //manager.DeletePokemon(tortank);
             Console.WriteLine("\n\nLes pokémons disponibles :");
             AfficherPokemons();
 

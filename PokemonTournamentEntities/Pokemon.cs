@@ -57,7 +57,7 @@ namespace PokemonTournamentEntities
             {
                 t = t + x.ToString() + " ";
             }
-            return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense + "types = " + t;
+            return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense + " types = " + t;
         }
 
         public string PokemonFormat()

@@ -170,19 +170,25 @@ private List<string> DataRequire(string request)
         private DataTable GetPokemonTable()
         {
             string r = "select * from Pokemon;";
-            return TableRequire(r);
+            DataTable t = TableRequire(r);
+            t.PrimaryKey = new DataColumn[] { t.Columns["idp"] }; 
+            return t;
         }
 
         private DataTable GetPokemonTypeTable()
         {
             string r = "select * from PokemonType;";
-            return TableRequire(r);
+            DataTable t = TableRequire(r);
+            t.PrimaryKey = new DataColumn[] { t.Columns["pkm"], t.Columns["type"] };
+            return t;
         }
 
         private DataTable GetPokemonTypeTableById(int id)
         {
             string r = "select pkm, type from PokemonType where pkm = " + id + ";";
-            return TableRequire(r);
+            DataTable t = TableRequire(r);
+            t.PrimaryKey = new DataColumn[] { t.Columns["pkm"], t.Columns["type"] };
+            return t;
         }
 
         private DataTable GetUtilisateurTable()
@@ -222,16 +228,17 @@ private List<string> DataRequire(string request)
         }
 
         // considere que l'on peut avoir plusieurs fois un pokemon dans la db
+       
         public int AddPokemon(Pokemon p)
         {
             int res = 0;
-            string r = "INSERT INTO Pokemon(idp, nom, vie, force, defense)" +
-                       "VALUES (@idp, @nom, @vie, @force, @defense)";
+            string r = "select * from Pokemon;";
 
-            DataTable t = (GetPokemonTable());
-            bool exist = t.AsEnumerable().Any(row => row.Field<int>("idp") == p.id);
+            DataTable tp = (GetPokemonTable());
+            bool exist = tp.Rows.Contains(p.id);
 
-            if (!exist) {
+            if (!exist)
+            {
                 try
                 {
                     using (SqlConnection connect = new SqlConnection(_connectionString))
@@ -240,33 +247,19 @@ private List<string> DataRequire(string request)
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
-                        adapter.InsertCommand = cmd;
-                        adapter.SelectCommand = new SqlCommand("select * from Pokemon", connect);
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
                         adapter.UpdateCommand = builder.GetUpdateCommand(true);
                         adapter.DeleteCommand = builder.GetDeleteCommand(true);
 
-                        adapter.InsertCommand.Parameters.AddWithValue("@idp", p.id);
-                        adapter.InsertCommand.Parameters.AddWithValue("@nom", p.Nom);
-                        adapter.InsertCommand.Parameters.AddWithValue("@vie", p.Vie);
-                        adapter.InsertCommand.Parameters.AddWithValue("@force", p.Force);
-                        adapter.InsertCommand.Parameters.AddWithValue("@defense", p.Defense);
-
+                        tp.Rows.Add(p.id, p.Nom, p.Vie, p.Force, p.Defense);
                         adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-        
-                        DataRow nr = t.Rows.Add();
-                        nr.SetField("idp", p.id);
-                        nr.SetField("nom", p.Nom);
-                        nr.SetField("vie", p.Vie);
-                        nr.SetField("force", p.Force);
-                        nr.SetField("defense", p.Defense);
 
-                        res = adapter.Update(t);
-
+                        res = adapter.Update(tp);
+                        tp.AcceptChanges();
+                        connect.Close();
 
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Console.WriteLine("Erreur dans AddPokemon");
                     Console.WriteLine(e.ToString());
 
@@ -274,28 +267,24 @@ private List<string> DataRequire(string request)
 
                 foreach(TypeElement x in p.Types)
                 {
-                    res ^= AddPokemonType(p.id, (Int32)x);
+                   res = AddPokemonType(p.id, (Int32)x + 1);
                 }
-            } else {
+            }
+            else
+            {
                 Console.WriteLine("Pokemon " + p.id + " deja connu !");
 
             }
             return res;
-
         }
 
         public int UpdatePokemon(Pokemon p)
         {
             int res = 0;
-            string r = "update Pokemon " +
-                "set nom = @nom " +
-                "set vie = @vie " +
-                "set force = @force " +
-                "set defense = @defense " +
-                "where idp = @idp;";
+            string r = "select * from Pokemon;";
 
-            DataTable t = (GetPokemonTable());
-            bool exist = t.AsEnumerable().Any(row => row.Field<int>("idp") == p.id);
+            DataTable t = GetPokemonTable();
+            bool exist = t.Rows.Contains(p.id);
 
             if (exist)
             {
@@ -307,42 +296,31 @@ private List<string> DataRequire(string request)
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
-                        adapter.UpdateCommand = cmd;
-                        adapter.SelectCommand = new SqlCommand("select * from Pokemon", connect);
+                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
                         adapter.InsertCommand = builder.GetInsertCommand(true);
                         adapter.DeleteCommand = builder.GetDeleteCommand(true);
 
-                        adapter.UpdateCommand.Parameters.AddWithValue("@idp", p.id);
-                        adapter.UpdateCommand.Parameters.AddWithValue("@nom", p.Nom);
-                        adapter.UpdateCommand.Parameters.AddWithValue("@vie", p.Vie);
-                        adapter.UpdateCommand.Parameters.AddWithValue("@force", p.Force);
-                        adapter.UpdateCommand.Parameters.AddWithValue("@defense", p.Defense);
+                        t.Rows.Find(p.id).ItemArray = new object[] { p.id, p.Nom, p.Vie, p.Force, p.Defense };
 
-                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-                        DataRow nr = t.Rows.Find(p.id);
-                        nr.SetField("idp", p.id);
-                        nr.SetField("nom", p.Nom);
-                        nr.SetField("vie", p.Vie);
-                        nr.SetField("force", p.Force);
-                        nr.SetField("defense", p.Defense);
+                        //adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
                         res = adapter.Update(t);
+                        t.AcceptChanges();
+                        connect.Close();
 
 
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Erreur dans AddPokemon");
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine("Erreur dans UpdatePokemon");
+                    //Console.WriteLine(e.ToString());
+                    throw e;
 
                 }
 
-                foreach (TypeElement x in p.Types)
-                {
-                    res ^= UpdatePokemonType(p.id, (Int32)x);
-                }
+                res ^= UpdatePokemonType(p);
+
             }
             else
             {
@@ -359,7 +337,7 @@ private List<string> DataRequire(string request)
         public int DeletePokemon(Pokemon p)
         {
             int res = 0;
-            string r = "delete from Pokemon Where idp = @idp";
+            string r = "select * from Pokemon;";
             DataTable t = GetPokemonTable();
 
             res = DeletePokemonType(p.id);
@@ -373,24 +351,16 @@ private List<string> DataRequire(string request)
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
-                    adapter.DeleteCommand = cmd;
-                    adapter.SelectCommand = new SqlCommand("select * from Pokemon", connect);
+                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
                     adapter.UpdateCommand = builder.GetUpdateCommand(true);
                     adapter.InsertCommand = builder.GetInsertCommand(true);
 
-                    adapter.DeleteCommand.Parameters.AddWithValue("@idp", p.id);
-
-                    for(int i = 0; i < t.Rows.Count; i++)
-                    {
-                        DataRow dr = t.Rows[i];
-                        if(dr["idp"].Equals(p.id))
-                        {
-                            dr.Delete();
-                        }
-                    }
+                    t.Rows.Find(p.id).Delete();
 
                     adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
                     res = adapter.Update(t);
+                    t.AcceptChanges();
+                    connect.Close();
 
 
                 }
@@ -409,7 +379,7 @@ private List<string> DataRequire(string request)
         public int DeletePokemonType(int id)
         {
             int res = 0;
-            string r = "delete from PokemonType Where pkm = @pkm";
+            string r = "select * from PokemonType;";
             DataTable tb = GetPokemonTypeTableById(id);
 
             try
@@ -420,20 +390,19 @@ private List<string> DataRequire(string request)
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
-                    adapter.DeleteCommand = cmd;
-                    adapter.SelectCommand = new SqlCommand("select * from PokemonType", connect);
+                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
                     adapter.UpdateCommand = builder.GetUpdateCommand(true);
                     adapter.InsertCommand = builder.GetInsertCommand(true);
 
-                    adapter.DeleteCommand.Parameters.AddWithValue("@pkm", id);
-
-                    for (int i = 0; i < tb.Rows.Count; i++)
+                    for(int i = 0; i < tb.Rows.Count; i++)
                     {
                         tb.Rows[i].Delete();
                     }
 
                     adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
                     res = adapter.Update(tb);
+                    tb.AcceptChanges();
+                    connect.Close();
                 }
             }
             catch (Exception e)
@@ -449,10 +418,10 @@ private List<string> DataRequire(string request)
         public int AddPokemonType(int id, int type)
         {
             int res = 0;
-            string r = "insert into PokemonType (pkm, type) values (@pkm, @type);";
+            string r = "select * from PokemonType;";
             DataTable t = GetPokemonTypeTableById(id);
 
-            bool exist = t.AsEnumerable().Any(row => row.Field<int>("pkm") == id && row.Field<int>("type") == type + 1);
+            bool exist = t.Rows.Contains(new Object[] { id, type });
 
             if (!exist)
             {
@@ -464,22 +433,17 @@ private List<string> DataRequire(string request)
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
-                        adapter.InsertCommand = cmd;
-                        adapter.SelectCommand = new SqlCommand("select * from PokemonType", connect);
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
                         adapter.UpdateCommand = builder.GetUpdateCommand(true);
                         adapter.DeleteCommand = builder.GetDeleteCommand(true);
 
-                        adapter.InsertCommand.Parameters.AddWithValue("@pkm", id);
-                        adapter.InsertCommand.Parameters.AddWithValue("@type", type + 1);
+                        t.Rows.Add(id, type);
 
                         adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-                        DataRow nr = t.Rows.Add();
-                        nr.SetField("pkm", id);
-                        nr.SetField("type", type + 1);
-
                         res = adapter.Update(t);
-
+                        t.AcceptChanges();
+                        connect.Close();
 
                     }
                 }
@@ -494,15 +458,16 @@ private List<string> DataRequire(string request)
             return res;
         }
 
-        public int UpdatePokemonType(int id, int type)
+        public int UpdatePokemonType(Pokemon p)
         {
             int res = 0;
-            //res = DeletePokemonType(int id, type);
-            //res = AddPokemonType(id, type);
-            
+            res = DeletePokemonType(p.id);
+            foreach(TypeElement x in p.Types)
+            {
+                res ^= AddPokemonType(p.id, (Int32)x + 1);
+            }
 
             return res;
-
         }
 
 
@@ -510,7 +475,7 @@ private List<string> DataRequire(string request)
         public int DeleteMatchByPokemonId(int id)
         {
             int res = 0;
-            string r = "delete from Match where pk1 = @pk1 or pk2 = @pk2";
+            string r = "select * from Match;";
             DataTable t = GetMatchByPokemonId(id);
 
             try
@@ -521,13 +486,9 @@ private List<string> DataRequire(string request)
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
-                    adapter.DeleteCommand = cmd;
-                    adapter.SelectCommand = new SqlCommand("select * from Match", connect);
+                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
                     adapter.UpdateCommand = builder.GetUpdateCommand(true);
                     adapter.InsertCommand = builder.GetInsertCommand(true);
-
-                    adapter.DeleteCommand.Parameters.AddWithValue("@pk1", id);
-                    adapter.DeleteCommand.Parameters.AddWithValue("@pk2", id);
 
                     for (int i = 0; i < t.Rows.Count; i++)
                     {
@@ -536,6 +497,8 @@ private List<string> DataRequire(string request)
 
                     adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
                     res = adapter.Update(t);
+                    t.AcceptChanges();
+                    connect.Close();
                 }
             }
             catch (Exception e)

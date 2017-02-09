@@ -88,6 +88,7 @@ namespace PokemonBusinessLayer
             return dab.GetAllUtilisateurs().Select(m => m.ToString()).ToList();
         }
 
+        // ici faire de la gestion et check de validite pour redescendre dans la bd 
         public int AddPokemon(Pokemon p)
         {
             return dab.AddPokemon(p);
@@ -97,6 +98,11 @@ namespace PokemonBusinessLayer
         public int DeletePokemon(Pokemon p)
         {
             return dab.DeletePokemon(p);
+        }
+
+        public int UpdatePokemon(Pokemon p)
+        {
+            return dab.UpdatePokemon(p);
         }
     }
 }
