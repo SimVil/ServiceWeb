@@ -84,6 +84,11 @@ namespace PokemonTournamentWPF
         {
             controller = new PokemonTournamentManager();
             pokemons = new List<Pokemon>(controller.GetAllPokemons());
+            List<Stade> stades = new List<Stade>(controller.GetAllStades());
+            stade_prem_phase.ItemsSource = stades;
+            stade_sec_phase.ItemsSource = stades;
+            stade_troi_phase.ItemsSource = stades;
+
 
             comboBoxes = new List<ComboBox>()
             {combattant1, combattant2, combattant3, combattant4, combattant5,
@@ -145,7 +150,7 @@ namespace PokemonTournamentWPF
             fenetre.Show();
         }
 
-        private void btn_tournoi_Click(object sender, RoutedEventArgs e)
+       /* private void btn_tournoi_Click(object sender, RoutedEventArgs e)
         {
             list_pokemons.Visibility = Visibility.Collapsed;
             list_stades.Visibility = Visibility.Visible;
@@ -155,7 +160,7 @@ namespace PokemonTournamentWPF
             grid_view_stades.Visibility = Visibility.Collapsed;
             grid_view_matchs.Visibility = Visibility.Collapsed;
             grid_view_tournoi.Visibility = Visibility.Visible;
-        }
+        }*/
 
         private void combattant_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -214,13 +219,12 @@ namespace PokemonTournamentWPF
                 string content = (sender as Button).Content.ToString();
                 if (content == "Tournoi Automatique")
                 {
-                    MessageBox.Show("Tournoi Automatique");
-                    
+                    MessageBox.Show("Vous avez choisi Tournoi Automatique");
                     //First Duel phase
-                    Pokemon winner1 = Pokemon.Duel((Pokemon)combattant1.SelectedItem,(Pokemon)combattant2.SelectedItem, null);
-                    Pokemon winner2 = Pokemon.Duel((Pokemon)combattant3.SelectedItem, (Pokemon)combattant4.SelectedItem, null);
-                    Pokemon winner3 = Pokemon.Duel((Pokemon)combattant5.SelectedItem, (Pokemon)combattant6.SelectedItem, null);
-                    Pokemon winner4 = Pokemon.Duel((Pokemon)combattant7.SelectedItem, (Pokemon)combattant8.SelectedItem, null);
+                    Pokemon winner1 = Pokemon.Duel((Pokemon)combattant1.SelectedItem,(Pokemon)combattant2.SelectedItem, (Stade)stade_prem_phase.SelectedItem);
+                    Pokemon winner2 = Pokemon.Duel((Pokemon)combattant3.SelectedItem, (Pokemon)combattant4.SelectedItem, (Stade)stade_prem_phase.SelectedItem);
+                    Pokemon winner3 = Pokemon.Duel((Pokemon)combattant5.SelectedItem, (Pokemon)combattant6.SelectedItem, (Stade)stade_prem_phase.SelectedItem);
+                    Pokemon winner4 = Pokemon.Duel((Pokemon)combattant7.SelectedItem, (Pokemon)combattant8.SelectedItem, (Stade)stade_prem_phase.SelectedItem);
 
                     //Healing phase
                     winner1.Heal();
@@ -229,17 +233,17 @@ namespace PokemonTournamentWPF
                     winner4.Heal();
 
                     //Second Duel phase
-                    winner1 = Pokemon.Duel(winner1, winner2,null);
-                    winner3 = Pokemon.Duel(winner3, winner4, null);
+                    Pokemon winner5 = Pokemon.Duel(winner1, winner2, (Stade)stade_sec_phase.SelectedItem);
+                    Pokemon winner6 = Pokemon.Duel(winner3, winner4, (Stade)stade_sec_phase.SelectedItem);
 
                     //healing phase
-                    winner1.Heal();
-                    winner3.Heal();
+                    winner5.Heal();
+                    winner6.Heal();
 
                     //Final
-                    winner1 = Pokemon.Duel(winner1, winner3, null);
+                    Pokemon winner7 = Pokemon.Duel(winner5, winner6, (Stade)stade_troi_phase.SelectedItem);
                     
-                    MessageBox.Show("The Winner of the ZZ Tournament is : "+winner1.Nom + " !!");
+                    MessageBox.Show("The Winner of the ZZ Tournament is : "+winner7.Nom + " !!");
 
 
 

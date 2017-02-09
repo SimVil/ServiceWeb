@@ -119,30 +119,40 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image Source="tournoi2.png" Grid.Column="1" Grid.Row="0" Grid.RowSpan="4"/>
-                <WrapPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant1" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                <WrapPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center">
+                    <Label x:Name="nom_stade_prem_phase" Margin="3,0,0,0" Width="100"> stade 1ere phase</Label>
+                    <Label x:Name="nom_stade_sec_phase" Margin="4,0,0,0" Width="106">stade 2eme phase</Label>
+                    <Label x:Name="nom_stade_troi_phase" Margin="0,0,0,0" Width="106" Content="stade 3eme phase"/>
+                </WrapPanel>
+                <WrapPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" >
+                    <ComboBox x:Name="stade_prem_phase" Margin="0,20,0,0" Width="90"></ComboBox>
+                    <ComboBox x:Name="stade_sec_phase" Margin="15,20,0,0" Width="90"></ComboBox>
+                    <ComboBox x:Name="stade_troi_phase" Margin="15,20,0,0" Width="90"></ComboBox>
+                </WrapPanel>
+                
+                <WrapPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <ComboBox x:Name="combattant1" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
                 <WrapPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant2" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                    <ComboBox x:Name="combattant2" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
                 <WrapPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant3" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                    <ComboBox x:Name="combattant3" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
                 <WrapPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant4" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                    <ComboBox x:Name="combattant4" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
-                <WrapPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant5" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                <WrapPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <ComboBox x:Name="combattant5" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
                 <WrapPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant6" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                    <ComboBox x:Name="combattant6" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
                 <WrapPanel Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant7" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                    <ComboBox x:Name="combattant7" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
                 <WrapPanel Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox x:Name="combattant8" Width="50" SelectionChanged="combattant_SelectionChanged"/>
+                    <ComboBox x:Name="combattant8" Width="110" SelectionChanged="combattant_SelectionChanged"/>
                 </WrapPanel>
                 <WrapPanel Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button Click="Tournoi_Click" Width="131">Tournoi Automatique</Button>
