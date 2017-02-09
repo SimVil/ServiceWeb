@@ -29,18 +29,20 @@ namespace PokemonConsole
             Console.WriteLine("\n\nLes matchs disponibles : ");
             AfficherMatchs();
 
-            Pokemon Onigali = manager.GetAllPokemons().Find(x => x.Nom.Equals("Onigali"));
-            Pokemon Tortank = manager.GetAllPokemons().Find(x => x.Nom.Equals("Tortank"));
-            Stade std = manager.GetAllStades().Find(x => x.Nom.Equals("Stade-neutre"));
-            Match mat = new Match(Onigali, Tortank, Onigali.id, PhaseTournoi.DemiFinale, std);
-            manager.AddMatch(mat);
+            Stade std = new Stade("Chez-toi", 50000, new List<TypeElement>() { TypeElement.Eau });
+            manager.AddStade(std);
+            Console.WriteLine("Les stades disponibles : ");
+            AfficherStades();
 
-            Console.WriteLine("\n\nLes matchs disponibles : ");
-            AfficherMatchs();
+            std.Nom = "Bonjourhan";
+            std.NbPlaces = 20000;
+            manager.UpdateStade(std);
+            Console.WriteLine("Les stades disponibles : ");
+            AfficherStades();
 
-            manager.DeleteMatch(mat);
-            Console.WriteLine("\n\nLes matchs disponibles : ");
-            AfficherMatchs();
+            manager.DeleteStade(std);
+            Console.WriteLine("Les stades disponibles : ");
+            AfficherStades();
 
 
 

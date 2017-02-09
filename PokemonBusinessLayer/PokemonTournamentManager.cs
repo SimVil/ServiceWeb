@@ -92,7 +92,6 @@ namespace PokemonBusinessLayer
         public int AddPokemon(Pokemon p)
         {
             return dab.AddPokemon(p);
-
         }
 
         public int DeletePokemon(Pokemon p)
@@ -119,5 +118,21 @@ namespace PokemonBusinessLayer
         {
             return dab.DeleteMatch(m);
         }
+
+        public int AddStade(Stade s)
+        {
+            return dab.AddStade(s);
+        }
+
+        public int UpdateStade(Stade s)
+        {
+            return dab.UpdateStade(s);
+        }
+
+        public int DeleteStade(Stade s)
+        {
+            return dab.DeleteStade(s);
+        }
+
     }
 }

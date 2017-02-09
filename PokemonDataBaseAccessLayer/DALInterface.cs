@@ -20,8 +20,6 @@ namespace PokemonDataBaseAccessLayer
 
         List<string> GetAllUtilisateurs();
 
-        List<string> GetAllPokemonType();
-
         List<string> GetPokemonTypeById(int id);
 
         string GetPokemonById(int id);
@@ -43,6 +41,12 @@ namespace PokemonDataBaseAccessLayer
         int UpdateMatch(Match m);
 
         int DeleteMatch(Match m);
+
+        int AddStade(Stade s);
+
+        int UpdateStade(Stade s);
+
+        int DeleteStade(Stade s);
 
 
     }

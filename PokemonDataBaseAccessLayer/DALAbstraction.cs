@@ -145,38 +145,23 @@ namespace PokemonDataBaseAccessLayer
             return res;
         }
 
+        public int AddPokemon(Pokemon p) { return idal.AddPokemon(p); }
 
-        public int AddPokemon(Pokemon p)
-        {
-            return idal.AddPokemon(p);
-        }
+        public int DeletePokemon(Pokemon p) { return idal.DeletePokemon(p); }
 
-        public int DeletePokemon(Pokemon p)
-        {
-            return idal.DeletePokemon(p);
-        }
+        public int UpdatePokemon(Pokemon p) { return idal.UpdatePokemon(p); }
 
-        public int UpdatePokemon(Pokemon p)
-        {
-            return idal.UpdatePokemon(p);
-        }
+        public int AddMatch(Match m) { return idal.AddMatch(m); }
 
-        public int AddMatch(Match m)
-        {
-            return idal.AddMatch(m);
-        }
+        public int UpdateMatch(Match m) { return idal.UpdateMatch(m); }
 
-        public int UpdateMatch(Match m)
-        {
-            return idal.UpdateMatch(m);
-        }
+        public int DeleteMatch(Match m) { return idal.DeleteMatch(m); }
 
-        public int DeleteMatch(Match m)
-        {
-            return idal.DeleteMatch(m);
-        }
+        public int AddStade(Stade s) { return idal.AddStade(s); }
 
+        public int UpdateStade(Stade s) { return idal.UpdateStade(s); }
 
+        public int DeleteStade(Stade s) { return idal.DeleteStade(s); }
 
     }
 }

@@ -7,41 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using PokemonTournamentEntities;
 
-// penser a la jointure pour recuperer la liste de type des pokemon !
-
-/* Methodes existantes (sinon je me perds)
- * 
- * private List<string> DataRequire(string request)
- * private DataTable TableRequire(string r)
- * public DALImplementation() { }
- * public List<string> GetAllPokemons()
- * public List<string> GetAllPokemonType()
- * public List<string> GetPokemonTypeById(int id)
- * public List<string> GetAllStades()
- * public List<string> GetAllElements()
- * public List<string> GetAllMatchs()
- * public List<string> GetAllUtilisateurs()
- * public string GetPokemonById(int id)
- * public string GetPokemonByNom(string n)
- * public string GetStadeById(int id)
- * private DataTable GetPokemonTable()
- * private DataTable GetPokemonTypeTable()
- * private DataTable GetPokemonTypeTableById(int id)
- * private DataTable GetUtilisateurTable()
- * private DataTable GetStadeTable()
- * private DataTable GetMatchTable()
- * private DataTable GetElementTable()
- * private DataTable GetMatchByPokemonId(int id)
- * private DataTable GetPokemonTypeTableByIdType(int id, int type)
- * public int AddPokemon(Pokemon p)
- * public int AddPokemonType(int id, int type)
- * public int DeletePokemon(Pokemon p)
- * public int DeletePokemonType(int id)
- * public int DeleteMatchByPokemonId(int id)
- * 
- * 
- * 
- * */
+/* Classe faisant le lien avec le SGBD */
 
 namespace PokemonDataBaseAccessLayer
 {
@@ -52,17 +18,13 @@ namespace PokemonDataBaseAccessLayer
         //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\Downgraded.mdf;Integrated Security = True; Connect Timeout = 30";
 
 
-        /* Methodes Generale --------------------------------------------------
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * ----------------------------------------------------------------- */
+/* Methodes Generale ----------------------------------------------------------
+*  + DALImplementation ~ constructeur 
+*  + DataRequire       ~ recupere tout type d'objet sous forme de
+*                        string
+*  + TableRequire      ~ recupere tout type d'obj sous DataTable                                 
+* -------------------------------------------------------------------------- */
+
 
         public DALImplementation() { }
 
@@ -112,17 +74,21 @@ namespace PokemonDataBaseAccessLayer
 
         
 
-        /* Methodes Pokemon ---------------------------------------------------
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * ----------------------------------------------------------------- */
+/* Methodes Pokemon -----------------------------------------------------------
+*  + GetAllPokemon   ~ recupere tous les pokemons sous forme de string
+*  + GetPokemonById  ~ recupere un pokemon en string par son id 
+*  + GetPokemonByNom ~ meme chose, par nom
+*  
+*  - PkBuild         ~ Methode de construction de DataTable sous contraintes
+*  - GetPokemonTable ~ Recupere tous les pokemons sous DataTable
+*  
+*  + AddPokemon      ~ Ajoute un pokemon en base
+*  + UpdatePokemon   ~ Met un jour un pokemon
+*  + DeletePokemon   ~ Efface un pokemon
+*  
+*  Rmq : comme les pokemons dependent d'une liste de types, il est 
+*  necessaire de manipuler des PokemonType quand on veut modifier des Pks.
+* -------------------------------------------------------------------------- */
 
         public List<string> GetAllPokemons() { return DataRequire("select * from Pokemon;"); }
 
@@ -186,6 +152,8 @@ namespace PokemonDataBaseAccessLayer
             return res;
         }
 
+
+
         public int UpdatePokemon(Pokemon p)
         {
             int res = 0;
@@ -239,8 +207,6 @@ namespace PokemonDataBaseAccessLayer
 
         }
 
-
-
         public int DeletePokemon(Pokemon p)
         {
             int res = 0;
@@ -285,28 +251,27 @@ namespace PokemonDataBaseAccessLayer
                 }
             }
 
-
-
             return res;
         }
 
 
 
-        /* Methodes PokemonType -----------------------------------------------
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * ----------------------------------------------------------------- */
+/* Methodes PokemonType -------------------------------------------------------
+* - GetAllPokemonType           ~ recupere tous les PokemonTypes en string.
+* + GetPokemonTypeById          ~ recup un PokeType par son id
+* - PkTypeBuild                 ~ constructeur de DataTable generique pour
+*                                 PokemonType
+* - GetPokemonTypeTable         ~ recup des PokemonType en DataTable
+* - GetPokemonTypeTableByIdType ~ recup par couple e clef (id, type)
+* 
+* +  AddPokemonType             ~ Ajoute un PokemonType (cf AddPokemon)
+* +  DeletePokemonType          ~ Supprime un PokeType (cf DeletePokemon)
+* +  UpdatePokemonType          ~ Met a jour un PokeType
+* -------------------------------------------------------------------------- */
 
         private List<string> GetAllPokemonType() { return DataRequire("select * from PokemonType;"); }
 
-        private List<string> GetPokemonTypeById(int id) { return DataRequire("select * from PokemonType where pkm = " + id + ";"); }
+        public List<string> GetPokemonTypeById(int id) { return DataRequire("select * from PokemonType where pkm = " + id + ";"); }
 
         private DataTable PkTypeBuild(string s)
         {
@@ -419,17 +384,17 @@ namespace PokemonDataBaseAccessLayer
 
 
 
-        /* Methodes Stade -----------------------------------------------------
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * ----------------------------------------------------------------- */
+/* Methodes Stade -----------------------------------------------------
+*  + GetAllStades  ~
+*  + GetStadeById  ~
+*  
+*  - GetStadeTable ~ 
+* 
+*  + AddStade      ~
+*  + UpdateStade   ~
+*  + DeleteStade   ~
+* 
+* ----------------------------------------------------------------- */
 
         public List<string> GetAllStades() { return DataRequire("select * from Stade;"); }
 
@@ -449,11 +414,136 @@ namespace PokemonDataBaseAccessLayer
             return t;
         }
 
-        public int AddStade(Stade s) { return 0; }
+        public int AddStade(Stade s)
+        {
+            int res = 0;
+            string r = "select * from Stade;";
 
-        public int UpdateStade(Stade s) { return 0; }
+            DataTable tp = GetStadeTable();
+            bool exist = tp.Rows.Contains(s.ids);
 
-        public int DeleteStade(Stade s) { return 0; }
+            if (!exist)
+            {
+                try
+                {
+                    using (SqlConnection connect = new SqlConnection(_connectionString))
+                    {
+                        connect.Open();
+                        SqlCommand cmd = new SqlCommand(r, connect);
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
+                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                        adapter.DeleteCommand = builder.GetDeleteCommand(true);
+
+                        tp.Rows.Add(s.ids, s.NbPlaces, s.Nom, (Int32)s.Types.First() + 1);
+                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                        res = adapter.Update(tp);
+                        tp.AcceptChanges();
+                        connect.Close();
+
+                    }
+                } catch (Exception e) {
+                    Console.WriteLine("Erreur dans AddStade");
+                    Console.WriteLine(e.ToString());
+                }
+
+            }
+            else { Console.WriteLine("Stade " + s.ids + " deja connu !"); }
+
+            return res;
+        }
+
+        public int UpdateStade(Stade s) {
+            int res = 0;
+            string r = "select * from Stade;";
+
+            DataTable t = GetStadeTable();
+            bool exist = t.Rows.Contains(s.ids);
+
+            if (exist)
+            {
+                try
+                {
+                    using (SqlConnection connect = new SqlConnection(_connectionString))
+                    {
+                        connect.Open();
+                        SqlCommand cmd = new SqlCommand(r, connect);
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
+                        adapter.DeleteCommand = builder.GetDeleteCommand(true);
+
+                        t.Rows.Find(s.ids).ItemArray = new object[] {s.ids, s.NbPlaces, s.Nom, (Int32)s.Types.First() + 1};
+
+                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                        res = adapter.Update(t);
+                        t.AcceptChanges();
+                        connect.Close();
+
+
+                    }
+                } catch (Exception e) {
+                    Console.WriteLine("Erreur dans UpdateStade");
+                    Console.WriteLine(e.ToString());
+
+                }
+
+            }
+            else { Console.WriteLine("Update : Le stade nexiste pas !"); }
+            return res;
+        }
+
+        public int DeleteStade(Stade s)
+        {
+            int res = 0;
+            string r = "select * from Stade;";
+            DataTable t = GetStadeTable();
+
+            res = DeleteMatchByStadeId(s.ids);
+
+            bool exist = t.Rows.Contains(s.ids);
+
+            if (exist)
+            {
+                try
+                {
+                    using (SqlConnection connect = new SqlConnection(_connectionString))
+                    {
+                        connect.Open();
+                        SqlCommand cmd = new SqlCommand(r, connect);
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                        adapter.DeleteCommand = builder.GetDeleteCommand(true);
+                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
+
+                        t.Rows.Find(s.ids).Delete();
+
+                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                        res = adapter.Update(t);
+                        t.AcceptChanges();
+                        connect.Close();
+
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Erreur dans DeletePokemon");
+                    Console.WriteLine(e.ToString());
+
+                }
+            }
+
+            return res;
+        }
 
 
         /* Methodes Match -----------------------------------------------------
@@ -661,6 +751,47 @@ namespace PokemonDataBaseAccessLayer
             catch (Exception e)
             {
                 Console.WriteLine("Erreur dans DeleteMatchByPokemonId");
+                Console.WriteLine(e.ToString());
+
+            }
+
+            return res;
+        }
+
+        public int DeleteMatchByStadeId(int id)
+        {
+
+            int res = 0;
+            string r = "select * from Match;";
+            DataTable t = GetMatchByStadeId(id);
+
+            try
+            {
+                using (SqlConnection connect = new SqlConnection(_connectionString))
+                {
+                    connect.Open();
+                    SqlCommand cmd = new SqlCommand(r, connect);
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
+                    adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                    adapter.InsertCommand = builder.GetInsertCommand(true);
+
+                    for (int i = 0; i < t.Rows.Count; i++)
+                    {
+                        t.Rows[i].Delete();
+                    }
+
+                    adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                    res = adapter.Update(t);
+                    t.AcceptChanges();
+                    connect.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur dans DeleteStadeByPokemonId");
                 Console.WriteLine(e.ToString());
 
             }
