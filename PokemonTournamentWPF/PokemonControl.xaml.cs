@@ -40,10 +40,17 @@ namespace PokemonTournamentWPF
             if(is_modif)
             {
                 button_modification.Content = "Modifier";
-                pokemon_force.IsEnabled = false;
-                pokemon_def.IsEnabled = false;
-                pokemon_vie.IsEnabled = false;
-                pokemon_name.IsEnabled = false;
+                pokemon_force.Visibility = Visibility.Collapsed;
+                pokemon_force_label.Visibility = Visibility.Visible;
+
+                pokemon_def.Visibility = Visibility.Collapsed;
+                pokemon_def_label.Visibility = Visibility.Visible;
+
+                pokemon_vie.Visibility = Visibility.Collapsed;
+                pokemon_vie_label.Visibility = Visibility.Visible;
+
+                pokemon_name.Visibility = Visibility.Collapsed;
+                pokemon_name_label.Visibility = Visibility.Visible;
 
                 label_types_disponibles.Visibility = Visibility.Collapsed;
                 list_types_disponibles.Visibility = Visibility.Collapsed;
@@ -57,10 +64,17 @@ namespace PokemonTournamentWPF
             else
             {
                 button_modification.Content = "Terminé";
-                pokemon_force.IsEnabled = true;
-                pokemon_def.IsEnabled = true;
-                pokemon_vie.IsEnabled = true;
-                pokemon_name.IsEnabled = true;
+                pokemon_force.Visibility = Visibility.Visible;
+                pokemon_force_label.Visibility = Visibility.Collapsed;
+
+                pokemon_def.Visibility = Visibility.Visible;
+                pokemon_def_label.Visibility = Visibility.Collapsed;
+
+                pokemon_vie.Visibility = Visibility.Visible;
+                pokemon_vie_label.Visibility = Visibility.Collapsed;
+
+                pokemon_name.Visibility = Visibility.Visible;
+                pokemon_name_label.Visibility = Visibility.Collapsed;
 
 
                 label_types_disponibles.Visibility = Visibility.Visible;

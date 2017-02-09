@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentWPF\App.xaml
-6-1917413324
+7-1249427964
 
-221135363825
+231693519318
 171263094556
-Login.xaml;MainWindow.xaml;MatchControl.xaml;PokemonControl.xaml;StadeControl.xaml;XMLSave.xaml;
+Login.xaml;MainWindow.xaml;MatchControl.xaml;PokemonControl.xaml;StadeControl.xaml;ChoixTournoi.xaml;XMLSave.xaml;
 
-True
+False
 

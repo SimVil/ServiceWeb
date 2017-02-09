@@ -35,8 +35,11 @@ namespace PokemonTournamentWPF
             if (is_modif)
             {
                 button_modification.Content = "Modifier";
-                stade_name.IsEnabled = false;
-                stade_places.IsEnabled = false;              
+                stade_name.Visibility = Visibility.Collapsed;
+                stade_name_label.Visibility = Visibility.Visible;
+
+                stade_places.Visibility = Visibility.Collapsed;
+                stade_places_label.Visibility = Visibility.Visible;             
 
                 label_types_disponibles.Visibility = Visibility.Collapsed;
                 list_types_disponibles.Visibility = Visibility.Collapsed;
@@ -50,9 +53,12 @@ namespace PokemonTournamentWPF
             else
             {
                 button_modification.Content = "Terminé";
-                stade_name.IsEnabled = true;
-                stade_places.IsEnabled = true;
-          
+
+                stade_name.Visibility = Visibility.Visible;
+                stade_name_label.Visibility = Visibility.Collapsed;
+
+                stade_places.Visibility = Visibility.Visible;
+                stade_places_label.Visibility = Visibility.Collapsed;
 
 
                 label_types_disponibles.Visibility = Visibility.Visible;

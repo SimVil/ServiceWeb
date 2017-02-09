@@ -25,6 +25,10 @@ namespace PokemonTournamentWPF
     {
         private PokemonTournamentManager controller;
 
+        private PokemonsViewModel pvm;
+        private StadesViewModel svm;
+        private MatchsViewModel mvm;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +41,7 @@ namespace PokemonTournamentWPF
 
             IList<PokemonTournamentEntities.Pokemon> pokemons = controller.GetAllPokemons();
 
-            ViewModelBase.PokemonsViewModel pvm = new ViewModelBase.PokemonsViewModel(pokemons);
+            pvm = new ViewModelBase.PokemonsViewModel(pokemons);
             list_pokemons.DataContext = pvm;
 
             List<String> list_types = new List<String>();
@@ -47,46 +51,46 @@ namespace PokemonTournamentWPF
 
             list_pokemons.Visibility = Visibility.Visible;
             list_stades.Visibility = Visibility.Collapsed;
-            list_matchs.Visibility = Visibility.Collapsed;
+            //list_matchs.Visibility = Visibility.Collapsed;
 
             grid_view_pokemons.Visibility = Visibility.Visible;
             grid_view_stades.Visibility = Visibility.Collapsed;
             grid_view_matchs.Visibility = Visibility.Collapsed;
-            grid_view_tournoi.Visibility = Visibility.Collapsed;
+            //grid_view_tournoi.Visibility = Visibility.Collapsed;
         }
 
         private void btn_stades_Click(object sender, RoutedEventArgs e)
         {
             IList<PokemonTournamentEntities.Stade> stades = controller.GetAllStades();
-            ViewModelBase.StadesViewModel svm = new ViewModelBase.StadesViewModel(stades);
+            svm = new ViewModelBase.StadesViewModel(stades);
             list_stades.DataContext = svm;
 
             list_pokemons.Visibility = Visibility.Collapsed;
             list_stades.Visibility = Visibility.Visible;
-            list_matchs.Visibility = Visibility.Collapsed;
+            //list_matchs.Visibility = Visibility.Collapsed;
 
             grid_view_pokemons.Visibility = Visibility.Collapsed;
             grid_view_stades.Visibility = Visibility.Visible;
             grid_view_matchs.Visibility = Visibility.Collapsed;
-            grid_view_tournoi.Visibility = Visibility.Collapsed;
+            //grid_view_tournoi.Visibility = Visibility.Collapsed;
 
         }
 
         private void btn_matchs_Click(object sender, RoutedEventArgs e)
         {
-            IList<PokemonTournamentEntities.Match> matchs = controller.GetAllMatchs();
+           /* IList<PokemonTournamentEntities.Match> matchs = controller.GetAllMatchs();
 
-            ViewModelBase.MatchsViewModel mvm = new ViewModelBase.MatchsViewModel(matchs);
-            list_matchs.DataContext = mvm;
+            mvm = new ViewModelBase.MatchsViewModel(matchs);
+            list_matchs.DataContext = mvm;*/
 
             list_pokemons.Visibility = Visibility.Collapsed;
             list_stades.Visibility = Visibility.Collapsed;
-            list_matchs.Visibility = Visibility.Visible;
+            //list_matchs.Visibility = Visibility.Visible;
 
             grid_view_pokemons.Visibility = Visibility.Collapsed;
             grid_view_stades.Visibility = Visibility.Collapsed;
             grid_view_matchs.Visibility = Visibility.Visible;
-            grid_view_tournoi.Visibility = Visibility.Collapsed;
+            //grid_view_tournoi.Visibility = Visibility.Collapsed;
         }
 
         private void btn_print_Click(object sender, RoutedEventArgs e)
@@ -101,12 +105,19 @@ namespace PokemonTournamentWPF
             String filtre = combo_filtrage.Text;
             if (filtre == "")
             {
-                list_stades.ItemsSource = controller.GetAllPokemons();
+                IList<PokemonTournamentEntities.Pokemon> pokemons = controller.GetAllPokemons();
+
+                pvm = new ViewModelBase.PokemonsViewModel(pokemons);
+                list_pokemons.DataContext = pvm;
+                //list_pokemons.ItemsSource = controller.GetAllPokemons();
             }
             else
             {
                 TypeElement type = (TypeElement)Enum.Parse(typeof(TypeElement), filtre);
-                list_pokemons.ItemsSource = controller.GetAllPokemonsFromType(type);
+                IList<Pokemon> pokemons = controller.GetAllPokemonsFromType(type);
+                pvm = new ViewModelBase.PokemonsViewModel(pokemons);
+                list_pokemons.DataContext = pvm;
+                //list_pokemons.ItemsSource = controller.GetAllPokemonsFromType(type);
             }
         }
 
@@ -116,7 +127,7 @@ namespace PokemonTournamentWPF
             fenetre.Show();
         }
 
-        private void btn_duel_Click(object sender, RoutedEventArgs e)
+        /*private void btn_duel_Click(object sender, RoutedEventArgs e)
         {
             IList<PokemonTournamentEntities.Pokemon> pokemons = controller.GetAllPokemons();
             IList<PokemonTournamentEntities.Stade> stades = controller.GetAllStades();
@@ -225,6 +236,6 @@ namespace PokemonTournamentWPF
                     }
                 }
             }
-        }
+        }*/
     }
 }

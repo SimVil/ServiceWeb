@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//INUTILE
 namespace PokemonTournamentWPF.ViewModelBase
 {
     class MatchsViewModel : ViewModelBase
@@ -42,11 +44,11 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         public MatchsViewModel(IList<PokemonTournamentEntities.Match> matchsModel)
         {
-            _matchs = new ObservableCollection<MatchViewModel>();
+            /*_matchs = new ObservableCollection<MatchViewModel>();
             foreach (PokemonTournamentEntities.Match a in matchsModel)
             {
                 _matchs.Add(new MatchViewModel(a));
-            }
+            }*/
         }
 
         #region "Commandes du formulaire"
@@ -75,11 +77,11 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Add()
         {
-              PokemonTournamentEntities.Match a = new PokemonTournamentEntities.Match(null, null, 0, PokemonTournamentEntities.PhaseTournoi.HuitiemeFinale, null);
+             /* PokemonTournamentEntities.Match a = new PokemonTournamentEntities.Match(null, null, 0, PokemonTournamentEntities.PhaseTournoi.HuitiemeFinale, null);
 
               this.SelectedItem = new MatchViewModel(a);
               Matchs.Add(this.SelectedItem);
-
+              */
             
         }
 
@@ -107,7 +109,7 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Remove()
         {
-            if (this.SelectedItem != null) Matchs.Remove(this.SelectedItem);
+          //  if (this.SelectedItem != null) Matchs.Remove(this.SelectedItem);
         }
 
         // Commande Close

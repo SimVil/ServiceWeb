@@ -75,6 +75,9 @@
     <Compile Include="ViewModelBase\StadesViewModel.cs" />
     <Compile Include="ViewModelBase\StadeViewModel.cs" />
     <Compile Include="ViewModelBase\ViewModelBase.cs" />
+    <Compile Include="ChoixTournoi.xaml.cs">
+      <DependentUpon>ChoixTournoi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XMLSave.xaml.cs">
       <DependentUpon>XMLSave.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StadeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChoixTournoi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pokearena.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tournoi2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

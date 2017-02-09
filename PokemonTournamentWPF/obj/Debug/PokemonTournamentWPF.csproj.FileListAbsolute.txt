@@ -87,3 +87,5 @@ C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentWPF\obj\Debug\XMLSave
 C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.g.resources
 C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.Properties.Resources.resources
 C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentWPF\obj\Debug\PokemonTournamentWPF.csproj.GenerateResource.Cache
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentWPF\obj\Debug\ChoixTournoi.g.cs
+C:\Users\Toto\Documents\GitHub\ServiceWeb\PokemonTournamentWPF\obj\Debug\ChoixTournoi.baml

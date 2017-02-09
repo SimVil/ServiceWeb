@@ -22,10 +22,12 @@
                 <WrapPanel>
                     <Label Content="Nom :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="27" />
                     <TextBox x:Name="stade_name" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" Height="21"  Text="{Binding SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label x:Name="stade_name_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="21"  Content="{Binding SelectedItem.Nom}"/>
                 </WrapPanel>
                 <WrapPanel>
-                    <Label Content="Nb Places :"/>
+                    <Label Content="Nombres Places :"/>
                     <TextBox x:Name="stade_places" Margin="0,6,0,0" Width="69" Height="19" Text="{Binding SelectedItem.NbPlaces}"/>
+                    <Label x:Name="stade_places_label" Visibility="Collapsed" Margin="0,6,0,0" Width="69" Height="19" Content="{Binding SelectedItem.NbPlaces}"/>
                 </WrapPanel>
                 <StackPanel>
                     <Label x:Name="label_types_disponibles" Content="Types disponibles" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>

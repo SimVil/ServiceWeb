@@ -26,7 +26,7 @@
             <Button x:Name="btn_stades" Content="Stades" Grid.Column="1" Height="30" Margin="10" Click="btn_stades_Click"/>
             <Button x:Name="btn_matchs" Content="Matchs" Grid.Column="2" Height="30" Margin="10" Click="btn_matchs_Click"/>
             <Button x:Name="btn_print" Content="Print" Grid.Column="4" Height="30" Margin="10" Click="btn_print_Click"/>
-            <Button x:Name="btn_duel" Content="Duel" Grid.Column="3" Height="30" Margin="10" Click="btn_duel_Click" />
+            <!--<Button x:Name="btn_duel" Content="Duel" Grid.Column="3" Height="30" Margin="10" Click="btn_duel_Click" />-->
         </Grid>
 
         <Grid DockPanel.Dock="Bottom">
@@ -65,11 +65,11 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListBox x:Name="list_matchs" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
+           <!-- <ListBox x:Name="list_matchs" DockPanel.Dock="Left" Grid.Column="0" Visibility="Collapsed"
                 ItemsSource="{Binding Matchs}" 
                 SelectedItem="{Binding SelectedItem}">
-            </ListBox>
-            <Grid x:Name="grid_view_pokemons" Background="Violet" Margin="158,10,-0.4,-9.8" Grid.ColumnSpan="2" Visibility="Visible">
+            </ListBox>-->
+            <Grid x:Name="grid_view_pokemons" Background="Violet" Grid.Column="1" Visibility="Visible">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="400*"/>
@@ -90,7 +90,7 @@
 
                 </Grid>
             </Grid>
-            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Visible" Grid.Column="1">
+            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Collapsed" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
@@ -107,13 +107,13 @@
                 </StackPanel>
 
             </Grid>
-            <Grid x:Name="grid_view_matchs" Background="Gray" Visibility="Collapsed" Grid.Column="1">
-                <mycontrol:MatchControl Margin="150,50,50,50" DataContext="{Binding ElementName=list_matchs}" >
-                    
-                </mycontrol:MatchControl>
+            <Grid x:Name="grid_view_matchs" Background="BlanchedAlmond" Visibility="Visible" Grid.Column="0" Grid.ColumnSpan="5">
+                <mycontrol:MatchControl Margin="50,50,50,50" Grid.Column="0" Grid.ColumnSpan="2"/>
+                
             </Grid>
 
-            <Grid x:Name="grid_view_tournoi" Background="BlanchedAlmond" Visibility="Collapsed" Grid.Column="1" >
+            
+            <!--<Grid x:Name="grid_view_tournoi" Background="BlanchedAlmond" Visibility="Collapsed" Grid.Column="1" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="2*"/>
@@ -131,7 +131,7 @@
                 <TextBlock x:Name="versus" Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontFamily="Century Gothic" FontSize="20" Margin="0,110,0,0"  Text="Versus"></TextBlock>
                 <Image x:Name="pokearena_png" Grid.Column="1" Grid.Row="0" Margin="0,5,0,0"  Source="pokearena.png" Stretch="Fill"/>
 
-            </Grid>
+            </Grid>-->
 
         </Grid>
 

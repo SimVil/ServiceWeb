@@ -25,6 +25,7 @@
                 <WrapPanel>
                     <Label Content="Nom :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="27" />
                     <TextBox x:Name="pokemon_name" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="22"  Text="{Binding SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label x:Name="pokemon_name_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="22"  Content="{Binding SelectedItem.Nom}"/>
                 </WrapPanel>
                 <StackPanel>
                     <Label x:Name="label_types_disponibles" Content="Types disponibles" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
@@ -43,14 +44,17 @@
                         <WrapPanel>
                             <Label Content="Vie :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
                             <TextBox x:Name="pokemon_vie" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Height="22" Text="{Binding SelectedItem.Vie, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label x:Name="pokemon_vie_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="22" Content="{Binding SelectedItem.Vie}"/>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Content="Defense :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
                             <TextBox x:Name="pokemon_def" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Height="22" Text="{Binding SelectedItem.Defense, UpdateSourceTrigger=PropertyChanged}" />
+                            <Label x:Name="pokemon_def_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="22" Content="{Binding SelectedItem.Defense}" />
                         </WrapPanel>
                         <WrapPanel>
                             <Label Content="Force :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
                             <TextBox x:Name="pokemon_force" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Height="27" Text="{Binding SelectedItem.Force, UpdateSourceTrigger=PropertyChanged}" />
+                            <Label x:Name="pokemon_force_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="27" Content="{Binding SelectedItem.Force}" />
                         </WrapPanel>
                     </StackPanel>
                 </WrapPanel>
