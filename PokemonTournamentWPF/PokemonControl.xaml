@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="PokemonTournamentWPF.PokemonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PokemonTournamentWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="700">
+    <Grid>
+        <WrapPanel>
+            <!--<Image HorizontalAlignment="Left" Height="135" VerticalAlignment="Top" Width="138" Source="{Binding SelectedItem.PokeImage}" > </Image>-->
+            <StackPanel>
+                <Rectangle Stroke="Turquoise" Opacity="1" StrokeThickness="1" Canvas.Left="24" Canvas.Top="22" Height="258" Width="151" >
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding SelectedItem.PokeImage}"></ImageBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Button x:Name="button_modification" Click="Button_Click_Modifier">Modifier pokémon</Button>
+            </StackPanel>
+
+
+            <StackPanel>
+                <TextBlock x:Name="PokemonCard" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" TextAlignment="Center" Background="Turquoise" Margin="10,0,0,0" Width="141"><Run Text="Pokemon Card"/></TextBlock>
+                <Separator HorizontalAlignment="Left" Height="10" Margin="10,0,0,0" VerticalAlignment="Top" Width="141"/>
+                <WrapPanel>
+                    <Label Content="Nom :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="27" />
+                    <TextBox x:Name="pokemon_name" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="22"  Text="{Binding SelectedItem.Nom, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label x:Name="pokemon_name_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="22"  Content="{Binding SelectedItem.Nom}"/>
+                </WrapPanel>
+                <StackPanel>
+                    <Label x:Name="label_types_disponibles" Content="Types disponibles" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <ListView x:Name="list_types_disponibles" ItemsSource="{Binding SelectedItem.TypesDisponibles}" SelectedItem="{Binding SelectedItem.SelectedItemDisponibles}"/>
+
+                    <Button x:Name="button_ajout_type" Content="&gt;&gt;" Command="{Binding SelectedItem.AddCommand}"/>
+                    <Button x:Name="button_remove_type" Content="&lt;&lt;" Command="{Binding SelectedItem.RemoveCommand}"/>
+
+                    <Label Content="Types" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <ListView  x:Name="list_types_pokemon" ItemsSource="{Binding SelectedItem.Types}" SelectedItem="{Binding SelectedItem.SelectedItemPokemon}"/>
+                </StackPanel>
+                
+                <Label Content="Caractérstiques :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Height="27" />
+                <WrapPanel>
+                    <StackPanel>
+                        <WrapPanel>
+                            <Label Content="Vie :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
+                            <TextBox x:Name="pokemon_vie" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Height="22" Text="{Binding SelectedItem.Vie, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label x:Name="pokemon_vie_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="22" Content="{Binding SelectedItem.Vie}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Defense :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
+                            <TextBox x:Name="pokemon_def" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Height="22" Text="{Binding SelectedItem.Defense, UpdateSourceTrigger=PropertyChanged}" />
+                            <Label x:Name="pokemon_def_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="22" Content="{Binding SelectedItem.Defense}" />
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Force :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="27" />
+                            <TextBox x:Name="pokemon_force" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="91" Height="27" Text="{Binding SelectedItem.Force, UpdateSourceTrigger=PropertyChanged}" />
+                            <Label x:Name="pokemon_force_label" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="27" Content="{Binding SelectedItem.Force}" />
+                        </WrapPanel>
+                    </StackPanel>
+                </WrapPanel>
+            </StackPanel>
+        </WrapPanel>
+
+
+
+
+
+    </Grid>
+</UserControl>
