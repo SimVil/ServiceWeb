@@ -81,7 +81,7 @@ namespace PokemonTournamentEntities
                     }
                     else
                     {
-                        winner = Pokemon2;
+                        winner = Pokemon1;
                     }
                 }
             }
