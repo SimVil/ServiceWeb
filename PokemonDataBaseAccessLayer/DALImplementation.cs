@@ -52,42 +52,49 @@ namespace PokemonDataBaseAccessLayer
         //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\Downgraded.mdf;Integrated Security = True; Connect Timeout = 30";
 
 
-        /* fonction recuperant de maniere generale une liste de string de donnee */
-private List<string> DataRequire(string request)
+        /* Methodes Generale --------------------------------------------------
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * ----------------------------------------------------------------- */
+
+        public DALImplementation() { }
+
+        private List<string> DataRequire(string request)
         {
             List<string> res = new List<string>();
             List<string> tmp = new List<string>();
             int i = 0;
 
-            using (SqlConnection SqlCo = new SqlConnection(_connectionString))
+            using (SqlConnection connect = new SqlConnection(_connectionString))
             {
-                SqlCommand select = new SqlCommand(request, SqlCo);
-                SqlCo.Open();
+                SqlCommand select = new SqlCommand(request, connect);
+                connect.Open();
 
                 SqlDataReader sqlDaRe = select.ExecuteReader();
 
                 while (sqlDaRe.Read())
                 {
-                    for(i = 0; i < sqlDaRe.FieldCount; i++)
-                    {
-                        tmp.Add(sqlDaRe.GetValue(i).ToString());
-                   
-                    }
+                    for(i = 0; i < sqlDaRe.FieldCount; i++) { tmp.Add(sqlDaRe.GetValue(i).ToString()); }
                     res.Add(string.Join(" ", tmp.ToArray()));
                     tmp.Clear();
-                    // faudra ptet rajouter un clear, mais vu qu'on remplace les id ca
-                    // devrait passer
                      
                 }
 
-                SqlCo.Close();
+                connect.Close();
             }
 
             return res;
 
         }
 
-        /* recupere les datatable */
+
         private DataTable TableRequire(string r)
         {
             DataTable res = new DataTable();
@@ -101,152 +108,37 @@ private List<string> DataRequire(string request)
             }
 
             return res;
-
         }
 
-        public DALImplementation() { }
-
-        public List<string> GetAllPokemons()
-        {
-            string r = "select idp, nom, vie, force, defense from Pokemon;";
-            return DataRequire(r);
-        }
-
-        public List<string> GetAllPokemonType()
-        {
-            string r = "select * from PokemonType;";
-            return DataRequire(r);
-
-        }
-
-        public List<string> GetPokemonTypeById(int id)
-        {
-            string r = "select * from PokemonType where pkm = " + id + ";";
-            return DataRequire(r);
-        }
-
-        public List<string> GetAllStades()
-        {
-            string r = "select * from Stade;";
-            return DataRequire(r);
-        }
-
-        public List<string> GetAllElements()
-        {
-            string r = "select type from Element;";
-            return DataRequire(r);
-        }
-
-        public List<string> GetAllMatchs()
-        {
-            string r = "select * from Match;";
-            return DataRequire(r);
-        }
-
-        public List<string> GetAllUtilisateurs()
-        {
-            string r = "select nom, prenom, login, password from Utilisateur;";
-            return DataRequire(r);
-        }
-
-        public string GetPokemonById(int id)
-        {
-            string r = "select * from Pokemon where idp = " + id + ";";
-            return string.Format(DataRequire(r).First());
-        }
-
-        public string GetPokemonByNom(string n)
-        {
-            string r = "select nom, vie, force, defense from Pokemon where Nom = " + n + ";";
-            return string.Format(DataRequire(r).First());
-        }
         
-        public string GetStadeById(int id)
-        {
-            string r = "select * from Stade where ids = " + id + ";";
-            List<string> t = DataRequire(r);
 
-            return string.Format(t.First());
-        }
+        /* Methodes Pokemon ---------------------------------------------------
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * ----------------------------------------------------------------- */
 
-        private DataTable GetPokemonTable()
+        public List<string> GetAllPokemons() { return DataRequire("select * from Pokemon;"); }
+
+        public string GetPokemonById(int id) { return string.Format(DataRequire("select * from Pokemon where idp = " + id + ";").First()); }
+
+        public string GetPokemonByNom(string n) { return string.Format(DataRequire("select * from Pokemon where Nom = " + n + ";").First()); }
+
+        private DataTable PkBuild(string s)
         {
-            string r = "select * from Pokemon;";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["idp"] }; 
+            DataTable t = TableRequire(s);
+            t.PrimaryKey = new DataColumn[] { t.Columns["idp"] };
             return t;
         }
 
-        private DataTable GetPokemonTypeTable()
-        {
-            string r = "select * from PokemonType;";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["pkm"], t.Columns["type"] };
-            return t;
-        }
+        private DataTable GetPokemonTable() { return PkBuild("select * from Pokemon;"); }
 
-        private DataTable GetPokemonTypeTableById(int id)
-        {
-            string r = "select pkm, type from PokemonType where pkm = " + id + ";";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["pkm"], t.Columns["type"] };
-            return t;
-        }
-
-        private DataTable GetUtilisateurTable()
-        {
-            string r = "select * from Utilisateur;";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["idu"] };
-            return t;
-        }
-
-        private DataTable GetStadeTable()
-        {
-            string r = "select * from Stade;";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["ids"] };
-            return t;
-        }
-
-        private DataTable GetMatchTable()
-        {
-            string r = "select * from Match;";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["idm"] };
-            return t;
-        }
-
-        private DataTable GetElementTable()
-        {
-            string r = "select * from Element;";
-            return TableRequire(r);
-        }
-
-        private DataTable GetMatchByPokemonId(int id)
-        {
-            string r = "select * from Match where pk1 = " + id + "or pk2 = " + id + ";";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["idm"] };
-            return t;
-        }
-
-        private DataTable GetMatchByStadeId(int id)
-        {
-            string r = "select * from Match where std = " + id + ";";
-            DataTable t = TableRequire(r);
-            t.PrimaryKey = new DataColumn[] { t.Columns["idm"] };
-            return t;
-        }
-
-        private DataTable GetPokemonTypeTableByIdType(int id, int type)
-        {
-            string r = "select * from PokemonType where pkm = " + id + " and type = " + type + ";";
-            return TableRequire(r);
-        }
-
-        // considere que l'on peut avoir plusieurs fois un pokemon dans la db
-       
         public int AddPokemon(Pokemon p)
         {
             int res = 0;
@@ -278,15 +170,18 @@ private List<string> DataRequire(string request)
                         connect.Close();
 
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine("Erreur dans AddPokemon");
                     Console.WriteLine(e.ToString());
 
                 }
 
-                foreach(TypeElement x in p.Types) { res = AddPokemonType(p.id, (Int32)x + 1); }
+                foreach (TypeElement x in p.Types) { res = AddPokemonType(p.id, (Int32)x + 1); }
 
-            } else { Console.WriteLine("Pokemon " + p.id + " deja connu !"); }
+            }
+            else { Console.WriteLine("Pokemon " + p.id + " deja connu !"); }
 
             return res;
         }
@@ -324,15 +219,19 @@ private List<string> DataRequire(string request)
 
 
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine("Erreur dans UpdatePokemon");
                     Console.WriteLine(e.ToString());
-                    
+
                 }
 
                 res ^= UpdatePokemonType(p);
 
-            } else {
+            }
+            else
+            {
                 Console.WriteLine("Update : Le pokemon nexiste pas !");
 
             }
@@ -385,12 +284,205 @@ private List<string> DataRequire(string request)
 
                 }
             }
-            
+
 
 
             return res;
         }
 
+
+
+        /* Methodes PokemonType -----------------------------------------------
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * ----------------------------------------------------------------- */
+
+        private List<string> GetAllPokemonType() { return DataRequire("select * from PokemonType;"); }
+
+        private List<string> GetPokemonTypeById(int id) { return DataRequire("select * from PokemonType where pkm = " + id + ";"); }
+
+        private DataTable PkTypeBuild(string s)
+        {
+            DataTable t = TableRequire(s);
+            t.PrimaryKey = new DataColumn[] { t.Columns["pkm"], t.Columns["type"] };
+            return t;
+        }
+
+        private DataTable GetPokemonTypeTable() { return PkTypeBuild("select * from PokemonType;"); }
+        
+        private DataTable GetPokemonTypeTableById(int id) { return PkTypeBuild("select * from PokemonType where pkm = " + id + ";"); }
+
+        private DataTable GetPokemonTypeTableByIdType(int id, int type) { return PkTypeBuild("select * from PokemonType where pkm = " + id + " and type = " + type + ";"); }
+
+        public int AddPokemonType(int id, int type)
+        {
+            int res = 0;
+            string r = "select * from PokemonType;";
+            DataTable t = GetPokemonTypeTableById(id);
+
+            bool exist = t.Rows.Contains(new Object[] { id, type });
+
+            if (!exist)
+            {
+                try
+                {
+                    using (SqlConnection connect = new SqlConnection(_connectionString))
+                    {
+                        connect.Open();
+                        SqlCommand cmd = new SqlCommand(r, connect);
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
+                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                        adapter.DeleteCommand = builder.GetDeleteCommand(true);
+
+                        t.Rows.Add(id, type);
+
+                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                        res = adapter.Update(t);
+                        t.AcceptChanges();
+                        connect.Close();
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Erreur dans AddPokemon");
+                    Console.WriteLine(e.ToString());
+
+                }
+            }
+
+            return res;
+        }
+
+        public int DeletePokemonType(int id)
+        {
+            int res = 0;
+            string r = "select * from PokemonType;";
+            DataTable tb = GetPokemonTypeTableById(id);
+
+            try
+            {
+                using (SqlConnection connect = new SqlConnection(_connectionString))
+                {
+                    connect.Open();
+                    SqlCommand cmd = new SqlCommand(r, connect);
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
+                    adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                    adapter.InsertCommand = builder.GetInsertCommand(true);
+
+                    for (int i = 0; i < tb.Rows.Count; i++)
+                    {
+                        tb.Rows[i].Delete();
+                    }
+
+                    adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                    res = adapter.Update(tb);
+                    tb.AcceptChanges();
+                    connect.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur dans DeletePokemonType");
+                Console.WriteLine(e.ToString());
+
+            }
+
+            return res;
+        }
+
+        public int UpdatePokemonType(Pokemon p)
+        {
+            int res = 0;
+            res = DeletePokemonType(p.id);
+            foreach (TypeElement x in p.Types)
+            {
+                res ^= AddPokemonType(p.id, (Int32)x + 1);
+            }
+
+            return res;
+        }
+
+
+
+        /* Methodes Stade -----------------------------------------------------
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * ----------------------------------------------------------------- */
+
+        public List<string> GetAllStades() { return DataRequire("select * from Stade;"); }
+
+        public string GetStadeById(int id)
+        {
+            string r = "select * from Stade where ids = " + id + ";";
+            List<string> t = DataRequire(r);
+
+            return string.Format(t.First());
+        }
+
+        private DataTable GetStadeTable()
+        {
+            string r = "select * from Stade;";
+            DataTable t = TableRequire(r);
+            t.PrimaryKey = new DataColumn[] { t.Columns["ids"] };
+            return t;
+        }
+
+        public int AddStade(Stade s) { return 0; }
+
+        public int UpdateStade(Stade s) { return 0; }
+
+        public int DeleteStade(Stade s) { return 0; }
+
+
+        /* Methodes Match -----------------------------------------------------
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * ----------------------------------------------------------------- */
+
+
+        public List<string> GetAllMatchs() { return DataRequire("select * from Match;"); }
+
+        private DataTable MtBuild(string s)
+        {
+            DataTable t = TableRequire(s);
+            t.PrimaryKey = new DataColumn[] { t.Columns["idm"] };
+            return t;
+        }
+
+        private DataTable GetMatchTable() { return MtBuild("select * from Match;"); }
+
+        private DataTable GetMatchByStadeId(int id) { return MtBuild("select * from Match where std = " + id + ";"); }
+
+        private DataTable GetMatchByPokemonId(int id) { return MtBuild("select * from Match where pk1 = " + id + "or pk2 = " + id + ";"); }
 
         public int AddMatch(Match m)
         {
@@ -423,13 +515,16 @@ private List<string> DataRequire(string request)
                         connect.Close();
 
                     }
-                } catch (Exception e) { 
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine("Erreur dans AddMatch");
                     Console.WriteLine(e.ToString());
 
                 }
 
-            } else { Console.WriteLine("Match " + m.idm + " deja enregistre !"); }
+            }
+            else { Console.WriteLine("Match " + m.idm + " deja enregistre !"); }
             return res;
         }
 
@@ -467,7 +562,9 @@ private List<string> DataRequire(string request)
 
 
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine("Erreur dans DeleteMatch");
                     Console.WriteLine(e.ToString());
 
@@ -517,113 +614,18 @@ private List<string> DataRequire(string request)
 
 
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine("Erreur dans UpdateMatch");
                     Console.WriteLine(e.ToString());
 
                 }
 
-            } else { Console.WriteLine("Update : Le match nexiste pas !"); }
+            }
+            else { Console.WriteLine("Update : Le match nexiste pas !"); }
             return res;
         }
-
-
-        public int DeletePokemonType(int id)
-        {
-            int res = 0;
-            string r = "select * from PokemonType;";
-            DataTable tb = GetPokemonTypeTableById(id);
-
-            try
-            {
-                using (SqlConnection connect = new SqlConnection(_connectionString))
-                {
-                    connect.Open();
-                    SqlCommand cmd = new SqlCommand(r, connect);
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-
-                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
-                    adapter.UpdateCommand = builder.GetUpdateCommand(true);
-                    adapter.InsertCommand = builder.GetInsertCommand(true);
-
-                    for(int i = 0; i < tb.Rows.Count; i++)
-                    {
-                        tb.Rows[i].Delete();
-                    }
-
-                    adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                    res = adapter.Update(tb);
-                    tb.AcceptChanges();
-                    connect.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Erreur dans DeletePokemonType");
-                Console.WriteLine(e.ToString());
-
-            }
-
-            return res;
-        }
-
-        public int AddPokemonType(int id, int type)
-        {
-            int res = 0;
-            string r = "select * from PokemonType;";
-            DataTable t = GetPokemonTypeTableById(id);
-
-            bool exist = t.Rows.Contains(new Object[] { id, type });
-
-            if (!exist)
-            {
-                try
-                {
-                    using (SqlConnection connect = new SqlConnection(_connectionString))
-                    {
-                        connect.Open();
-                        SqlCommand cmd = new SqlCommand(r, connect);
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-
-                        adapter.InsertCommand = builder.GetInsertCommand(true);
-                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
-                        adapter.DeleteCommand = builder.GetDeleteCommand(true);
-
-                        t.Rows.Add(id, type);
-
-                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-                        res = adapter.Update(t);
-                        t.AcceptChanges();
-                        connect.Close();
-
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Erreur dans AddPokemon");
-                    Console.WriteLine(e.ToString());
-
-                }
-            }
-
-            return res;
-        }
-
-        public int UpdatePokemonType(Pokemon p)
-        {
-            int res = 0;
-            res = DeletePokemonType(p.id);
-            foreach(TypeElement x in p.Types)
-            {
-                res ^= AddPokemonType(p.id, (Int32)x + 1);
-            }
-
-            return res;
-        }
-
 
 
         public int DeleteMatchByPokemonId(int id)
@@ -665,6 +667,72 @@ private List<string> DataRequire(string request)
 
             return res;
         }
+
+
+
+
+        /* Methodes Utilisateur -----------------------------------------------
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * ----------------------------------------------------------------- */
+        
+        public List<string> GetAllUtilisateurs() { return DataRequire("select * from Utilisateur;");  }
+
+        private DataTable GetUtilisateurTable()
+        {
+            string r = "select * from Utilisateur;";
+            DataTable t = TableRequire(r);
+            t.PrimaryKey = new DataColumn[] { t.Columns["idu"] };
+            return t;
+        }
+
+        public int AddUtilisateur(Utilisateur u) { return 0; }
+
+        public int UpdateUtilisateur(Utilisateur u) { return 0; }
+
+        public int DeleteUtilisateur(Utilisateur u) { return 0; }
+
+
+
+
+        /* Methodes Element ---------------------------------------------------
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         * ----------------------------------------------------------------- */
+
+        private DataTable GetElementTable()
+        {
+            string r = "select * from Element;";
+            DataTable t = TableRequire(r);
+            t.PrimaryKey = new DataColumn[] { t.Columns["ide"] };
+            return TableRequire(r);
+        }
+
+
+        public List<string> GetAllElements()
+        {
+            string r = "select type from Element;";
+            return DataRequire(r);
+        }
+
+
+
+
+
 
 
     }
