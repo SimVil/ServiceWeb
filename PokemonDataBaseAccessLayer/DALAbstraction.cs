@@ -5,67 +5,63 @@ using System.Text;
 using System.Threading.Tasks;
 using PokemonTournamentEntities;
 
+
+
+/* DALAbstraction -------------------------------------------------------------
+ * Attr
+ *   ~ private DALInterface idal : une Interface pour une implementation 
+ *     d'un DAL pour SBGD SQL.
+ * 
+ * Meth
+ *   ~ public List<Pokemon> GetAllPokemons()
+ *   ~ public List<Stade> GetAllStades()
+ *   ~ public List<Match> GetAllMatchs()
+ *   ~ public List<Utilisateur> GetAllUtilisateurs()
+ *   ~ public List<Pokemon> GetAllPokemonsFromType(TypeElement type)
+ *   ~ public List<String> GetAllElements()
+ *   ~ public Utilisateur getUtilisateurByLogin(String login)
+ *   ~ public Pokemon definePokemon(string s)
+ *   ~ public Stade defineStade(string s)
+ *   ~ public Utilisateur defineUtilisateur(string s)
+ *   ~ public Match defineMatch(string s)
+ *   ~ public int DeletePokemon(Pokemon p)
+ *   ~ public int DeletePokemon(Pokemon p)
+ * 
+ * ------------------------------------------------------------------------- */
+
 namespace PokemonDataBaseAccessLayer
 {
     public class DALAbstraction
     {
         private DALInterface idal = new DALImplementation();
 
-        // on peut essayer de passer par une methode generique
-        // et des delegate pour eviter la duplication de code degueulasse comme la
-
         public List<Pokemon> GetAllPokemons()
         {
             List<Pokemon> resu = new List<Pokemon>();
-            List<string> pokestring = new List<string>();
+            List<string> pokestring = idal.GetAllPokemons();
 
-            pokestring = idal.GetAllPokemons();
-
-            foreach(string s in pokestring)
-            {
-                resu.Add(definePokemon(s));
-            }
+            foreach(string s in pokestring) { resu.Add(definePokemon(s)); }
 
             return resu;
         }
-          
+         
 
         public List<Stade> GetAllStades()
         {
             List<Stade> resu = new List<Stade>();
-            List<string> stades = new List<string>();
-            string[] subs;
-            stades = idal.GetAllStades();
+            List<string> stades = idal.GetAllStades();
 
-            foreach (string s in stades)
-            {
-                subs = s.Split(' ');
-
-                resu.Add(new Stade(subs[0],
-                    Int32.Parse(subs[1]),
-                    new List<TypeElement>(1)));
-            }
-
+            foreach (string s in stades) { resu.Add(defineStade(s)); }
+ 
             return resu;
         }
 
         public List<Match> GetAllMatchs()
         {
             List<Match> resu = new List<Match>();
-            List<string> matchs = new List<string>();
-            string[] subs;
-            matchs = idal.GetAllMatchs();
+            List<string> matchs = idal.GetAllMatchs();
 
-            foreach (string s in matchs)
-            {
-                subs = s.Split(' ');
-                resu.Add(new Match(
-                    definePokemon(idal.GetPokemonById(Int32.Parse(subs[0]))),
-                    definePokemon(idal.GetPokemonById(Int32.Parse(subs[1]))),
-                    Int32.Parse(subs[2]),
-                    constTournoi(Int32.Parse(subs[3])),
-                    defineStade(idal.GetStadeById(Int32.Parse(subs[3])))));
-            }
+            foreach (string s in matchs) { resu.Add(defineMatch(s)); }
 
             return resu;
         }
@@ -73,20 +69,9 @@ namespace PokemonDataBaseAccessLayer
         public List<Utilisateur> GetAllUtilisateurs()
         {
             List<Utilisateur> res = new List<Utilisateur>();
-            List<string> user = new List<string>();
-            string[] subs;
+            List<string> user = idal.GetAllUtilisateurs();
 
-            user = idal.GetAllUtilisateurs();
-
-            foreach (string s in user)
-            {
-                subs = s.Split(' ');
-                res.Add(new Utilisateur(
-                    subs[0],
-                    subs[1],
-                    subs[2],
-                    subs[3]));
-            }
+            foreach (string s in user) { res.Add(defineUtilisateur(s)); }
 
             return res;
         }
@@ -113,54 +98,52 @@ namespace PokemonDataBaseAccessLayer
             string[] sub = s.Split(' ');
             List<string> strt = idal.GetPokemonTypeById(Int32.Parse(sub[0]));
             List<TypeElement> types = new List<TypeElement>();
+
             foreach(string x in strt)
             {
                 types.Add((TypeElement)Int32.Parse(x.Split(' ')[1]) - 1);
             }
+
             Pokemon p = new Pokemon(
-                    Int32.Parse(sub[0]),
-                    sub[1],
-                    Int32.Parse(sub[2]),
-                    Int32.Parse(sub[3]),
-                    Int32.Parse(sub[4]),
-                    types);
+                    Int32.Parse(sub[0]), sub[1],
+                    Int32.Parse(sub[2]), Int32.Parse(sub[3]),
+                    Int32.Parse(sub[4]), types);
 
             return p;
         }
 
+
         public Stade defineStade(string s)
         {
             string[] sub = s.Split(' ');
-            Stade std = new Stade(
-                sub[0],
-                Int32.Parse(sub[1]),
-                new List<TypeElement>(1));
+            Stade std = new Stade(sub[0], Int32.Parse(sub[1]), new List<TypeElement>(1));
 
             return std;
 
         }
 
-        public PhaseTournoi constTournoi(int i)
+
+        public Utilisateur defineUtilisateur(string s)
         {
-            PhaseTournoi pt = PhaseTournoi.HuitiemeFinale;
-
-            switch (i)
-            {
-                case (2):
-                    pt = PhaseTournoi.QuartFinale;
-                    break;
-
-                case (3):
-                    pt = PhaseTournoi.DemiFinale;
-                    break;
-
-                case (4):
-                    pt = PhaseTournoi.Finale;
-                    break;
-            }
-
-            return pt;
+            string[] sub = s.Split(' ');
+            Utilisateur u = new Utilisateur(sub[0], sub[1], sub[2], sub[3]);
+            return u;
         }
+
+
+        public Match defineMatch(string s)
+        {
+            string[] sub = s.Split(' ');
+            Match res = new Match(
+                definePokemon(idal.GetPokemonById(Int32.Parse(sub[0]))),
+                definePokemon(idal.GetPokemonById(Int32.Parse(sub[1]))),
+                Int32.Parse(sub[2]),
+                (PhaseTournoi)Int32.Parse(sub[3]),
+                defineStade(idal.GetStadeById(Int32.Parse(sub[3]))));
+
+            return res;
+        }
+
 
         public int AddPokemon(Pokemon p)
         {
@@ -171,6 +154,8 @@ namespace PokemonDataBaseAccessLayer
         {
             return idal.DeletePokemon(p);
         }
+
+        
 
     }
 }

@@ -31,14 +31,16 @@ namespace PokemonConsole
             Console.WriteLine("\n\nLes users :");
             AfficherUtilisateur();
 
-            /*manager.AddPokemon(new Pokemon("Michou", 100, 100, 100, new List<TypeElement>() { TypeElement.Eau }));
-            Console.WriteLine("\n\nLes pokémons disponibles :");
-            AfficherPokemons();*/
-
             List<Pokemon> l = manager.GetAllPokemons();
-            manager.DeletePokemon(l.First());
+            manager.DeletePokemon(l.Find(p => p.id == 9));
             Console.WriteLine("\n\nLes pokémons disponibles :");
             AfficherPokemons();
+
+            manager.AddPokemon(new Pokemon("Michou", 100, 100, 100, new List<TypeElement>() { TypeElement.Eau, TypeElement.Electrique }));
+            Console.WriteLine("\n\nLes pokémons disponibles :");
+            AfficherPokemons();
+
+
         }
 
         public void AfficherStades()
