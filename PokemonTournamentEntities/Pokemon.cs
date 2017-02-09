@@ -107,28 +107,9 @@ namespace PokemonTournamentEntities
             Pokemon winner = new Pokemon();
             if (pokemon1 != null && pokemon2 != null)
             {
-                if (pokemon1.Vie == 0 || pokemon2.Vie == 0)
-                {
-                    if (pokemon1.Vie == 0 && pokemon2.Vie != 0)
-                    {
-                        winner = pokemon2;
-                    }
-                    else
-                    {
-                        if(pokemon2.Vie == 0 && pokemon1.Vie != 0)
-                        {
-                            winner = pokemon1;
-                        }
-                    }
-                }
-
-
-                else
-                {
-
                     //determiner qui va commencer
                     Pokemon first = Pokemon.Begins(pokemon1, pokemon2);
-                    Pokemon second = null;
+                    Pokemon second = new Pokemon();
                     if (pokemon1 == first)
                     {
                         second = pokemon2;
@@ -155,7 +136,17 @@ namespace PokemonTournamentEntities
                         }
                     }
 
-                }
+                    if (pokemon1.Vie == 0 && pokemon2.Vie != 0)
+                    {
+                        winner = pokemon2;
+                    }
+                    else
+                    {
+                        winner = pokemon2;
+                    }
+                    
+
+
             }
             //anoncer le vainqueur
             return winner;

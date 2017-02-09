@@ -216,27 +216,22 @@ namespace PokemonTournamentWPF
                 {
                     MessageBox.Show("Tournoi Automatique");
                     //Jouer les matchs du huitième
-                    Pokemon winner1 = new Pokemon();
-                    Pokemon winner2 = new Pokemon();
-                    Pokemon winner3 = new Pokemon();
-                    Pokemon winner4 = new Pokemon();
-
-                    winner1 = Pokemon.Duel((Pokemon)combattant1.SelectedItem,(Pokemon)combattant2.SelectedItem, null);
-                    winner2 = Pokemon.Duel((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, null);
+                    
+                    Pokemon winner1 = Pokemon.Duel((Pokemon)combattant1.SelectedItem,(Pokemon)combattant2.SelectedItem, null);
+                    /*winner2 = Pokemon.Duel((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, null);
                     winner3 = Pokemon.Duel((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, null);
                     winner4 = Pokemon.Duel((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, null);
-                    //winner1.Heal();
-                    //winner2.Heal();
-                   //winner3.Heal();
-                   // winner4.Heal();
+                    winner1.Heal();
+                    winner2.Heal();
+                    winner3.Heal();
+                    winner4.Heal();
                     winner1 = Pokemon.Duel(winner1, winner2,null);
                     winner3 = Pokemon.Duel(winner3, winner4, null);
-                    // winner1.Heal();
-                    // winner1.Heal();*/
-
-                    winner1 = Pokemon.Duel(winner1, winner3, null);
-                    MessageBox.Show(winner1.Nom);
-                    //MessageBox.Show("The Winner of the ZZ Tournament is : "+Pokemon.Duel(winner1,winner2,null).Nom + " !!");
+                    winner1.Heal();
+                    winner3.Heal();
+                    winner1 = Pokemon.Duel(winner1, winner3, null);*/
+                    
+                    MessageBox.Show("The Winner of the ZZ Tournament is : "+winner1.Nom + " !!");
 
 
 
