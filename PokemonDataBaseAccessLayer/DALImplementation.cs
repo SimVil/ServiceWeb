@@ -9,6 +9,39 @@ using PokemonTournamentEntities;
 
 // penser a la jointure pour recuperer la liste de type des pokemon !
 
+/* Methodes existantes (sinon je me perds)
+ * 
+ * private List<string> DataRequire(string request)
+ * private DataTable TableRequire(string r)
+ * public DALImplementation() { }
+ * public List<string> GetAllPokemons()
+ * public List<string> GetAllPokemonType()
+ * public List<string> GetPokemonTypeById(int id)
+ * public List<string> GetAllStades()
+ * public List<string> GetAllElements()
+ * public List<string> GetAllMatchs()
+ * public List<string> GetAllUtilisateurs()
+ * public string GetPokemonById(int id)
+ * public string GetPokemonByNom(string n)
+ * public string GetStadeById(int id)
+ * private DataTable GetPokemonTable()
+ * private DataTable GetPokemonTypeTable()
+ * private DataTable GetPokemonTypeTableById(int id)
+ * private DataTable GetUtilisateurTable()
+ * private DataTable GetStadeTable()
+ * private DataTable GetMatchTable()
+ * private DataTable GetElementTable()
+ * private DataTable GetMatchByPokemonId(int id)
+ * private DataTable GetPokemonTypeTableByIdType(int id, int type)
+ * public int AddPokemon(Pokemon p)
+ * public int AddPokemonType(int id, int type)
+ * public int DeletePokemon(Pokemon p)
+ * public int DeletePokemonType(int id)
+ * public int DeleteMatchByPokemonId(int id)
+ * 
+ * 
+ * 
+ * */
 
 namespace PokemonDataBaseAccessLayer
 {
@@ -20,7 +53,7 @@ namespace PokemonDataBaseAccessLayer
 
 
         /* fonction recuperant de maniere generale une liste de string de donnee */
-        private List<string> DataRequire(string request)
+private List<string> DataRequire(string request)
         {
             List<string> res = new List<string>();
             List<string> tmp = new List<string>();
@@ -188,7 +221,6 @@ namespace PokemonDataBaseAccessLayer
             return TableRequire(r);
         }
 
-
         // considere que l'on peut avoir plusieurs fois un pokemon dans la db
         public int AddPokemon(Pokemon p)
         {
@@ -244,8 +276,7 @@ namespace PokemonDataBaseAccessLayer
                 {
                     res ^= AddPokemonType(p.id, (Int32)x);
                 }
-            } else
-            {
+            } else {
                 Console.WriteLine("Pokemon " + p.id + " deja connu !");
 
             }
@@ -253,15 +284,21 @@ namespace PokemonDataBaseAccessLayer
 
         }
 
-        public int AddPokemonType(int id, int type)
+        public int UpdatePokemon(Pokemon p)
         {
             int res = 0;
-            string r = "insert into PokemonType (pkm, type) values (@pkm, @type);";
-            DataTable t = GetPokemonTypeTable();
+            string r = "update Pokemon " +
+                "set nom = @nom " +
+                "set vie = @vie " +
+                "set force = @force " +
+                "set defense = @defense " +
+                "where idp = @idp;";
 
-            bool exist = t.AsEnumerable().Any(row => row.Field<int>("pkm") == id && row.Field<int>("type") == type + 1);
+            DataTable t = (GetPokemonTable());
+            bool exist = t.AsEnumerable().Any(row => row.Field<int>("idp") == p.id);
 
-            if (!exist) {
+            if (exist)
+            {
                 try
                 {
                     using (SqlConnection connect = new SqlConnection(_connectionString))
@@ -270,19 +307,25 @@ namespace PokemonDataBaseAccessLayer
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
-                        adapter.InsertCommand = cmd;
-                        adapter.SelectCommand = new SqlCommand("select * from PokemonType", connect);
-                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                        adapter.UpdateCommand = cmd;
+                        adapter.SelectCommand = new SqlCommand("select * from Pokemon", connect);
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
                         adapter.DeleteCommand = builder.GetDeleteCommand(true);
 
-                        adapter.InsertCommand.Parameters.AddWithValue("@pkm", id);
-                        adapter.InsertCommand.Parameters.AddWithValue("@type", type + 1);
+                        adapter.UpdateCommand.Parameters.AddWithValue("@idp", p.id);
+                        adapter.UpdateCommand.Parameters.AddWithValue("@nom", p.Nom);
+                        adapter.UpdateCommand.Parameters.AddWithValue("@vie", p.Vie);
+                        adapter.UpdateCommand.Parameters.AddWithValue("@force", p.Force);
+                        adapter.UpdateCommand.Parameters.AddWithValue("@defense", p.Defense);
 
                         adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-                        DataRow nr = t.Rows.Add();
-                        nr.SetField("pkm", id);
-                        nr.SetField("type", type + 1);
+                        DataRow nr = t.Rows.Find(p.id);
+                        nr.SetField("idp", p.id);
+                        nr.SetField("nom", p.Nom);
+                        nr.SetField("vie", p.Vie);
+                        nr.SetField("force", p.Force);
+                        nr.SetField("defense", p.Defense);
 
                         res = adapter.Update(t);
 
@@ -295,10 +338,23 @@ namespace PokemonDataBaseAccessLayer
                     Console.WriteLine(e.ToString());
 
                 }
+
+                foreach (TypeElement x in p.Types)
+                {
+                    res ^= UpdatePokemonType(p.id, (Int32)x);
+                }
             }
-            
+            else
+            {
+                Console.WriteLine("Update : Le pokemon nexiste pas !");
+
+            }
             return res;
+
+
         }
+
+
 
         public int DeletePokemon(Pokemon p)
         {
@@ -388,6 +444,65 @@ namespace PokemonDataBaseAccessLayer
             }
 
             return res;
+        }
+
+        public int AddPokemonType(int id, int type)
+        {
+            int res = 0;
+            string r = "insert into PokemonType (pkm, type) values (@pkm, @type);";
+            DataTable t = GetPokemonTypeTableById(id);
+
+            bool exist = t.AsEnumerable().Any(row => row.Field<int>("pkm") == id && row.Field<int>("type") == type + 1);
+
+            if (!exist)
+            {
+                try
+                {
+                    using (SqlConnection connect = new SqlConnection(_connectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand(r, connect);
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                        adapter.InsertCommand = cmd;
+                        adapter.SelectCommand = new SqlCommand("select * from PokemonType", connect);
+                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                        adapter.DeleteCommand = builder.GetDeleteCommand(true);
+
+                        adapter.InsertCommand.Parameters.AddWithValue("@pkm", id);
+                        adapter.InsertCommand.Parameters.AddWithValue("@type", type + 1);
+
+                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                        DataRow nr = t.Rows.Add();
+                        nr.SetField("pkm", id);
+                        nr.SetField("type", type + 1);
+
+                        res = adapter.Update(t);
+
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Erreur dans AddPokemon");
+                    Console.WriteLine(e.ToString());
+
+                }
+            }
+
+            return res;
+        }
+
+        public int UpdatePokemonType(int id, int type)
+        {
+            int res = 0;
+            //res = DeletePokemonType(int id, type);
+            //res = AddPokemonType(id, type);
+            
+
+            return res;
+
         }
 
 
