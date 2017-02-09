@@ -23,7 +23,87 @@ namespace PokemonTournamentEntities
             StadePokemon = stade;
         }
 
-        public override String ToString()
+        //determine qui va attaquer le premier alétoirement (toss a coin)
+        public Pokemon Begins(Pokemon pok1, Pokemon pok2)
+        {
+            Random rnd = new Random();
+            if (rnd.Next(1, 3) % 2 == 0)
+            {
+                return pok1;
+            }
+            return pok2;
+        }
+
+        //fonction qui simule le deroulement d'un combat et renvoie le gagnant
+        public Pokemon Duel()
+        {
+            Pokemon winner = null;
+            if (Pokemon1 != null && Pokemon2 != null)
+            {
+                if(Pokemon1 == Pokemon2)
+                {
+                    winner = Pokemon1;
+                }
+                else
+                {
+                    //determiner qui va commencer
+                    Pokemon first = Begins(Pokemon1, Pokemon2);
+                    Pokemon second = new Pokemon();
+                    if (Pokemon1 == first)
+                    {
+                        second = Pokemon2;
+                    }
+                    else
+                    {
+                        second = Pokemon1;
+                    }
+
+                    //Booster les pokemon selon les stades
+                    if (StadePokemon != null)
+                    {
+                        first.Boost(StadePokemon);
+                        second.Boost(StadePokemon);
+                    }
+
+                    //lancer le combat
+                    while (first.Vie > 0 && second.Vie > 0)
+                    {
+                        first.Attaquer(second);
+                        if (second.Vie > 0)
+                        {
+                            second.Attaquer(first);
+                        }
+                    }
+
+                    if (Pokemon1.Vie == 0 && Pokemon2.Vie != 0)
+                    {
+                        winner = Pokemon2;
+                    }
+                    else
+                    {
+                        winner = Pokemon2;
+                    }
+                }
+            }
+            else
+            {
+                if(Pokemon1 == null && Pokemon2 != null)
+                {
+                    winner = Pokemon2;
+                }
+                else
+                {
+                    if(Pokemon1 != null && Pokemon2 == null)
+                    {
+                        winner = Pokemon1;
+                    }
+                }
+            }
+            //anoncer le vainqueur
+            return winner;
+        }
+
+    public override String ToString()
         {
             return Pokemon1.Nom + " vs " + Pokemon2.Nom;
            /*return @"Match : " + Pokemon1.Nom + " vs " + Pokemon2.Nom + " - " + PhaseTournoi.ToString() + " - " + StadePokemon.ToString() + "\n"

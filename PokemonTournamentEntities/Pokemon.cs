@@ -50,7 +50,6 @@ namespace PokemonTournamentEntities
         public override String ToString()
         {
             return Nom;
-            //return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense;
         }
 
         //la fonction attaquer un autre pokemon : soustrait la valeur de force de la vie
@@ -83,73 +82,11 @@ namespace PokemonTournamentEntities
 
         }
 
-        //determine qui va attaquer le premier alétoirement (toss a coin)
-        public static Pokemon Begins(Pokemon pok1, Pokemon pok2)
-        {
-            Random rnd = new Random();
-            if(rnd.Next(1,3)%2 == 0)
-            {
-                return pok1;
-            }
-            return pok2;
-        }
-
         //Healer le pokemon
         public void Heal()
         {
             this.Vie += 200;
         }
 
-
-        //fonction qui simule le deroulement d'un combat et renvoie le gagnant
-        static public Pokemon Duel(Pokemon pokemon1, Pokemon pokemon2, Stade chosenstadium)
-        {
-            Pokemon winner = new Pokemon();
-            if (pokemon1 != null && pokemon2 != null)
-            {
-                    //determiner qui va commencer
-                    Pokemon first = Pokemon.Begins(pokemon1, pokemon2);
-                    Pokemon second = new Pokemon();
-                    if (pokemon1 == first)
-                    {
-                        second = pokemon2;
-                    }
-                    else
-                    {
-                        second = pokemon1;
-                    }
-
-                    //Booster les pokemon selon les stades
-                    if (chosenstadium != null)
-                    {
-                        first.Boost(chosenstadium);
-                        second.Boost(chosenstadium);
-                    }
-
-                    //lancer le combat
-                    while (first.Vie > 0 && second.Vie > 0)
-                    {
-                        first.Attaquer(second);
-                        if (second.Vie > 0)
-                        {
-                            second.Attaquer(first);
-                        }
-                    }
-
-                    if (pokemon1.Vie == 0 && pokemon2.Vie != 0)
-                    {
-                        winner = pokemon2;
-                    }
-                    else
-                    {
-                        winner = pokemon2;
-                    }
-                    
-
-
-            }
-            //anoncer le vainqueur
-            return winner;
-        }
      }
 }

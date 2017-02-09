@@ -96,14 +96,8 @@ namespace PokemonTournamentWPF
 
             pokemonsSelected = new List<Pokemon>();
 
-           /* IList<PokemonTournamentEntities.Match> matchs = controller.GetAllMatchs();
-
-            mvm = new ViewModelBase.MatchsViewModel(matchs);
-            list_matchs.DataContext = mvm;*/
-
             list_pokemons.Visibility = Visibility.Collapsed;
             list_stades.Visibility = Visibility.Collapsed;
-            //list_matchs.Visibility = Visibility.Visible;
 
             grid_view_pokemons.Visibility = Visibility.Collapsed;
             grid_view_stades.Visibility = Visibility.Collapsed;
@@ -127,7 +121,6 @@ namespace PokemonTournamentWPF
 
                 pvm = new ViewModelBase.PokemonsViewModel(pokemons);
                 list_pokemons.DataContext = pvm;
-                //list_pokemons.ItemsSource = controller.GetAllPokemons();
             }
             else
             {
@@ -135,7 +128,6 @@ namespace PokemonTournamentWPF
                 IList<Pokemon> pokemons = controller.GetAllPokemonsFromType(type);
                 pvm = new ViewModelBase.PokemonsViewModel(pokemons);
                 list_pokemons.DataContext = pvm;
-                //list_pokemons.ItemsSource = controller.GetAllPokemonsFromType(type);
             }
         }
 
@@ -148,8 +140,7 @@ namespace PokemonTournamentWPF
         private void btn_tournoi_Click(object sender, RoutedEventArgs e)
         {
             list_pokemons.Visibility = Visibility.Collapsed;
-            list_stades.Visibility = Visibility.Visible;
-            
+            list_stades.Visibility = Visibility.Visible;           
 
             grid_view_pokemons.Visibility = Visibility.Collapsed;
             grid_view_stades.Visibility = Visibility.Collapsed;
@@ -193,7 +184,7 @@ namespace PokemonTournamentWPF
             //on ne peut lancer le tournoi que si il ya un poekmon unique choisie par combobox
             comboBoxes = new List<ComboBox>() { combattant1, combattant2, combattant3, combattant4, combattant5, combattant6, combattant7, combattant8 };
             bool duplicate = false;
-            for (int i = 0; i < comboBoxes.Count(); i++)
+            /*for (int i = 0; i < comboBoxes.Count(); i++)
             {
                 for (int j = i + 1; j < comboBoxes.Count(); j++)
                 {
@@ -208,41 +199,68 @@ namespace PokemonTournamentWPF
                 {
                     break;
                 }
-            }
+            }*/
+            
             if (!duplicate)
             {
                 string content = (sender as Button).Content.ToString();
                 if (content == "Tournoi Automatique")
                 {
-                    MessageBox.Show("Tournoi Automatique");
-                    
                     //First Duel phase
-                    Pokemon winner1 = Pokemon.Duel((Pokemon)combattant1.SelectedItem,(Pokemon)combattant2.SelectedItem, null);
-                    Pokemon winner2 = Pokemon.Duel((Pokemon)combattant3.SelectedItem, (Pokemon)combattant4.SelectedItem, null);
-                    Pokemon winner3 = Pokemon.Duel((Pokemon)combattant5.SelectedItem, (Pokemon)combattant6.SelectedItem, null);
-                    Pokemon winner4 = Pokemon.Duel((Pokemon)combattant7.SelectedItem, (Pokemon)combattant8.SelectedItem, null);
+                    Match m1 = new Match((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, 0,PhaseTournoi.QuartFinale, null);
+                    Match m2 = new Match((Pokemon)combattant3.SelectedItem, (Pokemon)combattant4.SelectedItem, 0, PhaseTournoi.QuartFinale, null);
+                    Match m3 = new Match((Pokemon)combattant5.SelectedItem, (Pokemon)combattant6.SelectedItem, 0, PhaseTournoi.QuartFinale, null);
+                    Match m4 = new Match((Pokemon)combattant7.SelectedItem, (Pokemon)combattant8.SelectedItem, 0, PhaseTournoi.QuartFinale, null);
+
+                    Pokemon winner1 = m1.Duel();
+                    vainqueur1.Content = winner1;
+                    Pokemon winner2 = m2.Duel();
+                    vainqueur4.Content = winner2;
+                    Pokemon winner3 = m3.Duel();
+                    vainqueur2.Content = winner3;
+                    Pokemon winner4 = m4.Duel();
+                    vainqueur3.Content = winner4;
 
                     //Healing phase
-                    winner1.Heal();
-                    winner2.Heal();
-                    winner3.Heal();
-                    winner4.Heal();
+                    if(winner1 != null)
+                    {
+                        winner1.Heal();
+                    }
+                    if (winner2 != null)
+                    {
+                        winner2.Heal();
+                    }
+                    if (winner3 != null)
+                    {
+                        winner3.Heal();
+                    }
+                    if (winner4 != null)
+                    {
+                        winner4.Heal();
+                    }
+                   
+                    Match m5 = new Match(winner1, winner2, 0, PhaseTournoi.DemiFinale, null);
+                    Match m6 = new Match(winner3, winner4, 0, PhaseTournoi.DemiFinale, null);
 
-                    //Second Duel phase
-                    winner1 = Pokemon.Duel(winner1, winner2,null);
-                    winner3 = Pokemon.Duel(winner3, winner4, null);
+                    winner1 = m5.Duel();
+                    vainqueur5.Content = winner1;
+                    winner2 = m6.Duel();
+                    vainqueur6.Content = winner2;
 
                     //healing phase
-                    winner1.Heal();
-                    winner3.Heal();
+                    if (winner1 != null)
+                    {
+                        winner1.Heal();
+                    }
+                    if (winner2 != null)
+                    {
+                        winner2.Heal();
+                    }
 
                     //Final
-                    winner1 = Pokemon.Duel(winner1, winner3, null);
-                    
-                    MessageBox.Show("The Winner of the ZZ Tournament is : "+winner1.Nom + " !!");
-
-
-
+                    Match m7 = new Match(winner1, winner2, 0, PhaseTournoi.Finale, null);
+                    winner1 = m7.Duel();
+                    vainqueur7.Content = winner1;
                 }
                 else
                 {

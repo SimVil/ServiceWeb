@@ -58,9 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MatchControl.xaml.cs">
-      <DependentUpon>MatchControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PokemonControl.xaml.cs">
       <DependentUpon>PokemonControl.xaml</DependentUpon>
     </Compile>
@@ -75,9 +72,6 @@
     <Compile Include="ViewModelBase\StadesViewModel.cs" />
     <Compile Include="ViewModelBase\StadeViewModel.cs" />
     <Compile Include="ViewModelBase\ViewModelBase.cs" />
-    <Compile Include="ChoixTournoi.xaml.cs">
-      <DependentUpon>ChoixTournoi.xaml</DependentUpon>
-    </Compile>
     <Compile Include="XMLSave.xaml.cs">
       <DependentUpon>XMLSave.xaml</DependentUpon>
     </Compile>
@@ -100,19 +94,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MatchControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="PokemonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StadeControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ChoixTournoi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
