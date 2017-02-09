@@ -116,8 +116,8 @@ namespace PokemonDataBaseAccessLayer
         public Stade defineStade(string s)
         {
             string[] sub = s.Split(' ');
-            Stade std = new Stade(sub[0], Int32.Parse(sub[1]), new List<TypeElement>(1));
-
+            Stade std = new Stade(Int32.Parse(sub[0]), sub[2], Int32.Parse(sub[1]), new List<TypeElement>(1));
+      
             return std;
 
         }
@@ -135,11 +135,12 @@ namespace PokemonDataBaseAccessLayer
         {
             string[] sub = s.Split(' ');
             Match res = new Match(
-                definePokemon(idal.GetPokemonById(Int32.Parse(sub[0]))),
+                Int32.Parse(sub[0]),
                 definePokemon(idal.GetPokemonById(Int32.Parse(sub[1]))),
-                Int32.Parse(sub[2]),
-                (PhaseTournoi)Int32.Parse(sub[3]),
-                defineStade(idal.GetStadeById(Int32.Parse(sub[3]))));
+                definePokemon(idal.GetPokemonById(Int32.Parse(sub[2]))),
+                Int32.Parse(sub[3]),
+                (PhaseTournoi)Int32.Parse(sub[4]),
+                defineStade(idal.GetStadeById(Int32.Parse(sub[5]))));
 
             return res;
         }
@@ -160,7 +161,22 @@ namespace PokemonDataBaseAccessLayer
             return idal.UpdatePokemon(p);
         }
 
-        
+        public int AddMatch(Match m)
+        {
+            return idal.AddMatch(m);
+        }
+
+        public int UpdateMatch(Match m)
+        {
+            return idal.UpdateMatch(m);
+        }
+
+        public int DeleteMatch(Match m)
+        {
+            return idal.DeleteMatch(m);
+        }
+
+
 
     }
 }

@@ -104,5 +104,20 @@ namespace PokemonBusinessLayer
         {
             return dab.UpdatePokemon(p);
         }
+
+        public int AddMatch(Match m)
+        {
+            return dab.AddMatch(m);
+        }
+
+        public int UpdateMatch(Match m)
+        {
+            return dab.UpdateMatch(m);
+        }
+
+        public int DeleteMatch(Match m)
+        {
+            return dab.DeleteMatch(m);
+        }
     }
 }

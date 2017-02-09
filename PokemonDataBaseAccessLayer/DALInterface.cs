@@ -38,6 +38,12 @@ namespace PokemonDataBaseAccessLayer
 
         int UpdatePokemon(Pokemon p);
 
+        int AddMatch(Match m);
+
+        int UpdateMatch(Match m);
+
+        int DeleteMatch(Match m);
+
 
     }
 }

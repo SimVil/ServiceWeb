@@ -11,12 +11,25 @@ namespace PokemonTournamentEntities
         public String Nom { get; set; }
         public int NbPlaces { get; set; }
         public List<TypeElement> Types { get; set; }
+        private static int nb = 4;
+        public int ids { get; private set; }
 
         public Stade(String nom, int nbPlaces, List<TypeElement> types) : base()
         {
             Nom = nom;
             NbPlaces = nbPlaces;
             Types = types;
+            ids = nb;
+            nb++;
+        }
+
+        public Stade(int i, String nom, int nbPlaces, List<TypeElement> types) : base()
+        {
+            Nom = nom;
+            NbPlaces = nbPlaces;
+            Types = types;
+            ids = i;
+            
         }
 
         public override string ToString()

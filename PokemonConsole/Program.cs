@@ -29,19 +29,20 @@ namespace PokemonConsole
             Console.WriteLine("\n\nLes matchs disponibles : ");
             AfficherMatchs();
 
-            manager.AddPokemon(new Pokemon(15, "Michou", 100, 100, 100, new List<TypeElement>() { TypeElement.Eau, TypeElement.Electrique }));
-            Console.WriteLine("\n\nLes pokémons disponibles :");
-            AfficherPokemons();
+            Pokemon Onigali = manager.GetAllPokemons().Find(x => x.Nom.Equals("Onigali"));
+            Pokemon Tortank = manager.GetAllPokemons().Find(x => x.Nom.Equals("Tortank"));
+            Stade std = manager.GetAllStades().Find(x => x.Nom.Equals("Stade-neutre"));
+            Match mat = new Match(Onigali, Tortank, Onigali.id, PhaseTournoi.DemiFinale, std);
+            manager.AddMatch(mat);
 
-            Pokemon michou = manager.GetAllPokemons().Find(x => x.id == 15);
-            michou.Nom = "Alizarine";
-            michou.Vie = 200;
-            michou.Types.Clear();
-            michou.Types = new List<TypeElement>() { TypeElement.Vol, TypeElement.Eau, TypeElement.Feu };
-            manager.UpdatePokemon(michou);
-            //manager.DeletePokemon(tortank);
-            Console.WriteLine("\n\nLes pokémons disponibles :");
-            AfficherPokemons();
+            Console.WriteLine("\n\nLes matchs disponibles : ");
+            AfficherMatchs();
+
+            manager.DeleteMatch(mat);
+            Console.WriteLine("\n\nLes matchs disponibles : ");
+            AfficherMatchs();
+
+
 
 
         }
