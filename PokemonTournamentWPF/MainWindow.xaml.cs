@@ -224,13 +224,16 @@ namespace PokemonTournamentWPF
             }
             else
             {
-                List<Pokemon> poke = new List<Pokemon>();
-                foreach(ComboBox cb in comboBoxes)
+                if(content == "Tournoi Jouable")
                 {
-                    Pokemon p = (Pokemon)cb.SelectedItem;
-                    if(p != null)
+                    List<Pokemon> poke = new List<Pokemon>();
+                    foreach (ComboBox cb in comboBoxes)
                     {
-                        poke.Add(p);
+                        Pokemon p = (Pokemon)cb.SelectedItem;
+                        if (p != null)
+                        {
+                            poke.Add(p);
+                        }
                     }
                     ModeJouable mj = ModeJouable.getInstance(poke);
                     mj.Show();

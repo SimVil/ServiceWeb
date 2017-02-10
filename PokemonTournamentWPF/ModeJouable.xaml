@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel>
             <Label HorizontalAlignment="Center">Pokemon adverse</Label>
-            <Label x:Name="nom_adversaire" HorizontalAlignment="Center">eg</Label>
+            <Label x:Name="nom_adversaire" HorizontalAlignment="Center"></Label>
             <Image x:Name="image_adversaire" Width="90" Height="120"></Image>
             <Image x:Name="image_pokemon_selected" Width="90" Height="120"></Image>
             <Label HorizontalAlignment="Center">Votre Pokemon</Label>

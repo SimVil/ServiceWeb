@@ -23,10 +23,14 @@ namespace PokemonTournamentWPF
         private Pokemon pokemonJoue;
         private static ModeJouable modeJouable;
 
+        List<Pokemon> Pokemons;
+
         private ModeJouable(List<Pokemon> pokemons)
         {
             InitializeComponent();
             list_box_pokemons.ItemsSource = pokemons;
+
+            Pokemons = pokemons;
         }
 
         public static ModeJouable getInstance(List<Pokemon> pokemons)
@@ -49,6 +53,15 @@ namespace PokemonTournamentWPF
                 nom_pokemon_selected.Visibility = Visibility.Visible;
                 nom_pokemon_selected.Content = pokemonJoue.Nom;
                 image_pokemon_selected.Source = new BitmapImage(new Uri(pokemonJoue.PokeImage));
+
+                //récupérer pokemon adversaire
+                int indexjoue = Pokemons.IndexOf(pokemonJoue);
+                int indexAdverse = (indexjoue + 1) % Pokemons.Count;
+
+                Pokemon adversaire = Pokemons.ElementAt(indexAdverse);
+                nom_adversaire.Content = adversaire.Nom;
+                image_adversaire.Source = new BitmapImage(new Uri(adversaire.PokeImage));
+
             }
         }
     }
