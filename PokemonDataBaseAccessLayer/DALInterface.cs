@@ -8,6 +8,12 @@ using PokemonTournamentEntities;
 
 namespace PokemonDataBaseAccessLayer
 {
+
+    // a quoi sert cette classe ?
+    // elle est ici pour faire le pont entre la DALAbstraction et l'implementation en dur
+    // d'un dal gerant un SGBD specifique. Du coup, en fournissant une interface a un DAlabstraction
+    // (cf DALAbstraction) on peut ensuite instancier plein de dalsgbd differents.
+
     interface DALInterface
     {
         List<string> GetAllPokemons();

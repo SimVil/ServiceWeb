@@ -8,6 +8,8 @@ using System.Data;
 using PokemonTournamentEntities;
 
 /* Classe faisant le lien avec le SGBD */
+/* implemente l'interface DALInterface, fournit donc comme API
+ * toutes les methodede celle ci */
 
 namespace PokemonDataBaseAccessLayer
 {
@@ -420,6 +422,12 @@ namespace PokemonDataBaseAccessLayer
             res = DeletePokemonType(p.id);
             foreach (TypeElement x in p.Types)
             {
+                // pourquoi on met +1  ?
+                // en fait dans le C# les enum commencent a 0, et dans la bd
+                // ils commencent a 1, il faut donc corriger le decalage. En clair
+                //    dans C#  : TypeElement.Eau <--> 0
+                //    dans SQL : TypeElement.Eau <--> 1
+            
                 res ^= AddPokemonType(p.id, (Int32)x + 1);
             }
 
@@ -669,6 +677,7 @@ namespace PokemonDataBaseAccessLayer
                         adapter.UpdateCommand = builder.GetUpdateCommand(true);
                         adapter.DeleteCommand = builder.GetDeleteCommand(true);
 
+                        // on ajoute le match
                         tp.Rows.Add(m.idm, m.Pokemon1.id, m.Pokemon2.id, m.IdPokemonVainqueur, m.StadePokemon.ids, (Int32)m.PhaseTournoi + 1);
                         adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 

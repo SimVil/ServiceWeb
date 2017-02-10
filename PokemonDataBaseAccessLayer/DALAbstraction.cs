@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 using PokemonTournamentEntities;
 
 
+/* cette classe sert a faire le lien entre la DAL et la BL
+ * Elle contient une interface pour recuperer les donnees "brutes"
+ * de la base de donnees, les formater sous forme d'entite,
+ * et les fournir a la business layer pour qu'elle fasse du
+ * traitement dessus.
+ * 
+ * */
 
 /* DALAbstraction -------------------------------------------------------------
  * Attr
@@ -35,6 +42,8 @@ namespace PokemonDataBaseAccessLayer
     {
         private DALInterface idal = new DALImplementation();
 
+
+        // recupere tout les pokemon sous forme d'une liste de poke
         public List<Pokemon> GetAllPokemons()
         {
             List<Pokemon> resu = new List<Pokemon>();
@@ -76,6 +85,8 @@ namespace PokemonDataBaseAccessLayer
             return res;
         }
 
+
+        // pour recuperer les types, on recupere les poke et on filtre par type
         public List<Pokemon> GetAllPokemonsFromType(TypeElement type)
         {
             return GetAllPokemons().Where(p => p.Types.Contains(type)).ToList();
@@ -91,19 +102,30 @@ namespace PokemonDataBaseAccessLayer
             return GetAllUtilisateurs().Where(u => u.Login == login).FirstOrDefault();
         }
 
-
+        
+        // methode permettant de reconstruire un pokemon a partir d'une chaine resultant
+        // d'un appel a la base de donnee.
         public Pokemon definePokemon(string s)
         {
-
+            // la chaine contient toues les valeurs que l'on veut separee par un ' '
+            // on split donc sur ' ' et on remplit notre pokemon par la suite.
             string[] sub = s.Split(' ');
             List<string> strt = idal.GetPokemonTypeById(Int32.Parse(sub[0]));
             List<TypeElement> types = new List<TypeElement>();
 
+            // sa liste de type
             foreach(string x in strt)
             {
+                // on met -1 pour corriger le decalage entre le SQL et le C#
+                // On redonne l'exemple de construction. On peut voir dans
+                // AddPokemon (Implementation) pour l'exemple en sens inverse
+                //
+                //  En C#  : Eau <--> 0
+                //  En SQL : Eau <--> 1
                 types.Add((TypeElement)Int32.Parse(x.Split(' ')[1]) - 1);
             }
 
+            // et ses valeurs.
             Pokemon p = new Pokemon(
                     Int32.Parse(sub[0]), sub[1],
                     Int32.Parse(sub[2]), Int32.Parse(sub[3]),
@@ -112,7 +134,7 @@ namespace PokemonDataBaseAccessLayer
             return p;
         }
 
-
+        // meme chose pour les states
         public Stade defineStade(string s)
         {
             string[] sub = s.Split(' ');
@@ -122,7 +144,7 @@ namespace PokemonDataBaseAccessLayer
 
         }
 
-
+        // pour les users
         public Utilisateur defineUtilisateur(string s)
         {
             string[] sub = s.Split(' ');
@@ -130,7 +152,8 @@ namespace PokemonDataBaseAccessLayer
             return u;
         }
 
-
+        // et pour les match. Un match est lui carrement construit a partir
+        // d'autres objets.
         public Match defineMatch(string s)
         {
             string[] sub = s.Split(' ');
@@ -145,6 +168,8 @@ namespace PokemonDataBaseAccessLayer
             return res;
         }
 
+
+        // toutes les methodes ecrivant dans la base de donnee 
         public int AddPokemon(Pokemon p) { return idal.AddPokemon(p); }
 
         public int DeletePokemon(Pokemon p) { return idal.DeletePokemon(p); }

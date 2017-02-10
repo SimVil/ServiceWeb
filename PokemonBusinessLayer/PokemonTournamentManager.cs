@@ -88,6 +88,25 @@ namespace PokemonBusinessLayer
             return dab.GetAllUtilisateurs().Select(m => m.ToString()).ToList();
         }
 
+        // pour les 4 types : Utilisateur, Pokemon, Match, Stade
+        // on propose les 3 methodes insert, update, delete.
+
+        // Pour chacun de ces objets et chacunes de ces methodes,
+        // on effectue des controles d'existence et de contraintes.
+
+        // Par existence on entend  : on ne rajoute pas un pokemon qui existe deja
+        // par contrainte on entend : de la vie negative c'est pas top
+
+        // a noter que certaines contraintes (notamment les pass) sont faibles
+        // et que le code en general (c'est une grosse faiblesse de celui-ci)
+        // et pas SQLi-safe du tout.
+
+        // -----------------------------------------------------------
+        // Pour ajouter il faut : not(exist) and constraints
+        // pour updater il faut : exist and constraints
+        // pour deleter il faut : exist
+        // -----------------------------------------------------------
+
         // conditions d'acceptation d'un pokemon -> forme de CNF
         // (conjunctive normal form, en utilisant de morgan)
         private bool PokemonConstraints(Pokemon p)
@@ -110,7 +129,9 @@ namespace PokemonBusinessLayer
             foreach (Pokemon x in l) { exist ^= x.id == p.id; }
             return exist;
         }
- 
+
+
+        
         public int AddPokemon(Pokemon p)
         {  
             if(!PokemonExistence(p) && PokemonConstraints(p))
@@ -162,6 +183,10 @@ namespace PokemonBusinessLayer
         }
 
         
+        // match est lourd en contrainte, car si on ne verifie pas la contrainte et l'existence
+        // de chacun des objets, on pourrait tenter de creer un match avec des pokemon
+        // qui seraient hors cadre. Par exemple on pourrait faire :
+        //   new Match(New(Pokemon(1, "Pouet", -4, -4, -4, ....), ...);
         private bool MatchConstraints(Match m)
         {
             bool Pk1e = PokemonExistence(m.Pokemon1);
