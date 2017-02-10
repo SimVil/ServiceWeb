@@ -62,6 +62,17 @@ namespace PokemonTournamentEntities
             nb++;
         }
 
+        public Pokemon(int i, String nom, int vie, int force, int defense, List<TypeElement> types, String chemin) : base()
+        {
+            Nom = nom;
+            Vie = vie;
+            Force = force;
+            Defense = defense;
+            Types = types;
+            PokeImage = chemin;
+            id = i;
+        }
+
         //la fonction attaquer un autre pokemon : soustrait la valeur de force de la vie
         public void Attaquer(Pokemon Pokemon2)
         {

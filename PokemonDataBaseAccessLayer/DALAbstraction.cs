@@ -141,7 +141,7 @@ namespace PokemonDataBaseAccessLayer
 
             Stade std;
             string typeE = sub[3];
-            if(typeE == null)
+            if(typeE == null || typeE == "")
             {
                 std = new Stade(Int32.Parse(sub[0]), sub[2], Int32.Parse(sub[1]), new List<TypeElement>(1) {});
             }

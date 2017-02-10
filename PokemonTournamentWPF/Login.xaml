@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PokemonTournamentWPF"
         mc:Ignorable="d"
-        Title="Login" Height="363" Width="570">
+        Title="Login" Style="{StaticResource LoginWindow}">
     <Grid>
        
         <Grid.ColumnDefinitions>
@@ -19,10 +19,10 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
-        <Label x:Name="label_login" Content="Login :" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15"/>
-        <TextBox x:Name="textbox_login" Grid.Row="0" Grid.Column="1" Height="25"/>
-        <Label x:Name="label_password" Content="Password :" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15"/>
+        <Label  Foreground="#eeeeee" x:Name="label_login" Content="Login :" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15"/>
+        <TextBox x:Name="textbox_login" Grid.Row="0" Grid.Column="1" Height="25" />
+        <Label Foreground="#eeeeee" x:Name="label_password" Content="Password :" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15"/>
         <PasswordBox x:Name="passwordbox_password" Grid.Row="1" Grid.Column="1" Height="25"/>
-        <Button x:Name="btn_connexion" Content="Connexion" Grid.Row="2" Grid.Column="1" Height="35" Cursor="Hand" Click="btn_connexion_Click"/>
+        <Button x:Name="btn_connexion" Content="Connexion" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonLogin}"  Cursor="Hand" Click="btn_connexion_Click" Margin="0,45,10,22"/>
     </Grid>
 </Window>
