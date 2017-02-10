@@ -29,26 +29,26 @@ namespace PokemonBusinessLayer
          */
         public List<Stade> GetAllStades()
         {
-            //return DALManager.GetInstance().GetAllStades();
-            return dab.GetAllStades();
+            return DALManager.GetInstance().GetAllStades();
+            //return dab.GetAllStades();
         }
 
         public List<Pokemon> GetAllPokemonsFromType(TypeElement type)
         {
-            //return DALManager.GetInstance().GetAllPokemonsFromType(type);
-            return dab.GetAllPokemonsFromType(type);
+            return DALManager.GetInstance().GetAllPokemonsFromType(type);
+            //return dab.GetAllPokemonsFromType(type);
         }
 
         public List<Pokemon> GetAllPokemons()
         {
-            //return DALManager.GetInstance().GetAllPokemons();
-            return dab.GetAllPokemons();
+            return DALManager.GetInstance().GetAllPokemons();
+            //return dab.GetAllPokemons();
         }
 
         public List<Match> GetAllMatchs()
         {
-            //return DALManager.GetInstance().GetAllMatchs();
-            return dab.GetAllMatchs();
+            return DALManager.GetInstance().GetAllMatchs();
+            //return dab.GetAllMatchs();
         }
 
         public List<Utilisateur> GetAllUtilisateurs()
@@ -61,26 +61,26 @@ namespace PokemonBusinessLayer
          */
         public List<String> GetAllStadesString()
         {
-            //return DALManager.GetInstance().GetAllStades().Select(s => s.ToString()).ToList();
-            return dab.GetAllStades().Select(s => s.ToString()).ToList();
+            return DALManager.GetInstance().GetAllStades().Select(s => s.ToString()).ToList();
+            //return dab.GetAllStades().Select(s => s.ToString()).ToList();
         }
 
         public List<String> GetAllPokemonsFromTypeString(TypeElement type)
         {
-            //return DALManager.GetInstance().GetAllPokemonsFromType(type).Select(p => p.ToString()).ToList();
-            return dab.GetAllPokemonsFromType(type).Select(s => s.ToString()).ToList();
+            return DALManager.GetInstance().GetAllPokemonsFromType(type).Select(p => p.ToString()).ToList();
+            //return dab.GetAllPokemonsFromType(type).Select(s => s.ToString()).ToList();
         }
 
         public List<String> GetAllPokemonsString()
         {
-            //return DALManager.GetInstance().GetAllPokemons().Select(p => p.ToString()).ToList();
-            return dab.GetAllPokemons().Select(s => s.ToString()).ToList();
+            return DALManager.GetInstance().GetAllPokemons().Select(p => p.ToString()).ToList();
+            //return dab.GetAllPokemons().Select(s => s.ToString()).ToList();
         }
 
         public List<String> GetAllMatchsString()
         {
-            //return DALManager.GetInstance().GetAllMatchs().Select(m => m.ToString()).ToList();
-            return dab.GetAllMatchs().Select(m => m.ToString()).ToList();
+            return DALManager.GetInstance().GetAllMatchs().Select(m => m.ToString()).ToList();
+            //return dab.GetAllMatchs().Select(m => m.ToString()).ToList();
         }
 
         public List<string> GetAllUtilisateursString()
