@@ -285,12 +285,20 @@ namespace PokemonTournamentWPF
 
         private void sauvegarder_pokemon_Click(object sender, RoutedEventArgs e)
         {
-            //envoyer infos à la base de donnée
-            List<Pokemon> pokemons = controller.GetAllPokemons();
-            PokemonViewModel p = (PokemonViewModel)list_pokemons.SelectedItem;
-            Pokemon _p = p.Pokemon;
+            if (list_pokemons.SelectedItem != null)
+            {
+                //envoyer infos à la base de donnée
+                List<Pokemon> pokemons = controller.GetAllPokemons();
+                PokemonViewModel p = (PokemonViewModel)list_pokemons.SelectedItem;
+                Pokemon _p = p.Pokemon;
 
-            pokemons.Add(_p);
+                pokemons.Add(_p);
+            }
+            else
+            {
+                //si aucun pokemon n'est selectionné
+                MessageBox.Show("Choisi un Pokemon d'abord !");
+            }
         }
 
         private void button_importer_stade_Click(object sender, RoutedEventArgs e)
