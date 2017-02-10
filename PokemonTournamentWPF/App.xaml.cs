@@ -21,7 +21,7 @@ namespace PokemonTournamentWPF
 
         void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show("Dispatcher unhandled exception", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Dispatcher unhandled exception"+sender, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
