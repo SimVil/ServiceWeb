@@ -26,8 +26,15 @@ namespace PokemonConsole
             AfficherStades();
             Console.WriteLine("\n\nLes pokémons disponibles :");
             AfficherPokemons();
-            Console.WriteLine("\n\nLes matchs disponibles :");
+            Console.WriteLine("\n\nLes matchs disponibles : ");
             AfficherMatchs();
+
+            manager.UpdatePokemon(new Pokemon(1, "Raichu", 50, 50, 50, new List<TypeElement>() { TypeElement.Electrique }));
+
+            Console.WriteLine("\n\nLes pokémons disponibles :");
+            AfficherPokemons();
+
+
         }
 
         public void AfficherStades()
@@ -43,6 +50,11 @@ namespace PokemonConsole
         public void AfficherMatchs()
         {
             manager.GetAllMatchs().ForEach(m => Console.WriteLine(m));
+        }
+
+        public void AfficherUtilisateur()
+        {
+            manager.GetAllUtilisateurs().ForEach(m => Console.WriteLine(m));
         }
     }
 }

@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTournamentEntities",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTournamentWPF", "PokemonTournamentWPF\PokemonTournamentWPF.csproj", "{2E83E9C3-02D0-464B-B122-8C4363EBF358}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonDataBaseAccessLayer", "PokemonDataBaseAccessLayer\PokemonDataBaseAccessLayer.csproj", "{0E2A2120-F2B3-46C2-A9ED-2B4E850A7F09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{2E83E9C3-02D0-464B-B122-8C4363EBF358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E83E9C3-02D0-464B-B122-8C4363EBF358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E83E9C3-02D0-464B-B122-8C4363EBF358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E2A2120-F2B3-46C2-A9ED-2B4E850A7F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E2A2120-F2B3-46C2-A9ED-2B4E850A7F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E2A2120-F2B3-46C2-A9ED-2B4E850A7F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E2A2120-F2B3-46C2-A9ED-2B4E850A7F09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
