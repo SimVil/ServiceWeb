@@ -286,6 +286,11 @@ namespace PokemonTournamentWPF
         private void sauvegarder_pokemon_Click(object sender, RoutedEventArgs e)
         {
             //envoyer infos à la base de donnée
+            List<Pokemon> pokemons = controller.GetAllPokemons();
+            PokemonViewModel p = (PokemonViewModel)list_pokemons.SelectedItem;
+            Pokemon _p = p.Pokemon;
+
+            pokemons.Add(_p);
         }
     }
     

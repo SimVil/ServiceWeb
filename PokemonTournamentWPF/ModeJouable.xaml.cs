@@ -25,6 +25,9 @@ namespace PokemonTournamentWPF
         private Pokemon pokemonAdverse;
         private static ModeJouable modeJouable;
 
+        private int nombreAdversaireRestants;
+        private int nombreTours;
+
         List<Pokemon> Pokemons;
 
         private ModeJouable(List<Pokemon> pokemons)
@@ -33,6 +36,8 @@ namespace PokemonTournamentWPF
             list_box_pokemons.ItemsSource = pokemons;
 
             Pokemons = pokemons;
+            nombreAdversaireRestants = pokemons.Count;
+            nombreTours = 1;
         }
 
         /* ouvrir une nouvelle fenetre :
@@ -63,7 +68,7 @@ namespace PokemonTournamentWPF
 
                 //récupérer pokemon adversaire
                 int indexjoue = Pokemons.IndexOf(pokemonJoue);
-                int indexAdverse = (indexjoue + 1) % Pokemons.Count;
+                int indexAdverse = (indexjoue + nombreTours) % Pokemons.Count;
 
                 pokemonAdverse = Pokemons.ElementAt(indexAdverse);
                 nom_adversaire.Content = pokemonAdverse.Nom;
@@ -168,11 +173,34 @@ namespace PokemonTournamentWPF
             textBlock.Text += "La vie de votre adversaire : " + pokemonAdverse.Vie +"\n";
             if (pokemonAdverse.Vie <= 0)
             {
-                MessageBox.Show("L'adversaire a attaqué " + attaque + ".Vous avez perdu");
-                this.Close();
+                MessageBox.Show("L'adversaire a attaqué " + attaque + ".Vous avez gagné");
+                nombreAdversaireRestants /= 2;
+                if(nombreAdversaireRestants <= 1)
+                {
+                    MessageBox.Show("L'adversaire a attaqué " + attaque + ".Vous avez gagné le tournoi, félicitations");
+                    this.Close();
+                }
+                else
+                {
+                    selectionnerNouvelAdversaire();
+                }
+                
             }
         }
-       
+
+        private void selectionnerNouvelAdversaire()
+        {
+            textBlock.Text = "";
+            pokemonJoue.Heal();
+
+            int indexjoue = Pokemons.IndexOf(pokemonJoue);
+            int indexAdverse = (indexjoue + ++nombreTours) % Pokemons.Count;
+
+            pokemonAdverse = Pokemons.ElementAt(indexAdverse);
+            nom_adversaire.Content = pokemonAdverse.Nom;
+            image_adversaire.Source = new BitmapImage(new Uri(pokemonAdverse.PokeImage));
+        }
+
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
