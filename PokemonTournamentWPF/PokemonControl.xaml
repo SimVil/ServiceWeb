@@ -12,7 +12,7 @@
             <StackPanel>
                 <Rectangle Stroke="Turquoise" Opacity="1" StrokeThickness="1" Canvas.Left="24" Canvas.Top="22" Height="258" Width="151" >
                     <Rectangle.Fill>
-                        <ImageBrush ImageSource="{Binding SelectedItem.PokeImage}"></ImageBrush>
+                        <ImageBrush x:Name="pokemon_image" ImageSource="{Binding SelectedItem.PokeImage}" ></ImageBrush>
                     </Rectangle.Fill>
                 </Rectangle>
                 <Button x:Name="button_modification" Click="Button_Click_Modifier">Modifier pokémon</Button>

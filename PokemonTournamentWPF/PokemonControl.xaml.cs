@@ -1,4 +1,5 @@
-﻿using PokemonBusinessLayer;
+﻿using Microsoft.Win32;
+using PokemonBusinessLayer;
 using PokemonTournamentEntities;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace PokemonTournamentWPF
         {
             controller = new PokemonTournamentManager();
             InitializeComponent();
-
+            
             is_modif = true;
             Button_Click_Modifier(null, null);
         }
@@ -58,6 +59,7 @@ namespace PokemonTournamentWPF
 
                 button_ajout_type.Visibility = Visibility.Collapsed;
                 button_remove_type.Visibility = Visibility.Collapsed;
+                
 
                 is_modif = false;
             }
@@ -82,10 +84,13 @@ namespace PokemonTournamentWPF
                 
                 button_ajout_type.Visibility = Visibility.Visible;
                 button_remove_type.Visibility = Visibility.Visible;
+                
 
                 is_modif = true;
             }
             
         }
+
+    
     }
 }

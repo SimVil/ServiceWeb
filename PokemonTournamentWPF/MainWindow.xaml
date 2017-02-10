@@ -85,6 +85,7 @@
                     <StackPanel Grid.Column="3" Grid.Row="2">
                         <Button x:Name="button_ajouter_pokemon"  Grid.Column="1" Grid.Row="1" Height="20" Margin="0,40,39.6,40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.AddCommand}" >Ajouter Pokemon</Button>
                         <Button x:Name="button_supprimer_pokemon"  Grid.Column="1" Height="20" Margin="0,40,39.6,40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.RemoveCommand}" Grid.Row="1" >Supprimer Pokemon</Button>
+                        <Button x:Name="button_import_picture"  Grid.Column="1" Height="20" Margin="0,40,39.6,40" Grid.Row="1" Click="button_import_picture_Click" >Import Image</Button>
                     </StackPanel>
 
                 </Grid>
@@ -106,7 +107,7 @@
                 </StackPanel>
 
             </Grid>
-            <Grid x:Name="grid_view_matchs" Background="BlanchedAlmond" Visibility="Visible" Grid.Column="0" Grid.ColumnSpan="5">
+            <Grid x:Name="grid_view_matchs" Background="BlanchedAlmond" Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="3*"/>
@@ -176,12 +177,7 @@
             </Grid>
 
 
-            <Grid x:Name="grid_view_tournoi" Background="BlanchedAlmond" Visibility="Collapsed" Grid.Column="1" >
-                
-                    
-                
-            </Grid>
-
+            
         </Grid>
 
 

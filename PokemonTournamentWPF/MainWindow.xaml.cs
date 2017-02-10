@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PokemonBusinessLayer;
@@ -32,6 +33,7 @@ namespace PokemonTournamentWPF
         private List<Pokemon> pokemons;
 
         private List<ComboBox> comboBoxes;
+        
 
         public MainWindow()
         {
@@ -107,7 +109,7 @@ namespace PokemonTournamentWPF
             grid_view_pokemons.Visibility = Visibility.Collapsed;
             grid_view_stades.Visibility = Visibility.Collapsed;
             grid_view_matchs.Visibility = Visibility.Visible;
-            grid_view_tournoi.Visibility = Visibility.Collapsed;
+            
         }
 
         private void btn_print_Click(object sender, RoutedEventArgs e)
@@ -238,6 +240,33 @@ namespace PokemonTournamentWPF
             }
 
         }
+
+        private void button_import_picture_Click(object sender, RoutedEventArgs e)
+        {
+            if(list_pokemons.SelectedItem != null)
+            {
+                OpenFileDialog op = new OpenFileDialog();
+                op.Title = "Select a picture";
+                op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+                if (op.ShowDialog() == true)
+                {
+
+                    PokemonViewModel pokemon = (PokemonViewModel)list_pokemons.SelectedItem;
+                    pokemon.PokeImage = op.FileName;
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Choisi un Pokemon d'abord !");
+            }
+                
+
+
+      }
+        
     }
     /*
     private void lancer_duel_Click(object sender, RoutedEventArgs e)
