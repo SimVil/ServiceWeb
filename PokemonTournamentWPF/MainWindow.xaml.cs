@@ -154,33 +154,7 @@ namespace PokemonTournamentWPF
         }*/
 
         private void combattant_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*ComboBox cb = (ComboBox)sender;
-            if(cb != null)
-            {
-                Pokemon p = (Pokemon)cb.SelectedItem;
-                if(p != null)
-                {
-                    
-                    if(pokemonsSelected.Count >= 8)
-                    {
-
-                    }
-                    pokemons.Remove(p);
-                    pokemonsSelected.Add(p);
-                    
-                    for(int i = 0; i < comboBoxes.Count; ++i)
-                    {
-                        Int32 selectedIndex = comboBoxes.ElementAt(i).SelectedIndex;
-                        comboBoxes.ElementAt(i).SelectedIndex = -1;
-                        comboBoxes.ElementAt(i).Items.Refresh();
-                        comboBoxes.ElementAt(i).SelectedIndex = selectedIndex;
-                        ++i;
-                    }
-                }
-
-                
-            }*/
+        {                 
 
         }
 
@@ -188,88 +162,78 @@ namespace PokemonTournamentWPF
         {
             //on ne peut lancer le tournoi que si il ya un poekmon unique choisie par combobox
             comboBoxes = new List<ComboBox>() { combattant1, combattant2, combattant3, combattant4, combattant5, combattant6, combattant7, combattant8 };
-            bool duplicate = false;
-            /*for (int i = 0; i < comboBoxes.Count(); i++)
+           
+            string content = (sender as Button).Content.ToString();
+            if (content == "Tournoi Automatique")
             {
-                for (int j = i + 1; j < comboBoxes.Count(); j++)
+                //First Duel phase
+                Match m1 = new Match((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, 0,PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
+                Match m2 = new Match((Pokemon)combattant3.SelectedItem, (Pokemon)combattant4.SelectedItem, 0, PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
+                Match m3 = new Match((Pokemon)combattant5.SelectedItem, (Pokemon)combattant6.SelectedItem, 0, PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
+                Match m4 = new Match((Pokemon)combattant7.SelectedItem, (Pokemon)combattant8.SelectedItem, 0, PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
+
+                Pokemon winner1 = m1.Duel();
+                vainqueur1.Content = winner1;
+                Pokemon winner2 = m2.Duel();
+                vainqueur4.Content = winner2;
+                Pokemon winner3 = m3.Duel();
+                vainqueur2.Content = winner3;
+                Pokemon winner4 = m4.Duel();
+                vainqueur3.Content = winner4;
+
+                //Healing phase
+                if(winner1 != null)
                 {
-                    if (comboBoxes[i] == null || comboBoxes[i].SelectedItem == comboBoxes[j].SelectedItem)
-                    {
-                        MessageBox.Show("Please choose one unique pokemon per box !");
-                        duplicate = true;
-                        break;
-                    }
+                    winner1.Heal();
                 }
-                if (duplicate)
+                if (winner2 != null)
                 {
-                    break;
+                    winner2.Heal();
                 }
-            }*/
-            
-            if (!duplicate)
+                if (winner3 != null)
+                {
+                    winner3.Heal();
+                }
+                if (winner4 != null)
+                {
+                    winner4.Heal();
+                }
+                  
+                Match m5 = new Match(winner1, winner2, 0, PhaseTournoi.DemiFinale, (Stade)stade_sec_phase.SelectedItem);
+                Match m6 = new Match(winner3, winner4, 0, PhaseTournoi.DemiFinale, (Stade)stade_sec_phase.SelectedItem);
+
+                winner1 = m5.Duel();
+                vainqueur5.Content = winner1;
+                winner2 = m6.Duel();
+                vainqueur6.Content = winner2;
+
+                //healing phase
+                if (winner1 != null)
+                {
+                    winner1.Heal();
+                }
+                if (winner2 != null)
+                {
+                   winner2.Heal();
+                }
+
+                //Final
+                Match m7 = new Match(winner1, winner2, 0, PhaseTournoi.Finale, (Stade)stade_troi_phase.SelectedItem);
+                winner1 = m7.Duel();
+                vainqueur7.Content = winner1;
+            }
+            else
             {
-                string content = (sender as Button).Content.ToString();
-                if (content == "Tournoi Automatique")
+                List<Pokemon> poke = new List<Pokemon>();
+                foreach(ComboBox cb in comboBoxes)
                 {
-                    //First Duel phase
-                    Match m1 = new Match((Pokemon)combattant1.SelectedItem, (Pokemon)combattant2.SelectedItem, 0,PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
-                    Match m2 = new Match((Pokemon)combattant3.SelectedItem, (Pokemon)combattant4.SelectedItem, 0, PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
-                    Match m3 = new Match((Pokemon)combattant5.SelectedItem, (Pokemon)combattant6.SelectedItem, 0, PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
-                    Match m4 = new Match((Pokemon)combattant7.SelectedItem, (Pokemon)combattant8.SelectedItem, 0, PhaseTournoi.QuartFinale, (Stade)stade_prem_phase.SelectedItem);
-
-                    Pokemon winner1 = m1.Duel();
-                    vainqueur1.Content = winner1;
-                    Pokemon winner2 = m2.Duel();
-                    vainqueur4.Content = winner2;
-                    Pokemon winner3 = m3.Duel();
-                    vainqueur2.Content = winner3;
-                    Pokemon winner4 = m4.Duel();
-                    vainqueur3.Content = winner4;
-
-                    //Healing phase
-                    if(winner1 != null)
+                    Pokemon p = (Pokemon)cb.SelectedItem;
+                    if(p != null)
                     {
-                        winner1.Heal();
+                        poke.Add(p);
                     }
-                    if (winner2 != null)
-                    {
-                        winner2.Heal();
-                    }
-                    if (winner3 != null)
-                    {
-                        winner3.Heal();
-                    }
-                    if (winner4 != null)
-                    {
-                        winner4.Heal();
-                    }
-                   
-                    Match m5 = new Match(winner1, winner2, 0, PhaseTournoi.DemiFinale, (Stade)stade_sec_phase.SelectedItem);
-                    Match m6 = new Match(winner3, winner4, 0, PhaseTournoi.DemiFinale, (Stade)stade_sec_phase.SelectedItem);
-
-                    winner1 = m5.Duel();
-                    vainqueur5.Content = winner1;
-                    winner2 = m6.Duel();
-                    vainqueur6.Content = winner2;
-
-                    //healing phase
-                    if (winner1 != null)
-                    {
-                        winner1.Heal();
-                    }
-                    if (winner2 != null)
-                    {
-                        winner2.Heal();
-                    }
-
-                    //Final
-                    Match m7 = new Match(winner1, winner2, 0, PhaseTournoi.Finale, (Stade)stade_troi_phase.SelectedItem);
-                    winner1 = m7.Duel();
-                    vainqueur7.Content = winner1;
-                }
-                else
-                {
-                    MessageBox.Show("Tournoi Jouable");
+                    ModeJouable mj = ModeJouable.getInstance(poke);
+                    mj.Show();
                 }
             }
 
