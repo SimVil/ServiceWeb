@@ -269,7 +269,11 @@ namespace PokemonTournamentWPF
 
 
       }
-        
+
+        private void sauvegarder_pokemon_Click(object sender, RoutedEventArgs e)
+        {
+            //envoyer infos à la base de donnée
+        }
     }
     /*
     private void lancer_duel_Click(object sender, RoutedEventArgs e)
