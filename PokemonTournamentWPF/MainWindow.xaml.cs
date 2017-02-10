@@ -292,6 +292,40 @@ namespace PokemonTournamentWPF
 
             pokemons.Add(_p);
         }
+
+        private void button_importer_stade_Click(object sender, RoutedEventArgs e)
+        {
+            if (list_stades.SelectedItem != null)
+            {
+                OpenFileDialog op = new OpenFileDialog();
+                op.Title = "Select a picture";
+                op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+                if (op.ShowDialog() == true)
+                {
+
+                    StadeViewModel stade = (StadeViewModel)list_stades.SelectedItem;
+                    stade.StadeImage = op.FileName;
+
+                }
+            }
+            else
+            {
+                //si aucun pokemon n'est selectionné
+                MessageBox.Show("Choisi un Stade d'abord !");
+            }
+        }
+
+        private void button_sauvgarder_stade_Click(object sender, RoutedEventArgs e)
+        {
+            //envoyer infos à la base de donnée
+            List<Stade> stades = controller.GetAllStades();
+            StadeViewModel p = (StadeViewModel)list_stades.SelectedItem;
+            Stade _p = p.Stade;
+
+            stades.Add(_p);
+        }
     }
     
 }

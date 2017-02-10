@@ -91,7 +91,7 @@
 
                 </Grid>
             </Grid>
-            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Collapsed" Grid.Column="1">
+            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Visible" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
@@ -105,6 +105,8 @@
                 <StackPanel Grid.Column="1" Margin="0,80,0,0">
                     <Button x:Name="button_ajouter_stade" Height="20"  Command="{Binding DataContext.AddCommand, ElementName=list_stades}"  Content="Ajouter Stade" Margin="82,0,80.6,0" />
                     <Button x:Name="button_supprimer_stade" Height="20" Margin="82,80,80.6,0" Command="{Binding DataContext.RemoveCommand, ElementName=list_stades}" Content="Supprimer Stade" />
+                    <Button x:Name="button_importer_stade" Height="20" Margin="82,80,80.6,0" Content="Importer Image" Click="button_importer_stade_Click" />
+                    <Button x:Name="button_sauvgarder_stade" Height="20" Margin="82,80,80.6,0" Content="Sauvegarder Image" Click="button_sauvgarder_stade_Click" />
                 </StackPanel>
 
             </Grid>
