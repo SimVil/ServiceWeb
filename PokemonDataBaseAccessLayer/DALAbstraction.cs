@@ -126,7 +126,7 @@ namespace PokemonDataBaseAccessLayer
         public Utilisateur defineUtilisateur(string s)
         {
             string[] sub = s.Split(' ');
-            Utilisateur u = new Utilisateur(sub[0], sub[1], sub[2], sub[3]);
+            Utilisateur u = new Utilisateur(sub[1], sub[2], sub[3], sub[4]);
             return u;
         }
 
@@ -162,6 +162,12 @@ namespace PokemonDataBaseAccessLayer
         public int UpdateStade(Stade s) { return idal.UpdateStade(s); }
 
         public int DeleteStade(Stade s) { return idal.DeleteStade(s); }
+
+        public int AddUtilisateur(Utilisateur u) { return idal.AddUtilisateur(u); }
+
+        public int UpdateUtilisateur(Utilisateur u) { return idal.UpdateUtilisateur(u); }
+
+        public int DeleteUtilisateur(Utilisateur u) { return idal.DeleteUtilisateur(u); }
 
     }
 }

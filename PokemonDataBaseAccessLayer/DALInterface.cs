@@ -48,35 +48,12 @@ namespace PokemonDataBaseAccessLayer
 
         int DeleteStade(Stade s);
 
+        int AddUtilisateur(Utilisateur u);
+
+        int UpdateUtilisateur(Utilisateur u);
+
+        int DeleteUtilisateur(Utilisateur u);
+
 
     }
 }
-
-/*
- *         void AddElement();
-
-        void DeleteElement();
-
-        void UpdateElement();
- * 
- *         void AddMatch();
-
-        void DeleteMatch();
-
-        void UpdateMatch();
- * 
- * 
- *         void AddStade();
-
-        void DeleteStade();
-
-        void UpdateStade();
- * 
- * 
- *         void AddPokemon(Pokemon n);
-
-        void DeletePokemon(Pokemon d);
-
-        void UpdatePokemon(Pokemon u);
- * 
- * */

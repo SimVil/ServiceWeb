@@ -824,11 +824,122 @@ namespace PokemonDataBaseAccessLayer
             return t;
         }
 
-        public int AddUtilisateur(Utilisateur u) { return 0; }
+        private delegate void AppliedMethod(Utilisateur u, DataTable t);
 
-        public int UpdateUtilisateur(Utilisateur u) { return 0; }
+        private int UtilisateurCall(Utilisateur u, AppliedMethod meth, DataTable t)
+        {
+            int res = 0;
+            string r = "select * from Utilisateur;";
 
-        public int DeleteUtilisateur(Utilisateur u) { return 0; }
+            try
+            {
+                using (SqlConnection connect = new SqlConnection(_connectionString))
+                {
+                    connect.Open();
+                    SqlCommand cmd = new SqlCommand(r, connect);
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                    adapter.InsertCommand = builder.GetInsertCommand(true);
+                    adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                    adapter.DeleteCommand = builder.GetDeleteCommand(true);
+
+                    meth(u, t);
+                    adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                    res = adapter.Update(t);
+                    t.AcceptChanges();
+                    connect.Close();
+
+                }
+
+            } catch (Exception e) {
+                Console.WriteLine("Erreur dans Fonctions Utilisateur");
+                Console.WriteLine(e.ToString());
+
+            }
+
+            return res;
+        }
+
+        public int AddUtilisateur(Utilisateur u)
+        {
+            DataTable tp = GetUtilisateurTable();
+
+            if (!tp.Rows.Contains(u.idu)) { return UtilisateurCall(u, AdderUtilisateur, tp); }
+            Console.WriteLine("AddUtilisateur : utilisateur " + u.idu + " existant.");
+
+            return 0;
+            
+        }
+
+        public int UpdateUtilisateur(Utilisateur u)
+        {
+            DataTable tp = GetUtilisateurTable();
+            if (tp.Rows.Contains(u.idu)) { return UtilisateurCall(u, UpdaterUtilisateur, tp); }
+            Console.WriteLine("UpdateUtilisateur : utilisateur " + u.idu + " NON existant.");
+
+            return 0;
+        }
+
+        public int DeleteUtilisateur(Utilisateur u)
+        {
+            DataTable tp = GetUtilisateurTable();
+            if (tp.Rows.Contains(u.idu)) { return UtilisateurCall(u, DeleterUtilisateur, tp); }
+            Console.WriteLine("UpdateUtilisateur : utilisateur " + u.idu + " NON existant.");
+
+            return 0;
+        }
+
+        private void AdderUtilisateur(Utilisateur u, DataTable t) { t.Rows.Add(u.idu, u.Nom, u.Prenom, u.Login, u.Password); }
+
+        private void UpdaterUtilisateur(Utilisateur u, DataTable t) { t.Rows.Find(u.idu).ItemArray = new object[] { u.idu, u.Nom, u.Prenom, u.Login, u.Password }; }
+
+        private void DeleterUtilisateur(Utilisateur u, DataTable t) { t.Rows.Find(u.idu).Delete(); }
+
+        public int AltDeleteUtilisateur(Utilisateur u)
+        {
+            int res = 0;
+            string r = "select * from Utilisateur;";
+            DataTable t = GetUtilisateurTable();
+
+            bool exist = t.Rows.Contains(u.idu);
+
+            if (exist)
+            {
+                try
+                {
+                    using (SqlConnection connect = new SqlConnection(_connectionString))
+                    {
+                        connect.Open();
+                        SqlCommand cmd = new SqlCommand(r, connect);
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                        adapter.DeleteCommand = builder.GetDeleteCommand(true);
+                        adapter.UpdateCommand = builder.GetUpdateCommand(true);
+                        adapter.InsertCommand = builder.GetInsertCommand(true);
+
+                        t.Rows.Find(u.idu).Delete();
+
+                        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                        res = adapter.Update(t);
+                        t.AcceptChanges();
+                        connect.Close();
+
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Erreur dans DeleteUtilisateur");
+                    Console.WriteLine(e.ToString());
+
+                }
+            }
+
+            return res;
+        }
 
 
 

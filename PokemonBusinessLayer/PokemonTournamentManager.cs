@@ -134,5 +134,19 @@ namespace PokemonBusinessLayer
             return dab.DeleteStade(s);
         }
 
+        public int AddUtilisateur(Utilisateur u)
+        {
+            return dab.AddUtilisateur(u);
+        }
+
+        public int UpdateUtilisateur(Utilisateur u)
+        {
+            return dab.UpdateUtilisateur(u);
+        }
+
+        public int DeleteUtilisateur(Utilisateur u)
+        {
+            return dab.DeleteUtilisateur(u);
+        }
     }
 }

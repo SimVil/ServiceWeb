@@ -18,7 +18,7 @@ namespace PokemonTournamentEntities
         public int Force { get; set; }
         public int Defense { get; set; }
         public int id { get; set; }
-        private static int nb = 9;
+        private static int nb = 10;
 
                 
         public Pokemon()

@@ -29,22 +29,21 @@ namespace PokemonConsole
             Console.WriteLine("\n\nLes matchs disponibles : ");
             AfficherMatchs();
 
-            Stade std = new Stade("Chez-toi", 50000, new List<TypeElement>() { TypeElement.Eau });
-            manager.AddStade(std);
-            Console.WriteLine("Les stades disponibles : ");
-            AfficherStades();
+            Console.WriteLine("\n\n Les utilisateurs : ");
+            AfficherUtilisateur();
+            Utilisateur Aurore = new Utilisateur("Pouet", "Aurore", "Auro", "pass");
+            manager.AddUtilisateur(Aurore);
+            Console.WriteLine("\n\n Les utilisateurs : ");
+            AfficherUtilisateur();
 
-            std.Nom = "Bonjourhan";
-            std.NbPlaces = 20000;
-            manager.UpdateStade(std);
-            Console.WriteLine("Les stades disponibles : ");
-            AfficherStades();
+            Aurore.Prenom = "Romane";
+            manager.UpdateUtilisateur(Aurore);
+            Console.WriteLine("\n\n Les utilisateurs : ");
+            AfficherUtilisateur();
 
-            manager.DeleteStade(std);
-            Console.WriteLine("Les stades disponibles : ");
-            AfficherStades();
-
-
+            manager.DeleteUtilisateur(Aurore);
+            Console.WriteLine("\n\n Les utilisateurs : ");
+            AfficherUtilisateur();
 
 
         }

@@ -11,7 +11,7 @@ namespace PokemonTournamentEntities
         public String Nom { get; set; }
         public int NbPlaces { get; set; }
         public List<TypeElement> Types { get; set; }
-        private static int nb = 5;
+        private static int nb = 10;
         public int ids { get; private set; }
 
         public Stade(String nom, int nbPlaces, List<TypeElement> types) : base()
