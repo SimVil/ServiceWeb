@@ -21,7 +21,7 @@ namespace PokemonTournamentEntities
         public int Vie { get; set; }
         public int Force { get; set; }
         public int Defense { get; set; }
-        public Uri PokeImage { get; set; }
+        public String PokeImage { get; set; }
         
         public Pokemon()
         {
@@ -37,7 +37,7 @@ namespace PokemonTournamentEntities
             Types = types;
         }
 
-        public Pokemon(String nom, int vie, int force, int defense, List<TypeElement> types, Uri chemin) : base()
+        public Pokemon(String nom, int vie, int force, int defense, List<TypeElement> types, String chemin) : base()
         {
             Nom = nom;
             Vie = vie;

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PokemonTournamentEntities;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Forms;
 
 namespace PokemonTournamentWPF.ViewModelBase
 {
@@ -141,13 +143,14 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
-        public Uri PokeImage
+        public String PokeImage
         {
             get { return _pokemon.PokeImage; }
             set
             {
                 if (value == _pokemon.PokeImage) return;
                 _pokemon.PokeImage = value;
+               
                 base.OnPropertyChanged("PokeImage");
             }
         }
