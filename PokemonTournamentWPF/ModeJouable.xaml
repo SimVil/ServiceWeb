@@ -1,0 +1,28 @@
+﻿<Window x:Class="PokemonTournamentWPF.ModeJouable"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PokemonTournamentWPF"
+        mc:Ignorable="d"
+        Title="ModeJouable" Height="500" Width="300">
+    <Grid>
+        <StackPanel>
+            <Label HorizontalAlignment="Center">Pokemon adverse</Label>
+            <Label x:Name="nom_adversaire" HorizontalAlignment="Center"></Label>
+            <Image x:Name="image_adversaire" Width="90" Height="120"></Image>
+            <Image x:Name="image_pokemon_selected" Width="90" Height="120"></Image>
+            <Label HorizontalAlignment="Center">Votre Pokemon</Label>
+            <ListBox x:Name="list_box_pokemons" Height="70"></ListBox>
+            <Button x:Name="confirmation_selection_button" Click="confirmation_selection_button_Click">Confirmer la sélection</Button>
+            <Label x:Name="nom_pokemon_selected" HorizontalAlignment="Center" Visibility="Collapsed">zef</Label>
+            <WrapPanel x:Name="attaques" HorizontalAlignment="Center" Visibility="Collapsed">
+                <Button Click="attaque_selection_button_Click">Tranche Herbe</Button>
+                <Button Click="attaque_selection_button_Click">Déflagration</Button>
+                <Button Click="attaque_selection_button_Click">Hydrocanon</Button>
+            </WrapPanel>
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Height="50" Visibility="Collapsed"/>
+
+        </StackPanel>
+    </Grid>
+</Window>
