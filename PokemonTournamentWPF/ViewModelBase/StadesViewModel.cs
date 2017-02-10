@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PokemonBusinessLayer;
+using PokemonTournamentEntities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -40,13 +42,17 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
-        public StadesViewModel(IList<PokemonTournamentEntities.Stade> stadesModel)
+        private PokemonTournamentManager Controller;
+
+        public StadesViewModel(IList<PokemonTournamentEntities.Stade> stadesModel, PokemonTournamentManager controller)
         {
             _stades = new ObservableCollection<StadeViewModel>();
             foreach (PokemonTournamentEntities.Stade a in stadesModel)
             {
                 _stades.Add(new StadeViewModel(a));
             }
+
+            Controller = controller;
         }
 
         #region "Commandes du formulaire"
@@ -76,9 +82,11 @@ namespace PokemonTournamentWPF.ViewModelBase
         private void Add()
         {
             
-            PokemonTournamentEntities.Stade a = new PokemonTournamentEntities.Stade("WTF", 0, null);
+            PokemonTournamentEntities.Stade a = new PokemonTournamentEntities.Stade("<Nom>", 12000, new List<TypeElement>(){TypeElement.Eau});
             this.SelectedItem = new StadeViewModel(a);
             Stades.Add(this.SelectedItem);
+
+            Controller.AddStade(a);
             
         }
 
@@ -106,7 +114,12 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Remove()
         {
-            if (this.SelectedItem != null) Stades.Remove(this.SelectedItem);
+            
+            if (this.SelectedItem != null)
+            {
+                Controller.DeleteStade(this.SelectedItem.Stade);
+                Stades.Remove(this.SelectedItem);
+            }
         }
 
         // Commande Close

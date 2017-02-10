@@ -100,13 +100,13 @@ namespace PokemonTournamentEntities
 
         public override String ToString()
         {
-            //return Nom;
-            string t = "";
+            return Nom;
+            /*string t = "";
             foreach(TypeElement x in Types)
             {
                 t = t + x.ToString() + " ";
             }
-            return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense + " types = " + t;
+            return Nom + ", vie = " + Vie + ", force = " + Force + ", défense = " + Defense + " types = " + t;*/
         }
 
         public string PokemonFormat()

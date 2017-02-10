@@ -81,12 +81,12 @@
                         <Button x:Name="button_ajouter_pokemon"  Grid.Column="1" Grid.Row="1" Height="20" Margin="0,40,39.6,40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.AddCommand}" >Ajouter Pokemon</Button>
                         <Button x:Name="button_supprimer_pokemon"  Grid.Column="1" Height="20" Margin="0,40,39.6,40" Command="{Binding ElementName=list_pokemons,  Path=DataContext.RemoveCommand}" Grid.Row="1" >Supprimer Pokemon</Button>
                         <Button x:Name="button_import_picture"  Grid.Column="1" Height="20" Margin="0,40,39.6,40" Grid.Row="1" Click="button_import_picture_Click" >Import Image</Button>
-                        <Button x:Name="sauvegarder_pokemon"  Grid.Column="1" Height="20" Margin="0,40,39.6,40" Grid.Row="1" Click="sauvegarder_pokemon_Click">Sauvegarder Pokemon</Button>
+                        <Button x:Name="sauvegarder_pokemon"  Grid.Column="1" Height="20" Margin="0,40,39.6,40" Grid.Row="1" Click="sauvegarder_pokemon_Click" Content="Sauver Changements"></Button>
                     </StackPanel>
 
                 </Grid>
             </Grid>
-            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Collapsed" Grid.Column="1">
+            <Grid x:Name="grid_view_stades" Background="Green" Visibility="Visible" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
@@ -100,6 +100,9 @@
                 <StackPanel Grid.Column="1" Margin="0,80,0,0">
                     <Button x:Name="button_ajouter_stade" Height="20"  Command="{Binding DataContext.AddCommand, ElementName=list_stades}"  Content="Ajouter Stade" Margin="82,0,80.6,0" />
                     <Button x:Name="button_supprimer_stade" Height="20" Margin="82,80,80.6,0" Command="{Binding DataContext.RemoveCommand, ElementName=list_stades}" Content="Supprimer Stade" />
+                    <Button x:Name="button_import_stade" Height="20" Margin="82,80,80.6,0" Content="Importer Image" Click="button_stade_import"/>
+                    <Button x:Name="button_sauvegarder_stade" Height="20" Margin="82,80,80.6,0" Content="Sauver Changements" Click="sauvegarder_stade_Click" />
+                    
                 </StackPanel>
 
             </Grid>

@@ -61,6 +61,8 @@ namespace PokemonTournamentWPF
 
                 button_ajout_type.Visibility = Visibility.Collapsed;
                 button_remove_type.Visibility = Visibility.Collapsed;
+
+
                 
 
                 is_modif = false;

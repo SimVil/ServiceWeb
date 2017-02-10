@@ -48,7 +48,7 @@ namespace PokemonTournamentWPF
 
             IList<PokemonTournamentEntities.Pokemon> pokemons = controller.GetAllPokemons();
 
-            pvm = new ViewModelBase.PokemonsViewModel(pokemons);
+            pvm = new ViewModelBase.PokemonsViewModel(pokemons, controller);
             list_pokemons.DataContext = pvm;
 
             List<String> list_types = new List<String>();
@@ -72,7 +72,7 @@ namespace PokemonTournamentWPF
         private void btn_stades_Click(object sender, RoutedEventArgs e)
         {
             IList<PokemonTournamentEntities.Stade> stades = controller.GetAllStades();
-            svm = new ViewModelBase.StadesViewModel(stades);
+            svm = new ViewModelBase.StadesViewModel(stades, controller);
             list_stades.DataContext = svm;
 
             list_pokemons.Visibility = Visibility.Collapsed;
@@ -139,14 +139,14 @@ namespace PokemonTournamentWPF
             {
                 IList<PokemonTournamentEntities.Pokemon> pokemons = controller.GetAllPokemons();
 
-                pvm = new ViewModelBase.PokemonsViewModel(pokemons);
+                pvm = new ViewModelBase.PokemonsViewModel(pokemons, controller);
                 list_pokemons.DataContext = pvm;
             }
             else
             {
                 TypeElement type = (TypeElement)Enum.Parse(typeof(TypeElement), filtre);
                 IList<Pokemon> pokemons = controller.GetAllPokemonsFromType(type);
-                pvm = new ViewModelBase.PokemonsViewModel(pokemons);
+                pvm = new ViewModelBase.PokemonsViewModel(pokemons, controller);
                 list_pokemons.DataContext = pvm;
             }
         }
@@ -276,7 +276,7 @@ namespace PokemonTournamentWPF
             else
             {
                 //si aucun pokemon n'est selectionné
-                MessageBox.Show("Choisi un Pokemon d'abord !");
+                MessageBox.Show("Choisis un Pokemon d'abord");
             }
 
 
@@ -286,12 +286,54 @@ namespace PokemonTournamentWPF
         private void sauvegarder_pokemon_Click(object sender, RoutedEventArgs e)
         {
             //envoyer infos à la base de donnée
-            List<Pokemon> pokemons = controller.GetAllPokemons();
             PokemonViewModel p = (PokemonViewModel)list_pokemons.SelectedItem;
             Pokemon _p = p.Pokemon;
 
-            pokemons.Add(_p);
+
+            controller.UpdatePokemon(_p);
+
+            MessageBox.Show("Changement sauvegardées");
         }
+
+        private void sauvegarder_stade_Click(object sender, RoutedEventArgs e)
+        {
+            //envoyer infos à la base de donnée
+            StadeViewModel p = (StadeViewModel)list_stades.SelectedItem;
+            Stade _p = p.Stade;
+
+
+            controller.UpdateStade(_p);
+
+            MessageBox.Show("Changement sauvegardées");
+        }
+
+        /*bouton qui : * permet d'importer une image
+                       * la lié à un pokemon
+                                                    */
+        private void button_stade_import(object sender, RoutedEventArgs e)
+        {
+            if (list_stades.SelectedItem != null)
+            {
+                OpenFileDialog op = new OpenFileDialog();
+                op.Title = "Select a picture";
+                op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+                if (op.ShowDialog() == true)
+                {
+
+                    StadeViewModel stade = (StadeViewModel)list_stades.SelectedItem;
+                    stade.StadeImage = op.FileName;
+
+                }
+            }
+            else
+            {
+                //si aucun pokemon n'est selectionné
+                MessageBox.Show("Choisi un Stade d'abord !");
+            }
+        }
+
     }
 
 }
