@@ -48,7 +48,7 @@ namespace PokemonTournamentWPF
                 attaques.Visibility = Visibility.Visible;
                 nom_pokemon_selected.Visibility = Visibility.Visible;
                 nom_pokemon_selected.Content = pokemonJoue.Nom;
-                image_pokemon_selected.Source = new BitmapImage(pokemonJoue.PokeImage);
+                image_pokemon_selected.Source = new BitmapImage(new Uri(pokemonJoue.PokeImage));
             }
         }
     }
