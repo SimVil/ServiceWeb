@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +22,7 @@ namespace PokemonTournamentWPF
     public partial class ModeJouable : Window
     {
         private Pokemon pokemonJoue;
+        private Pokemon pokemonAdverse;
         private static ModeJouable modeJouable;
 
         List<Pokemon> Pokemons;
@@ -49,6 +51,8 @@ namespace PokemonTournamentWPF
             {
                 list_box_pokemons.Visibility = Visibility.Collapsed;
                 confirmation_selection_button.Visibility = Visibility.Collapsed;
+
+                textBlock.Visibility = Visibility.Visible;
                 attaques.Visibility = Visibility.Visible;
                 nom_pokemon_selected.Visibility = Visibility.Visible;
                 nom_pokemon_selected.Content = pokemonJoue.Nom;
@@ -58,11 +62,116 @@ namespace PokemonTournamentWPF
                 int indexjoue = Pokemons.IndexOf(pokemonJoue);
                 int indexAdverse = (indexjoue + 1) % Pokemons.Count;
 
-                Pokemon adversaire = Pokemons.ElementAt(indexAdverse);
-                nom_adversaire.Content = adversaire.Nom;
-                image_adversaire.Source = new BitmapImage(new Uri(adversaire.PokeImage));
-
+                pokemonAdverse = Pokemons.ElementAt(indexAdverse);
+                nom_adversaire.Content = pokemonAdverse.Nom;
+                image_adversaire.Source = new BitmapImage(new Uri(pokemonAdverse.PokeImage));
             }
+        }
+
+        private void attaque_selection_button_Click(object sender, RoutedEventArgs e)
+        {
+            textBlock.Text = "";
+            List<string> attaquesAdverses = new List<string>()
+            {"Tranche Herbe","Déflagration","Hydrocanon"};
+
+            Random attaqueAdv = new Random();
+            int valeurAttaqueAdversaire = attaqueAdv.Next(0, 3);
+
+            string content = (sender as Button).Content.ToString();
+            if(content == "Tranche Herbe")
+            {
+                if(attaquesAdverses.ElementAt(valeurAttaqueAdversaire)== "Déflagration")
+                {
+                    perdreVie(attaquesAdverses.ElementAt(valeurAttaqueAdversaire));                    
+                }
+                else
+                {
+                    if (attaquesAdverses.ElementAt(valeurAttaqueAdversaire) == "Hydrocanon")
+                    {
+                        infligerDegats(attaquesAdverses.ElementAt(valeurAttaqueAdversaire));
+                    }
+                    else
+                    {
+                        textBlock.Text = "L'adversaire a contré\n";
+                    }
+                }
+            }
+            else
+            {
+                if(content == "Déflagration")
+                {
+                    if (attaquesAdverses.ElementAt(valeurAttaqueAdversaire) == "Hydrocanon")
+                    {
+                        perdreVie(attaquesAdverses.ElementAt(valeurAttaqueAdversaire));
+                    }
+                    else
+                    {
+                        if (attaquesAdverses.ElementAt(valeurAttaqueAdversaire) == "Tranche Herbe")
+                        {
+                            infligerDegats(attaquesAdverses.ElementAt(valeurAttaqueAdversaire));
+                        }
+                        else
+                        {
+                            textBlock.Text = "L'adversaire a contré\n";
+                        }
+                    }
+                }
+                else
+                {
+                    if(content == "Hydrocanon")
+                    {
+                        if (attaquesAdverses.ElementAt(valeurAttaqueAdversaire) == "Tranche Herbe")
+                        {
+                            perdreVie(attaquesAdverses.ElementAt(valeurAttaqueAdversaire));
+                        }
+                        else
+                        {
+                            if (attaquesAdverses.ElementAt(valeurAttaqueAdversaire) == "Déflagration")
+                            {
+                                infligerDegats(attaquesAdverses.ElementAt(valeurAttaqueAdversaire));
+                            }
+                            else
+                            {
+                                textBlock.Text = "L'adversaire a contré\n";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void perdreVie(string attaque)
+        {
+            textBlock.Text += "L'adversaire a attaqué " + attaque +"\n";
+            pokemonAdverse.Attaquer(pokemonJoue);
+            textBlock.Text += "Votre vie : " + pokemonJoue.Vie+"\n";
+            textBlock.Text += "La vie de votre adversaire : " + pokemonAdverse.Vie +"\n";
+            if (pokemonJoue.Vie <= 0)
+            {
+                MessageBox.Show("L'adversaire a attaqué " + attaque + ".Vous avez perdu");
+                this.Close();
+            }
+        }
+
+        private void infligerDegats(string attaque)
+        {
+            textBlock.Text += "L'adversaire a attaqué " + attaque+ "\n";
+            pokemonJoue.Attaquer(pokemonAdverse);
+            textBlock.Text += "Votre vie : " + pokemonJoue.Vie+"\n";
+            textBlock.Text += "La vie de votre adversaire : " + pokemonAdverse.Vie +"\n";
+            if (pokemonAdverse.Vie <= 0)
+            {
+                MessageBox.Show("L'adversaire a attaqué " + attaque + ".Vous avez perdu");
+                this.Close();
+            }
+        }
+       
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            modeJouable = null;
+
+            base.OnClosing(e);
         }
     }
 }

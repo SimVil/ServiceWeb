@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PokemonTournamentWPF"
         mc:Ignorable="d"
-        Title="ModeJouable" Height="450" Width="300">
+        Title="ModeJouable" Height="500" Width="300">
     <Grid>
         <StackPanel>
             <Label HorizontalAlignment="Center">Pokemon adverse</Label>
@@ -17,10 +17,12 @@
             <Button x:Name="confirmation_selection_button" Click="confirmation_selection_button_Click">Confirmer la sélection</Button>
             <Label x:Name="nom_pokemon_selected" HorizontalAlignment="Center" Visibility="Collapsed">zef</Label>
             <WrapPanel x:Name="attaques" HorizontalAlignment="Center" Visibility="Collapsed">
-                <Button>Tranche Herbe</Button>
-                <Button>Déflagration</Button>
-                <Button>Hydrocanon</Button>
+                <Button Click="attaque_selection_button_Click">Tranche Herbe</Button>
+                <Button Click="attaque_selection_button_Click">Déflagration</Button>
+                <Button Click="attaque_selection_button_Click">Hydrocanon</Button>
             </WrapPanel>
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Height="50" Visibility="Collapsed"/>
+
         </StackPanel>
     </Grid>
 </Window>
