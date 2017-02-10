@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PokemonBusinessLayer;
+using PokemonTournamentEntities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -39,13 +41,17 @@ namespace PokemonTournamentWPF.ViewModelBase
             }
         }
 
-        public PokemonsViewModel(IList<PokemonTournamentEntities.Pokemon> pokemonsModel)
+        private PokemonTournamentManager Controller;
+
+        public PokemonsViewModel(IList<PokemonTournamentEntities.Pokemon> pokemonsModel, PokemonTournamentManager controller)
         {
             _pokemons = new ObservableCollection<PokemonViewModel>();
             foreach (PokemonTournamentEntities.Pokemon a in pokemonsModel)
             {
                 _pokemons.Add(new PokemonViewModel(a));
             }
+
+            Controller = controller;
         }
 
         #region "Commandes du formulaire"
@@ -74,10 +80,12 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Add()
         {
-            PokemonTournamentEntities.Pokemon a = new PokemonTournamentEntities.Pokemon("<Nom>", 0, 0, 0, null);
+            PokemonTournamentEntities.Pokemon a = new PokemonTournamentEntities.Pokemon("<Nom>", 0, 0, 0, new List<TypeElement>() {TypeElement.Feu});
 
             this.SelectedItem = new PokemonViewModel(a);
             Pokemons.Add(this.SelectedItem);
+
+            Controller.AddPokemon(a);
         }
 
         // Commande Remove
@@ -104,7 +112,14 @@ namespace PokemonTournamentWPF.ViewModelBase
 
         private void Remove()
         {
-            if (this.SelectedItem != null) Pokemons.Remove(this.SelectedItem);
+            if (this.SelectedItem != null)
+            {
+                Pokemon p = this.SelectedItem.Pokemon;
+                Controller.DeletePokemon(p);
+                Pokemons.Remove(this.SelectedItem);
+            }
+
+
         }
 
         // Commande Close

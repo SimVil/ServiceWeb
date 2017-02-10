@@ -138,8 +138,20 @@ namespace PokemonDataBaseAccessLayer
         public Stade defineStade(string s)
         {
             string[] sub = s.Split(' ');
-            Stade std = new Stade(Int32.Parse(sub[0]), sub[2], Int32.Parse(sub[1]), new List<TypeElement>(1));
-      
+
+            Stade std;
+            string typeE = sub[3];
+            if(typeE == null)
+            {
+                std = new Stade(Int32.Parse(sub[0]), sub[2], Int32.Parse(sub[1]), new List<TypeElement>(1) {});
+            }
+            else
+            {
+                int typeElt = Int32.Parse(typeE); 
+                std = new Stade(Int32.Parse(sub[0]), sub[2], Int32.Parse(sub[1]), new List<TypeElement>(1) { (TypeElement)typeElt });
+            }
+
+
             return std;
 
         }

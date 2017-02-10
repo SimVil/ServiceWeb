@@ -115,7 +115,7 @@ namespace PokemonBusinessLayer
             bool lifeset = p.Vie <= 100 && p.Vie >= 0;
             bool forceset = p.Force <= 100 && p.Force >= 0;
             bool defenseset = p.Defense <= 100 && p.Defense >= 0;
-            bool nonemptytypes = p.Types.Count != 0;
+            bool nonemptytypes = p.Types != null && p.Types.Count != 0;
             bool cnf = namelength && lifeset && forceset && defenseset && nonemptytypes;
             return cnf;
         }
@@ -260,8 +260,9 @@ namespace PokemonBusinessLayer
         {
             bool nameval = s.Nom.Length < 32 && !s.Nom.Contains(" ");
             bool nbpval = s.NbPlaces <= 100000 && s.NbPlaces >= 1000;
-            bool typeval = s.Types.Count == 1;
-            return false;
+            
+            bool typeval = s.Types != null && s.Types.Count == 1;
+            return nameval && nbpval && typeval;
         }
 
         public int AddStade(Stade s)

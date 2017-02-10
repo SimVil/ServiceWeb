@@ -15,17 +15,18 @@ namespace PokemonDataBaseAccessLayer
 {
     class DALImplementation : DALInterface
     {
-        private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Simon\\Desktop\\Cours\\ISIMA\\ZZ-2\\Service Web\\PokemonTournament\\pif.mdf;Integrated Security = True; Connect Timeout = 30";
+        private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Toto\\Documents\\GitHub\\ServiceWeb\\pif.mdf;Integrated Security=True;Connect Timeout=30";
+        //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Simon\\Desktop\\Cours\\ISIMA\\ZZ-2\\Service Web\\PokemonTournament\\pif.mdf;Integrated Security = True; Connect Timeout = 30";
         //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\pif.mdf;Integrated Security=True;Connect Timeout=30";
         //private string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=H:\\ZZ2\\Service\\ServiceWeb\\Downgraded.mdf;Integrated Security = True; Connect Timeout = 30";
 
 
-/* Methodes Generale ----------------------------------------------------------
-*  + DALImplementation ~ constructeur 
-*  + DataRequire       ~ recupere tout type d'objet sous forme de
-*                        string
-*  + TableRequire      ~ recupere tout type d'obj sous DataTable                                 
-* -------------------------------------------------------------------------- */
+        /* Methodes Generale ----------------------------------------------------------
+        *  + DALImplementation ~ constructeur 
+        *  + DataRequire       ~ recupere tout type d'objet sous forme de
+        *                        string
+        *  + TableRequire      ~ recupere tout type d'obj sous DataTable                                 
+        * -------------------------------------------------------------------------- */
 
 
         public DALImplementation() { }
