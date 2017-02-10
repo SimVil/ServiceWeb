@@ -24,7 +24,6 @@ namespace PokemonTournamentWPF
     public partial class PokemonControl : UserControl
     {
         private PokemonTournamentManager controller;
-
         private bool is_modif;
 
         public PokemonControl()
@@ -36,6 +35,9 @@ namespace PokemonTournamentWPF
             Button_Click_Modifier(null, null);
         }
 
+        /*  permet la modification du pokemon :
+         *  donner un nom, type vie etc... au pokemon
+         *  selectionnée                            */
         private void Button_Click_Modifier(object sender, RoutedEventArgs e)
         {
             if(is_modif)

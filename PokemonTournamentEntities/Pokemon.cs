@@ -27,7 +27,7 @@ namespace PokemonTournamentEntities
         {
 
         }
-
+        
         public Pokemon(String nom, int vie, int force, int defense, List<TypeElement> types):base()
         {
             Nom = nom;

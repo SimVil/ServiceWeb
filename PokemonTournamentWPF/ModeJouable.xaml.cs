@@ -35,6 +35,8 @@ namespace PokemonTournamentWPF
             Pokemons = pokemons;
         }
 
+        /* ouvrir une nouvelle fenetre :
+         * pour choisir son pokemon et jouer les combat */
         public static ModeJouable getInstance(List<Pokemon> pokemons)
         {
             if(modeJouable == null)
@@ -44,6 +46,7 @@ namespace PokemonTournamentWPF
             return modeJouable;
         }
 
+        // confirmer la selection de son pokemon
         private void confirmation_selection_button_Click(object sender, RoutedEventArgs e)
         {
             pokemonJoue = (Pokemon)list_box_pokemons.SelectedItem;
@@ -68,6 +71,10 @@ namespace PokemonTournamentWPF
             }
         }
 
+        /* mode jouable de type : feueille, ciseau, roche
+         * le gagnant inflige des degats à l'ennemi
+         * si le joueur gagne il passe au porchain combat, sinon le tournoi
+         * se completera de facon automatique */
         private void attaque_selection_button_Click(object sender, RoutedEventArgs e)
         {
             textBlock.Text = "";

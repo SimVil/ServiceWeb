@@ -30,6 +30,10 @@ namespace PokemonTournamentWPF
             Button_Click_Modifier(null, null);
         }
 
+
+        /*  permet la modification du stade:
+         *  donner un nom, type et nombre de places
+         *   au pokemon selectionné                         */
         private void Button_Click_Modifier(object sender, RoutedEventArgs e)
         {
             if (is_modif)

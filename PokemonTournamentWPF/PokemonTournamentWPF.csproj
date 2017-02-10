@@ -67,8 +67,6 @@
     <Compile Include="StadeControl.xaml.cs">
       <DependentUpon>StadeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelBase\MatchViewModel.cs" />
-    <Compile Include="ViewModelBase\MatchsViewModel.cs" />
     <Compile Include="ViewModelBase\PokemonViewModel.cs" />
     <Compile Include="ViewModelBase\PokemonsViewModel.cs" />
     <Compile Include="ViewModelBase\RelayCommand.cs" />

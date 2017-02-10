@@ -24,14 +24,12 @@ namespace PokemonTournamentWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        //initialisation du controlleur ,des viewmodels et des listes
         private PokemonTournamentManager controller;
-
         private PokemonsViewModel pvm;
         private StadesViewModel svm;
-        private MatchsViewModel mvm;
         private List<Pokemon> pokemonsSelected;
         private List<Pokemon> pokemons;
-
         private List<ComboBox> comboBoxes;
         
 
@@ -42,6 +40,9 @@ namespace PokemonTournamentWPF
             btn_pokemons.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
 
+        /*bouton qui : * remplie la liste des pokemons,
+                       * cache les vues stades et matchs,
+                       * met la vue des pokemon visible             */
         private void btn_pokemons_Click(object sender, RoutedEventArgs e)
         {
 
@@ -65,6 +66,9 @@ namespace PokemonTournamentWPF
             //grid_view_tournoi.Visibility = Visibility.Collapsed;
         }
 
+        /*bouton qui : * remplie la liste des stades,
+                       * cache les vues stades et pokemons,
+                       * met la vue des stade visible             */
         private void btn_stades_Click(object sender, RoutedEventArgs e)
         {
             IList<PokemonTournamentEntities.Stade> stades = controller.GetAllStades();
@@ -82,6 +86,10 @@ namespace PokemonTournamentWPF
 
         }
 
+        /*bouton qui : * met la vue de matchs visible
+                       * propose à l'utilisateur d'organiser le tournoi
+                       * propose à l'utilisateur de lancer le tournoi en deux modes
+                                                            */
         private void btn_matchs_Click(object sender, RoutedEventArgs e)
         {
             controller = new PokemonTournamentManager();
@@ -112,6 +120,9 @@ namespace PokemonTournamentWPF
             
         }
 
+
+        /*bouton qui : imprime la liste des pokemons et stades
+                                                            */
         private void btn_print_Click(object sender, RoutedEventArgs e)
         {
             PrintDialog pdlg = new PrintDialog();
@@ -119,6 +130,8 @@ namespace PokemonTournamentWPF
             pdlg.ShowDialog();
         }
 
+
+        /* bouton qui filtre les pokemons selon leurs types */
         private void button_filtrage_Click(object sender, RoutedEventArgs e)
         {
             String filtre = combo_filtrage.Text;
@@ -144,28 +157,24 @@ namespace PokemonTournamentWPF
             fenetre.Show();
         }
 
-       /* private void btn_tournoi_Click(object sender, RoutedEventArgs e)
-        {
-            list_pokemons.Visibility = Visibility.Collapsed;
-            list_stades.Visibility = Visibility.Visible;           
-
-            grid_view_pokemons.Visibility = Visibility.Collapsed;
-            grid_view_stades.Visibility = Visibility.Collapsed;
-            grid_view_matchs.Visibility = Visibility.Collapsed;
-            grid_view_tournoi.Visibility = Visibility.Visible;
-        }*/
-
+       
         private void combattant_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {                 
 
         }
 
+
+        /* fonction qui selon le bouton clické :
+         *  lance le tournoi automatique (1er choix)
+         *  lance un mode jouable ou le joueur chosis son pokemon et participe au tournoi
+         */
         private void Tournoi_Click(object sender, RoutedEventArgs e)
         {
             //on ne peut lancer le tournoi que si il ya un poekmon unique choisie par combobox
             comboBoxes = new List<ComboBox>() { combattant1, combattant2, combattant3, combattant4, combattant5, combattant6, combattant7, combattant8 };
            
             string content = (sender as Button).Content.ToString();
+            //mode automatique
             if (content == "Tournoi Automatique")
             {
                 //First Duel phase
@@ -226,6 +235,7 @@ namespace PokemonTournamentWPF
             }
             else
             {
+                //mode jouable
                 if(content == "Tournoi Jouable")
                 {
                     List<Pokemon> poke = new List<Pokemon>();
@@ -243,7 +253,9 @@ namespace PokemonTournamentWPF
             }
 
         }
-
+        /*bouton qui : * permet d'importer une image
+                       * la lié à un pokemon
+                                                    */
         private void button_import_picture_Click(object sender, RoutedEventArgs e)
         {
             if(list_pokemons.SelectedItem != null)
@@ -263,6 +275,7 @@ namespace PokemonTournamentWPF
             }
             else
             {
+                //si aucun pokemon n'est selectionné
                 MessageBox.Show("Choisi un Pokemon d'abord !");
             }
                 
@@ -275,92 +288,6 @@ namespace PokemonTournamentWPF
             //envoyer infos à la base de donnée
         }
     }
-    /*
-    private void lancer_duel_Click(object sender, RoutedEventArgs e)
-    {
-        PokemonViewModel pokemon1 = (PokemonViewModel)list_pokemons1_tournament.SelectedItem;
-
-        PokemonViewModel pokemon2 = (PokemonViewModel)list_pokemons2_tournament.SelectedItem;
-
-        if (pokemon1 != null && pokemon2 != null)
-        {
-            if (pokemon1.Vie == 0 || pokemon2.Vie == 0)
-            {
-                if (pokemon1.Vie == 0 && pokemon2.Vie == 0)
-                {
-                    MessageBox.Show("Both Pokemons has fainted !");
-                }
-
-                else
-                {
-                    if (pokemon1.Vie == 0 && pokemon2.Vie != 0)
-                    {
-                        MessageBox.Show(pokemon1.Nom + " has fainted !");
-                    }
-                    else
-                    {
-                        MessageBox.Show(pokemon2.Nom + " has fainted !");
-                    }
-                }
-            }
-
-            else
-            {
-                Pokemon _pokemon1 = pokemon1.Pokemon;
-                Pokemon _pokemon2 = pokemon2.Pokemon;
-                //determiner qui va commencer
-                Pokemon first = Pokemon.Begins(_pokemon1, _pokemon2);
-                Pokemon second = null;
-                if (_pokemon1 == first)
-                {
-                    second = _pokemon2;
-                }
-                else
-                {
-                    second = _pokemon1;
-                }
-
-                //Booster les pokemon selon les stades
-                StadeViewModel chosenstadium = (StadeViewModel)list_stades.SelectedItem;
-                if (chosenstadium != null)
-                {
-                    Stade _chosenstadium = chosenstadium.Stade;
-                    first.Boost(_chosenstadium);
-                    second.Boost(_chosenstadium);
-                }
-
-                //lancer le combat
-                while (first.Vie > 0 && second.Vie > 0)
-                {
-                    first.Attaquer(second);
-                    if (second.Vie > 0)
-                    {
-                        second.Attaquer(first);
-                    }
-                    MessageBox.Show(first.Nom + " has :" + first.Vie.ToString() + " HP left & " + second.Nom + " has : " + second.Vie.ToString() + " HP left");
-
-                }
-
-                //anoncer le vainqueur
-                if (first.Vie == 0 && second.Vie > 0)
-                {
-                    MessageBox.Show("The winner is : " + second.Nom);
-
-                }
-                else
-                {
-                    if (second.Vie == 0 && first.Vie > 0)
-                    {
-                        MessageBox.Show("The winner is : " + first.Nom);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Draw !");
-                    }
-
-                }
-            }
-        }
-    }*/
+    
 }
 
