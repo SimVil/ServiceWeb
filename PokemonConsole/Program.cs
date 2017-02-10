@@ -29,21 +29,10 @@ namespace PokemonConsole
             Console.WriteLine("\n\nLes matchs disponibles : ");
             AfficherMatchs();
 
-            Console.WriteLine("\n\n Les utilisateurs : ");
-            AfficherUtilisateur();
-            Utilisateur Aurore = new Utilisateur("Pouet", "Aurore", "Auro", "pass");
-            manager.AddUtilisateur(Aurore);
-            Console.WriteLine("\n\n Les utilisateurs : ");
-            AfficherUtilisateur();
+            manager.UpdatePokemon(new Pokemon(1, "Raichu", 50, 50, 50, new List<TypeElement>() { TypeElement.Electrique }));
 
-            Aurore.Prenom = "Romane";
-            manager.UpdateUtilisateur(Aurore);
-            Console.WriteLine("\n\n Les utilisateurs : ");
-            AfficherUtilisateur();
-
-            manager.DeleteUtilisateur(Aurore);
-            Console.WriteLine("\n\n Les utilisateurs : ");
-            AfficherUtilisateur();
+            Console.WriteLine("\n\nLes pokémons disponibles :");
+            AfficherPokemons();
 
 
         }
