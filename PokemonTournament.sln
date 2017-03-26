@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTournamentEntities",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTournamentWPF", "PokemonTournamentWPF\PokemonTournamentWPF.csproj", "{2E83E9C3-02D0-464B-B122-8C4363EBF358}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonWCF", "PokemonWCF\PokemonWCF.csproj", "{D5CFD5AC-9E19-4547-9E49-BF50140BCB71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonWebApp", "PokemonWebApp\PokemonWebApp.csproj", "{B255793F-E22A-47F7-A16E-69DFCB3B32DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D5CFD5AC-9E19-4547-9E49-BF50140BCB71} = {D5CFD5AC-9E19-4547-9E49-BF50140BCB71}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +46,14 @@ Global
 		{2E83E9C3-02D0-464B-B122-8C4363EBF358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E83E9C3-02D0-464B-B122-8C4363EBF358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E83E9C3-02D0-464B-B122-8C4363EBF358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5CFD5AC-9E19-4547-9E49-BF50140BCB71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5CFD5AC-9E19-4547-9E49-BF50140BCB71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5CFD5AC-9E19-4547-9E49-BF50140BCB71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5CFD5AC-9E19-4547-9E49-BF50140BCB71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B255793F-E22A-47F7-A16E-69DFCB3B32DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B255793F-E22A-47F7-A16E-69DFCB3B32DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B255793F-E22A-47F7-A16E-69DFCB3B32DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B255793F-E22A-47F7-A16E-69DFCB3B32DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

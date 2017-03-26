@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "Pokemon View";
+}
+<h2>You're here to see the pokeMOMs List ?</h2>
+
+<body>
+    <div class="container" id="yourPokemons">
+        <h1> Pokemons : </h1>
+        <ul id="available_pokemons" class="list-group">
+            @for (int i = 0, j=0; i < @ViewBag.Length; i++)
+            {
+                <li class="list-group-item" id="pokemons"> 
+                <div>
+                <div class="row"> 
+                   <p id="@ViewBag.Pokemons[i].Id" class="col-sm-1" >@ViewBag.Pokemons[i].Nom</p>  <button class="deletebutton btn btn-danger col-sm-1 col-lg-offset-7">Delete</button> <button class="modifypokemon btn btn-warning col-sm-1 col-lg-offset-1" > Modify</button>
+                </div>
+                <div class="container" >
+                    <ul class="list-group" id="@ViewBag.Pokemons[i].Nom">
+                            <li class="list-group-item"> Vie     : @ViewBag.Pokemons[i].Vie </li>
+                            <li class="list-group-item"> Défense : @ViewBag.Pokemons[i].Defense</li>
+                            <li class="list-group-item"> Force   : @ViewBag.Pokemons[i].Force </li>
+                            <li class="list-group-item"> Id      : @ViewBag.Pokemons[i].Id </li>
+                    </ul>
+                   
+                </div>
+                </div>
+                </li>
+            }
+        </ul>
+        <button id="addnewpokemon" class="btn btn-success"> Add Pokemon</button>
+        <br />
+        <br />
+               
+        <div id="newpoke">
+            <form id="pokeForm">
+                <div class="form-group">
+                    <label>Pokemon Name</label>
+                    <input type="text" class="form-control" id="pokeName" aria-describedby="nameHelp" placeholder="Enter Pokemon Name" />
+                    <small id="nameHelp" class="form-text text-muted">Choose a new name to your pokemon !</small>
+                </div>
+                <div class="form-group">
+                    <label>Vie</label>
+                    <input type="text" class="form-control" id="pokeVie" placeholder="HP points" />
+                </div>
+                <div class="form-group">
+                    <label>Force</label>
+                    <input type="text" class="form-control" id="pokeForce" placeholder="Force points" />
+                </div>
+                <div class="form-group">
+                    <label>Defense</label>
+                    <input type="text" class="form-control" id="pokeDefense" placeholder="Defense points" />
+                </div>
+            </form>
+                <button id="submitNewPokemon" class="btn btn-primary">Submit </button>
+                  
+        </div>
+        
+        
+
+                       
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    
+    <script type="text/javascript">
+        
+        $('#newpoke').hide();
+
+        $(document).ready(function () {
+            $('#addnewpokemon').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("AddPokemon","Pokemon")',
+                    success: function (data) {
+                        li = $("<li class='list-group-item'>");
+                        div = $("<div class='row'>");
+                        div.append("<p class='col-sm-1'>" + data["Nom"] + "</p>" + "<button class='deletebutton btn btn btn-danger col-sm-1 col-lg-offset-7' >Delete</button> <button class='modifypokemon btn btn-warning col-sm-1 col-lg-offset-1' > Modify</button");
+                        div2 = $("<div class='container'>");
+                        ul2 = $("<ul class='list-group' id='Unknown'>");
+                        ul2.append("<li class='list-group-item'>" +"Vie : " +data["Vie"] + "</li>");
+                        ul2.append("<li class='list-group-item'>" + "Force : " +data["Force"] + "</li>");
+                        ul2.append("<li class='list-group-item'>" + "Defense : " + data["Defense"] + "</li>");
+                        ul2.append("<li class='list-group-item'>" + "Id : " + data["Id"] + "</li>");
+                        div2.append(ul2);
+                        div3 = $("<div>");
+                        div3.append(div);
+                        div3.append(div2);
+                        li.append(div3);
+                        $('#available_pokemons').append(li);
+                    }
+                });
+
+            });
+        });
+        $("#yourPokemons").on("click", ".deletebutton",function (evt) {
+                var evt = window.event || evt;
+                if (!evt.target) evt.target = evt.srcElement;
+                //evt.target.parentNode.parentNode.parentNode.remove();
+                $.ajax({
+                    type: 'post',
+                    url : '@Url.Action("DeletePokemon","Pokemon")',
+                    data: { 'Name': evt.target.parentNode.firstElementChild.textContent },
+                    success: function () {
+                        evt.target.parentNode.parentNode.parentNode.remove();
+                    }
+                });
+
+        });
+
+        $("#yourPokemons").on("click", ".modifypokemon", function (evt) {
+            $('#newpoke').show();
+
+            var evt = window.event || evt;
+            if (!evt.target) evt.target = evt.srcElement;
+            var nodeEl = evt.target
+            var str = evt.target.parentNode.firstElementChild.textContent;
+            $('#pokeName').val(str);
+            $('#pokeVie').val('') ;
+            $('#pokeForce').val('') ;
+            $('#pokeDefense').val('') ;
+            evt.target = $('#pokeName').focus();
+
+            $('#submitNewPokemon').click(function () {
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("ModifyPokemon","Pokemon")',
+                    data: { 'Name': str, 'NewName': $('#pokeName').val(), 'Vie': $('#pokeVie').val(), 'Force': $('#pokeForce').val(), 'Defense': $('#pokeDefense').val() },
+                    success : function(data){
+                        nodeEl.parentNode.firstElementChild.textContent = $('#pokeName').val();
+                        var uls = document.getElementById(str).getElementsByTagName('li');
+                        if ($('#pokeVie').val() != '') {
+                            uls[0].textContent = "Vie : " + $('#pokeVie').val();
+                        }
+                        if ($('#pokeDefense').val() != '') {
+                            uls[1].textContent = "Defense : " + $('#pokeDefense').val();
+                        }
+                        if ($('#pokeForce').val() != '') {
+                            uls[2].textContent = "Force : " + $('#pokeForce').val();
+                        }
+                        $('#newpoke').hide();
+
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+     
+</body>

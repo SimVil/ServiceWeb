@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@{
+    ViewBag.Title = "Pokemon View";
+}
+
+<h2>You're here to see the pokeMOMs List ?</h2>
+
+<body>
+    <div class="container">
+        <h1> Pokemons : </h1>
+        <ul id="available_pokemons" class="list-group">
+            @for (int i = 0, j = 0; i < @ViewBag.Length; i++)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-1">@ViewBag.Pokemons[i].Nom</div>  <button class="btn btn-danger col-sm-1 col-lg-offset-7"> Delete</button> <button id=i class="btn btn-warning col-sm-1 col-lg-offset-1"> Modifier</button>
+                    </div>
+                    <div id=@ViewBag.Pokemons[i].Nom class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"> Vie     : @ViewBag.Pokemons[i].Vie </li>
+                            <li class="list-group-item"> Défense : @ViewBag.Pokemons[i].Defense</li>
+                            <li class="list-group-item"> Force   : @ViewBag.Pokemons[i].Force </li>
+                        </ul>
+
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <button id="btnaddpokemon" class="btn btn-success"> Add New Pokemon </button>
+
+        <form id="addNewPokemon">
+            <div class="form-group">
+                <label for="Pokemon_name">Pokemon Name</label>
+                <input type="text" class="form-control" id="Pokemon_name" placeholder="Pokemon Name Here">
+            </div>
+            <div class="form-group">
+                <label for="Pokemon_vie">Pokemon Vie</label>
+                <input type="number" class="form-control" id="Pokemon_vie" placeholder="Pokemon Health Here">
+            </div>
+            <div class="form-group">
+                <label for="Pokemon_def">Pokemon Defense</label>
+                <input type="number" class="form-control" id="Pokemon_def" placeholder="Pokemon Defense Here">
+            </div>
+            <div class="form-group">
+                <label for="Pokemon_force">Pokemon Force</label>
+                <input type="number" class="form-control" id="Pokemon_name" placeholder="Pokemon Force Here">
+            </div>
+            <button id="submitbutton" class="btn btn-primary" onclick="addPokemon()"> Submit !</button>
+        </form>
+        <div id="blank"> lel </div>
+    </div>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#addNewPokemon").hide();
+        $("#btnaddpokemon").click(function () {
+            $("#addNewPokemon").show();
+        });
+    </script>
+</body>

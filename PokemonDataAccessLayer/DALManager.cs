@@ -33,18 +33,15 @@ namespace PokemonDataAccessLayer
 
         private void CreerMonde()
         {
-            string dir = System.IO.Directory.GetCurrentDirectory().ToString();
-            dir = System.IO.Directory.GetParent(dir).ToString();
-            dir = System.IO.Directory.GetParent(dir).ToString();
-            dir = System.IO.Directory.GetParent(dir).ToString();
-            Pokemon p1 = new Pokemon("Electhor", 200, 75, 30, new List<TypeElement>() { TypeElement.Electrique, TypeElement.Vol },  dir+@"\Images\electhor.png");
-            Pokemon p2 = new Pokemon("Brasegali", 160, 90, 25, new List<TypeElement>() { TypeElement.Feu }, dir + @"\Images\Brasegali.png");
-            Pokemon p3 = new Pokemon("Onigali", 180, 55, 45, new List<TypeElement>() { TypeElement.Glace }, dir + @"\Images\Onigali.png");
-            Pokemon p4 = new Pokemon("Lucario", 165, 70, 35, new List<TypeElement>() { TypeElement.Sol }, dir + @"\Images\Lucario.png");
-            Pokemon p5 = new Pokemon("Tortank", 220, 60, 30, new List<TypeElement>() { TypeElement.Eau, TypeElement.Sol }, dir + @"\Images\Tortank.png");
-            Pokemon p6 = new Pokemon("Germinion", 140, 65, 25, new List<TypeElement>() { TypeElement.Plante }, dir + @"\Images\Germinion.png");
-            Pokemon p7 = new Pokemon("Groudon", 200, 85, 35, new List<TypeElement>() { TypeElement.Feu, TypeElement.Sol}, dir + @"\Images\Groudon.png");
-            Pokemon p8 = new Pokemon("Kyogre", 210, 75, 35, new List<TypeElement>() { TypeElement.Eau, TypeElement.Vol }, dir + @"\Images\Kyogre.png");
+            
+            Pokemon p1 = new Pokemon("Electhor", 200, 75, 30, new List<TypeElement>() { TypeElement.Electrique, TypeElement.Vol },  @"\Images\electhor.png");
+            Pokemon p2 = new Pokemon("Brasegali", 160, 90, 25, new List<TypeElement>() { TypeElement.Feu }, @"\Images\Brasegali.png");
+            Pokemon p3 = new Pokemon("Onigali", 180, 55, 45, new List<TypeElement>() { TypeElement.Glace }, @"\Images\Onigali.png");
+            Pokemon p4 = new Pokemon("Lucario", 165, 70, 35, new List<TypeElement>() { TypeElement.Sol }, @"\Images\Lucario.png");
+            Pokemon p5 = new Pokemon("Tortank", 220, 60, 30, new List<TypeElement>() { TypeElement.Eau, TypeElement.Sol }, @"\Images\Tortank.png");
+            Pokemon p6 = new Pokemon("Germinion", 140, 65, 25, new List<TypeElement>() { TypeElement.Plante }, @"\Images\Germinion.png");
+            Pokemon p7 = new Pokemon("Groudon", 200, 85, 35, new List<TypeElement>() { TypeElement.Feu, TypeElement.Sol}, @"\Images\Groudon.png");
+            Pokemon p8 = new Pokemon("Kyogre", 210, 75, 35, new List<TypeElement>() { TypeElement.Eau, TypeElement.Vol }, @"\Images\Kyogre.png");
             Pokemons.Add(p1);
             Pokemons.Add(p2);
             Pokemons.Add(p3);
@@ -63,10 +60,10 @@ namespace PokemonDataAccessLayer
             Types.Add(TypeElement.Vol);
 
 
-            Stade s1 = new Stade("Stade neutre", 75000, new List<TypeElement>(), dir+@"\Images\stade_neutre.jpg");
-            Stade s2 = new Stade("Stade éclair", 50000, new List<TypeElement>() { TypeElement.Electrique }, dir+@"\Images\stade_eclair.jpg");
-            Stade s3 = new Stade("Stade aquatique", 90000, new List<TypeElement>() { TypeElement.Eau }, dir+@"\Images\stade_aquatique.jpg");
-            Stade s4 = new Stade("Stade volcan", 60000, new List<TypeElement>() { TypeElement.Feu }, dir+@"\Images\stade_volcan.jpg");
+            Stade s1 = new Stade("Stade neutre", 75000, new List<TypeElement>());
+            Stade s2 = new Stade("Stade éclair", 50000, new List<TypeElement>() { TypeElement.Electrique });
+            Stade s3 = new Stade("Stade aquatique", 90000, new List<TypeElement>() { TypeElement.Eau });
+            Stade s4 = new Stade("Stade volcan", 60000, new List<TypeElement>() { TypeElement.Feu });
 
             Stades.Add(s1);
             Stades.Add(s2);

@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Matchs View";
+}
+<h2>You're here to see the match List ?</h2>
+<body>
+<div class="container" id="yourMatchs">
+    <h1> Matchs : </h1>
+    <ul id="available_matchs" class="list-group">
+        @for (int i = 0, j = 0; i < @ViewBag.Length; i++)
+        {
+            <li class="list-group-item" id="stades">
+                <div>
+                    <div class="row">
+                        <p class="col-sm-1">@i</p>  <button class="deletebutton btn btn-danger col-sm-1 col-lg-offset-7">Forfeit</button> 
+                    </div>
+                    <div class="container">
+                        <ul class="list-group" id="Match @i">
+                            <li class="list-group-item"> Pokemon : @ViewBag.Matchs[i].Pokemon1.Nom </li>
+                            <li class="list-group-item"> Challenger : @ViewBag.Matchs[i].Pokemon2.Nom</li>
+                            <li class="list-group-item"> Stadium   : @ViewBag.Matchs[i].StadePokemon.Nom </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+    
+    <br />
+    <br />
+        
+</div>
+</body>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+<script type="text/javascript">
+    
+    $("#yourMatchs").on("click", ".deletebutton", function (evt) {
+        var evt = window.event || evt;
+        if (!evt.target) evt.target = evt.srcElement;
+        //evt.target.parentNode.parentNode.parentNode.remove();
+        $.ajax({
+            type: 'post',
+            data: { 'Number': evt.target.parentNode.firstElementChild.textContent },
+            url :'@Url.Action("DeleteMatch","Match")',
+            success: function () {
+                evt.target.parentNode.parentNode.parentNode.remove();
+            }
+        });
+    });
+        
+
+</script>

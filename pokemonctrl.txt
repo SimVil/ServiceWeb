@@ -1,0 +1,22 @@
+sing System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace PokemonWebApp.Controllers
+{
+    public class PokemonController : Controller
+    {
+        PokemonWCF.Service1 service = new PokemonWCF.Service1();
+                
+        // GET: Pokemon
+        public ActionResult Index()
+        {
+            List<PokemonWCF.Pokemon> pokemons = service.getAllPokemons();
+            ViewBag.Pokemons = pokemons;
+            ViewBag.Length = pokemons.Count();
+            return View();
+        }
+  }
+}
